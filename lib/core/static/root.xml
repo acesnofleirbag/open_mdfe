@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
+<soap12:Header>
+    <nfeCabecMsg xmlns="http://www.portalfiscal.inf.br/sce/wsdl/NfeRecepcao2">
+        <versaoDados>{{version}}</versaoDados>
+        <cUF>{{UF}}</cUF>
+    </nfeCabecMsg>
+</soap12:Header>
+<soap12:Body>
+    <nfeDadosMsg xmlns="http://www.portalfiscal.inf.br/nfe/wsdl/NfeRecepcao2">
+        <NFe xmlns="http://www.portalfiscal.inf.br/nfe" >
+            <infNFe Id="NFe{{AccessKey}}" versao="1.01">
+                {{payload}}
+            </infNFe>
+            <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+                <SignedInfo>
+                    <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+                    <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
+                    <Reference URI="#NFe{{AccessKey}}">
+                        <Transforms>
+                            <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                            <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+                        </Transforms>
+                        <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+                        <DigestValue>vFL68WETQ+mvj1aJAMDx+oVi928=</DigestValue>
+                    </Reference>
+                </SignedInfo>
+                <SignatureValue>IhXNhbdL1F9UGb2ydVc5v/gTB/y6r0KIFaf5evUi1i</SignatureValue>
+                <KeyInfo>
+                    <X509Data>
+                        <X509Certificate>MIIFazCCBFOgAwIBAgIQaHEfNaxSeOEvZGlVDANB</X509Certificate>
+                    </X509Data>
+                </KeyInfo>
+            </Signature>
+        </NFe>
+    </nfeDadosMsg>
+</soap12:Body>
+</soap12:Envelope>

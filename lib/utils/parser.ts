@@ -1,4 +1,4 @@
-export class Parser {
+export class ParserUtility {
     static scape(str: string): string {
         return str
             .replace(/</g, "&lt;")

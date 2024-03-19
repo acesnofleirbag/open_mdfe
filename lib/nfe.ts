@@ -1,33 +1,20 @@
-import { AxiosRequestConfig } from "axios";
-import { NFEConfig } from "./@types/nfe";
-import { SefazOperations } from "./@types/operations";
-import { AxiosHttpClient } from "./adapters/httpClient";
+import { SefazNFE } from "./@types/layouts/nfe";
 import { XMLClient } from "./adapters/xml";
-import { HTTPClient } from "./core/ports/httpClient";
-import { WebServices } from "./core/static/webServices";
 
-export class NFE implements SefazOperations {
-    private httpClient: HTTPClient<AxiosRequestConfig>;
+export class NFE {
+    private payload: SefazNFE;
     private XML: XMLClient;
-    private config: NFEConfig;
 
-    constructor(config: NFEConfig) {
-        this.httpClient = new AxiosHttpClient();
+    constructor(payload: SefazNFE) {
+        this.payload = payload;
         this.XML = new XMLClient();
-        this.config = config;
     }
 
-    async send(): Promise<void> {
-        // @ts-ignore
-        const { data } = await this.httpClient.get(WebServices[this.config.UF].authorization[this.config.environment]);
-        const res = await this.XML.xml2obj(data);
-
-        console.log(">>1", res);
+    toXML(): string {
+        return this.XML.obj2xml(this.payload);
     }
 
-    cancel(): void {}
-
-    fix_letter(): void {}
-
-    make_useless(): void {}
+    async toObject(xml: string): Promise<SefazNFE> {
+        return this.XML.xml2obj<SefazNFE>(xml);
+    }
 }

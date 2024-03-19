@@ -1,6 +1,7 @@
 import { Axios, AxiosRequestConfig } from "axios";
+import { HTTPClient } from "../core/ports/httpClient";
 
-export class AxiosHttpClient implements AxiosHttpClient {
+export class AxiosHttpClient implements HTTPClient<AxiosRequestConfig> {
     private client: Axios;
 
     constructor() {
@@ -15,9 +16,9 @@ export class AxiosHttpClient implements AxiosHttpClient {
         return this.client.get(URL, params);
     }
 
-    post() {}
+    async post(_URL: string, _payload: any, _params?: AxiosRequestConfig): Promise<any> {}
 
-    put() {}
+    async put(_URL: string, _payload: any, _params?: AxiosRequestConfig): Promise<any> {}
 
-    delete() {}
+    async delete(_URL: string, _params?: AxiosRequestConfig): Promise<any> {}
 }

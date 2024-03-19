@@ -1,11 +1,9 @@
-import { AxiosRequestConfig } from "axios";
+export interface HTTPClient<T> {
+    get(URL: string, params?: T): Promise<any>;
 
-export interface HTTPClient {
-    get(URL: string, params?: AxiosRequestConfig): Promise<any>;
+    post(URL: string, payload: any, params?: T): Promise<any>;
 
-    post(): any;
+    put(URL: string, payload: any, params?: T): Promise<any>;
 
-    put(): any;
-
-    delete(): any;
+    delete(URL: string, params?: T): Promise<any>;
 }

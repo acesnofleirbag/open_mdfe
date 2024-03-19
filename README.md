@@ -1,23 +1,25 @@
 # OPEN SEFAZ
 
-### Requirements
+NodeJS package para emissão de NF-e, NFC-e e consulta de dados
+
+### Requisitos
 
 - NodeJS v18+
 
-### Installation
+### Instalação
 
 ```bash
 $ npm install @acesnofleirbag/open-sefaz
 ```
 
-### Specs
+### Especificação
 
-The specs currently used is located on `/specs`
+A especificação implementada encontra-se na pasta `/specs`
 
-### How To Generate The Certificate
+### Como Gerar O Certificado Digital
 
 https://serasa.certificadodigital.com.br/blog/certificado-digital/icp-brasil-2/
 
-### Usage Example
+### Exemplos De Uso
 
-See `/docs` folder for examples
+Para exemplos de uso veja a pasta `/docs`

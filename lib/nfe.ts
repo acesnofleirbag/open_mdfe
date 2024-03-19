@@ -1,11 +1,13 @@
-import { NFEConfig, SefazNFE } from "./@types/nfe";
+import { AxiosRequestConfig } from "axios";
+import { NFEConfig } from "./@types/nfe";
+import { SefazOperations } from "./@types/operations";
 import { AxiosHttpClient } from "./adapters/httpClient";
 import { XMLClient } from "./adapters/xml";
 import { HTTPClient } from "./core/ports/httpClient";
 import { WebServices } from "./core/static/webServices";
 
-export class NFE implements SefazNFE {
-    private httpClient: HTTPClient;
+export class NFE implements SefazOperations {
+    private httpClient: HTTPClient<AxiosRequestConfig>;
     private XML: XMLClient;
     private config: NFEConfig;
 

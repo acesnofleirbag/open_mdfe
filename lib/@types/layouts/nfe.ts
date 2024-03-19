@@ -1,3 +1,33 @@
+export enum UF {
+    AC = "AC",
+    AL = "AL",
+    AP = "AP",
+    AM = "AM",
+    BA = "BA",
+    CE = "CE",
+    DF = "DF",
+    ES = "ES",
+    GO = "GO",
+    MA = "MA",
+    MT = "MT",
+    MS = "MS",
+    MG = "MG",
+    PA = "PA",
+    PB = "PB",
+    PR = "PR",
+    PE = "PE",
+    PI = "PI",
+    RJ = "RJ",
+    RN = "RN",
+    RS = "RS",
+    RO = "RO",
+    RR = "RR",
+    SC = "SC",
+    SP = "SP",
+    SE = "SE",
+    TO = "TO",
+}
+
 export enum TCodUfIBGE {
     RO = 11,
     AC = 12,
@@ -72,7 +102,7 @@ export enum TCodMunIBGE {
     SAO_PAULO = "3550308",
     TERESINA = "2211001",
     VITORIA = "3205309",
-};
+}
 
 export enum TtpImp {
     NO_DANFE = 0,
@@ -81,7 +111,7 @@ export enum TtpImp {
     SIMPLIFIED = 3,
     NFCE = 4,
     NFCE_ELETRONIC_MESSAGE = 5,
-};
+}
 
 export enum TtpEmis {
     NORMAL = 1,
@@ -92,19 +122,19 @@ export enum TtpEmis {
     CONTINGENCY_SVCAN = 6,
     CONTINGENCY_SVCRS = 7,
     CONTINGENCY_OFFLINE_NFCE = 9,
-};
+}
 
 export enum TtpAmb {
     PRODUCTION = 1,
     HOMOLOGATION = 2,
-};
+}
 
 export enum TFinNFe {
     NFE_NORMAL = 1,
     NFE_COMPLEMENTARY = 2,
     NFE_ADJUST = 3,
     DEVOLUTION = 4,
-};
+}
 
 export enum TindFinal {
     NO = 0,
@@ -119,42 +149,60 @@ export enum TindPres {
     NFCE_HOME_DELIVERY = 4,
     IN_PERSON_OUTSIDE_ESTABLISHMENT = 5,
     OTHERS = 9,
-};
+}
 
 export enum TindIntermed {
     WITHOUT_INTERMEDIARY = 0,
     THIRD_PARTY_PLATFORMS = 1,
-};
+}
 
 export enum TProcEmi {
     OWNED_APP = 0,
     SINGLE_BY_TAX_AUTHORITY = 1,
     SINGLE_WITH_DIGITAL_CERTIFICATE_ON_TAX_AUTHORITY_WEBSITE = 2,
     APP_PROVIDED_BY_TAX_AUTHORITY = 3,
-};
+}
 
 export enum TrefNFMod {
-     MODEL_1_1A = "01",
-     MODEL_2 = "02",
-};
+    MODEL_1_1A = "01",
+    MODEL_2 = "02",
+}
 
-type TNFref = {
-    refNFe: string;
-    refNFeSig: string;
-    refNF: {
-        cUF: TCodUfIBGE;
-        AAMM: string;
-        CNPJ: string;
-        mod: TrefNFMod;
-        serie: string;
-        nNF: string;
-    };
-};
+type TNFref =
+    | {
+          refNFe: string;
+      }
+    | {
+          refNFeSig: string;
+      }
+    | {
+          refNF: {
+              cUF: TCodUfIBGE;
+              AAMM: string;
+              CNPJ: string;
+              mod: TrefNFMod;
+              serie: string;
+              nNF: string;
+          };
+      }
+    | {
+          refNFP: (TrefNFP & { CNPJ: string }) | (TrefNFP & { CPF: string });
+      }
+    | {
+          refCTe: string;
+      }
+    | {
+          refECF: {
+              mod: TrefECFMod;
+              nECF: string;
+              nCOO: string;
+          };
+      };
 
 export enum TTrefNFPMod {
     SINGLE = "01",
     PRODUCER = "04",
-};
+}
 
 type TrefNFP = {
     cUF: TCodUfIBGE;
@@ -169,7 +217,7 @@ enum TrefECFMod {
     REGISTER_MACHINE_TAX_COUPON = "2B",
     PDV_TAX_COUPON = "2C",
     ECF_TAX_COUPON = "2D",
-};
+}
 
 export type TNFe = {
     infNFE: {
@@ -198,15 +246,7 @@ export type TNFe = {
             verProc: string;
             dhCont?: Date;
             xJust?: string;
-            // FIXME: choice type
             NFref?: TNFref[];
-            refNFP: TrefNFP & { CNPJ: string; } | TrefNFP & { CPF: string; };
-            refCTe: string;
-            refECF: {
-                mod: TrefECFMod;
-                nECF: string;
-                nCOO: string;
-            };
         };
         emit: null;
         avulsa: null;

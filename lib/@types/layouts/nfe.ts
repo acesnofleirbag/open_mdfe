@@ -239,7 +239,7 @@ type Address = {
     fone?: string;
 };
 
-export enum TaxRemigeCode {
+export enum TaxRegimeCode {
     SIMPLES_NACIONAL = 1,
     SIMPLES_NACIONAL_EXCESS_SUBLIMIT_RAW_INCOME = 2,
     REGIME_NORMAL = 3,
@@ -253,7 +253,7 @@ type Issuer = {
     IEST?: string;
     IM?: string;
     CNAE?: string;
-    CRT: TaxRemigeCode;
+    CRT: TaxRegimeCode;
 };
 
 export enum RecipientStateSubscriptionIndicator {
@@ -649,6 +649,69 @@ type CONFINS = CONFINS__Type1 | CONFINS__Type2 | CONFINS__Type3 | CONFINS__Type4
 
 type COFINSST = { vCOFINS: string; indSomaCOFINSST?: ProductComposeTotal };
 
+export enum SpecialTaxRegimeCode {
+    I1 = 1,
+    I2 = 2,
+    I3 = 3,
+    I4 = 4,
+    I5 = 5,
+    I6 = 6,
+}
+
+export enum ShippingMethod {
+    FREIGHT_CONTRACTING_ON_BEHALF_OF_THE_SENDER_CIF = 0,
+    FREIGHT_CONTRACTING_ON_BEHALF_OF_THE_RECIPIENT_SENDER_FOB = 1,
+    HIRING_FREIGHT_ON_BEHALF_OF_THIRD_PARTIES = 2,
+    OWN_TRANSPORT_EXPENSE_OF_THE_SENDER = 3,
+    OWN_TRANSPORT_EXPENSE_OF_THE_RECIPIENT = 4,
+    NO_TRANSPORT_OCCURRENCE = 9,
+}
+
+type Transporter = {
+    xNome?: string;
+    IE?: string;
+    xEnder?: string;
+    xMun?: string;
+    UF?: UFIssuer;
+};
+
+export enum PaymentMode {
+    CASH = 0,
+    IN_PARTS = 1,
+}
+
+export enum IntegrationTypeInPaymentProcess {
+    INTEGRATED = 1,
+    NOT_INTEGRATED = 2,
+}
+
+export enum ProcessOrigin {
+    SEFAZ = 0,
+    FEDERAL_JUSTICE = 1,
+    STATE_JUSTICE = 2,
+    SECEX_RFB = 3,
+    CONFAZ = 4,
+    OTHERS = 9,
+}
+
+export enum ConcessionAct {
+    AGREEMENT_TERM = "08",
+    SPECIAL_REGIME = "10",
+    SPECIFIC_AUTHORIZATION = "12",
+    SINIEF_ADJUSTMENT = "14",
+    ICMS_AGREEMENT = "15",
+}
+
+// schema: TInfRespTec
+export type TechnicalResponsible = {
+    CNPJ: string;
+    xContato: string;
+    email: string;
+    fone: string;
+    idCSRT?: string;
+    hashCSRT?: string;
+};
+
 // schema: TNFe
 export type SefazNFE = {
     infNFE: {
@@ -735,18 +798,170 @@ export type SefazNFE = {
                     xCampo: string;
                 };
             };
+        }[];
+        total: {
+            ICMSTot: {
+                vBC: string;
+                vICMS: string;
+                vICMSDeson: string;
+                vFCPUFDest?: string;
+                vICMSUFDest?: string;
+                vICMSUFRemet?: string;
+                vFCP: string;
+                vBCST: string;
+                vST: string;
+                vFCPST: string;
+                vFCPSTRet: string;
+                qBCMono?: string;
+                vICMSMono?: string;
+                qBCMonoReten?: string;
+                vICMSMonoReten?: string;
+                qBCMonoRet?: string;
+                vICMSMonoRet?: string;
+                vProd: string;
+                vFrete: string;
+                vSeg: string;
+                vDesc: string;
+                vII: string;
+                vIPI: string;
+                vIPIDevol: string;
+                vPIS: string;
+                vCOFINS: string;
+                vOutro: string;
+                vNF: string;
+                vTotTrib?: string;
+            };
+            ISSQNtot?: {
+                vServ?: string;
+                vBC?: string;
+                vISS?: string;
+                vPIS?: string;
+                vCOFINS?: string;
+                dCompet: string;
+                vDeducao?: string;
+                vOutro?: string;
+                vDescIncond?: string;
+                vDescCond?: string;
+                vISSRet?: string;
+                cRegTrib?: SpecialTaxRegimeCode;
+            };
+            retTrib?: {
+                vRetPIS?: string;
+                vRetCOFINS?: string;
+                vRetCSLL?: string;
+                vBCIRRF?: string;
+                vIRRF?: string;
+                vBCRetPrev?: string;
+                vRetPrev?: string;
+            };
         };
-        total: null; // @@@
-        transp: null;
-        cobr: null;
-        pag: null;
-        infIntermed: null;
-        infAdic: null;
-        exporta: null;
-        compra: null;
-        cana: null;
-        infRespTec: null;
-        infSolicNFF: null;
+        transp: {
+            modFrete: ShippingMethod;
+            transporta?: (Transporter & { CNPJ?: string }) | (Transporter & { CPF?: string });
+            retTransp?: {
+                vServ: string;
+                vBCRet: string;
+                pICMSRet: string;
+                vICMSRet: string;
+                CFOP: string;
+                cMunFG: CodeCityIBGE;
+            };
+            vol?: {
+                qVol?: string;
+                esp?: string;
+                marca?: string;
+                nVol?: string;
+                pesoL?: string;
+                pesoB?: string;
+                lacres: { nLacre: string }[];
+            }[];
+        };
+        cobr?: {
+            fat?: {
+                nFat?: string;
+                vOrig?: string;
+                vDesc?: string;
+                vLiq?: string;
+            };
+            dup?: {
+                nDup?: string;
+                dVenc?: string;
+                vDup: string;
+            }[];
+        };
+        pag: {
+            detPag: {
+                indPag?: PaymentMode;
+                tPag: string;
+                xPag?: string;
+                vPag: string;
+                dPag?: string;
+                CNPJPag?: string;
+                UFPag?: UFIssuer;
+                card?: {
+                    tpIntegra: IntegrationTypeInPaymentProcess;
+                    CNPJ?: string;
+                    tBand?: string;
+                    cAut?: string;
+                    CNPJReceb?: string;
+                    idTermPag?: string;
+                };
+            }[];
+            vTroco?: string;
+        };
+        infIntermed?: {
+            CNPJ: string;
+            idCadIntTran: string;
+        };
+        infAdic?: {
+            infAdFisco?: string;
+            infCpl?: string;
+            obsCont?: {
+                $: { xCampo: string };
+                xTexto: string;
+            }[];
+            obsFisco?: {
+                $: { xCampo: string };
+                xTexto: string;
+            }[];
+            procRef?: {
+                nProc: string;
+                indProc: ProcessOrigin;
+                tpAto?: ConcessionAct;
+            }[];
+        };
+        exporta?: {
+            UFSaidaPais: UFIssuer;
+            xLocExporta: string;
+            xLocDespacho?: string;
+        };
+        compra?: {
+            xNEmp?: string;
+            xPed?: string;
+            xCont?: string;
+        };
+        cana?: {
+            safra: string;
+            ref: string;
+            forDia: {
+                $: { dia: string };
+                qtde: string;
+            }[];
+            qTotMes: string;
+            qTotAnt: string;
+            qTotGer: string;
+            deduc?: {
+                xDed: string;
+                vDed: string;
+            }[];
+            vFor: string;
+            vTotDed: string;
+            vLiqFor: string;
+        };
+        infRespTec?: TechnicalResponsible;
+        infSolicNFF?: {
+            xSolic: string;
+        };
     };
 };
 
@@ -756,7 +971,7 @@ export enum WebServiceMode {
 }
 
 // schema: TEnviNFe
-export type RequestGrantAuthorization2NFE = {
+export type RequestGrantAuthorizationToNFE = {
     $: { versao: "4.00" };
     idLote: string;
     indSinc: WebServiceMode;

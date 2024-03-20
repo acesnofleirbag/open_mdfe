@@ -1,7 +1,7 @@
 import { AccessKey } from "./accessKey";
 import { createHash } from "crypto";
-import { TechnicalResponsible } from "./@types/structure";
 import { XMLClient } from "./adapters/xml";
+import { TechnicalResponsible } from "./@types/layouts/nfe";
 
 // CSRT (Código de Segurança do Responsável Técnico)
 export class CSRT {
@@ -24,14 +24,14 @@ export class CSRT {
         return Buffer.from(sha1, "hex").toString("base64");
     }
 
-    genTechnicalResponsibleInfo(infos: TechnicalResponsible) {
+    genTechnicalResponsibleInfo(payload: TechnicalResponsible) {
         return this.XML.obj2xml({
             infRespTec: {
-                CNPJ: infos.CNPJ,
-                contato: infos.contact,
-                email: infos.email,
-                fone: infos.phone,
-                idCSRT: infos.idCSRT,
+                CNPJ: payload.CNPJ,
+                contato: payload.xContato,
+                email: payload.email,
+                fone: payload.fone,
+                idCSRT: payload.idCSRT,
                 hashCSRT: this.genHash(),
             },
         });

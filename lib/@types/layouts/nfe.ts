@@ -332,7 +332,7 @@ type __Product = {
     cBarra?: string;
     xProd: string;
     NCM: string;
-    NVE?: string;
+    NVE?: string[];
     CEST?: string;
     indEscala?: "S" | "N";
     CNPJFab?: string;
@@ -356,7 +356,7 @@ type __Product = {
     vDesc?: string;
     vOutro?: string;
     indTot: ProductComposeTotal;
-    DI?: (ImportDocument & { CPF?: string }) | (ImportDocument & { CNPJ?: string });
+    DI?: ((ImportDocument & { CPF?: string }) | (ImportDocument & { CNPJ?: string }))[];
     detExport?: {
         nDraw?: string;
         exportInd?: {
@@ -620,7 +620,7 @@ type COFINSOutr = {
     vCOFINS: string;
 };
 
-type CONFINS__Type1 = {
+type COFINS__Type1 = {
     COFINSAliq: {
         CST: CST__Type1;
         vBC: string;
@@ -628,7 +628,7 @@ type CONFINS__Type1 = {
         vCOFINS: string;
     };
 };
-type CONFINS__Type2 = {
+type COFINS__Type2 = {
     COFINSQtde: {
         CST: "03";
         qBCProd: string;
@@ -636,16 +636,16 @@ type CONFINS__Type2 = {
         vCOFINS: string;
     };
 };
-type CONFINS__Type3 = {
+type COFINS__Type3 = {
     COFINSNT: {
         CST: CST__Type2;
     };
 };
-type CONFINS__Type4 = {
+type COFINS__Type4 = {
     COFINSOutr: (COFINSOutr & { vBC: string; pCOFINS: string }) | (COFINSOutr & { qBCProd: string; vAliqProd: string });
 };
 
-type CONFINS = CONFINS__Type1 | CONFINS__Type2 | CONFINS__Type3 | CONFINS__Type4;
+type COFINS = COFINS__Type1 | COFINS__Type2 | COFINS__Type3 | COFINS__Type4;
 
 type COFINSST = { vCOFINS: string; indSomaCOFINSST?: ProductComposeTotal };
 
@@ -712,6 +712,604 @@ export type TechnicalResponsible = {
     hashCSRT?: string;
 };
 
+export enum MerchandiseOrigin {
+    NATIONAL_EXCEPT_THOSE_INDICATED_IN_CODES_3_4_5_8 = 0,
+    FOREIGN_DIRECT_IMPORT = 1,
+    FOREIGN_ACQUIRED_ON_THE_DOMESTIC_MARKET = 2,
+    NATIONAL_CONTENT_GREATER_THAN_40_PERCENT_AND_LESS_THAN_OR_EQUAL_TO_70_PERCENT = 3,
+    NATIONAL_BASIC_PRODUCTION_PROCESSES = 4,
+    NATIONAL_CONTENT_LOWER_THAN_40_PERCENT = 5,
+    FOREIGN_DIRECT_IMPORT_WITH_NATIONAL_SIMILAR_CAMEX_LIST = 6,
+    FOREIGN_DOMESTIC_MARKET_WITHOUT_SIMULATING_CAMEX_LIST = 7,
+    NATIONAL_IMPORT_CONTENT_GREATER_THAN_70_PERCENT = 8,
+}
+
+export enum DeterminationMethod__Type1 {
+    ADDED_VALUE_MARGIN_PERCENT = 0,
+    TARIFF_VALUE = 1,
+    MAXIMUM_LISTED_PRICE_VALUE = 2,
+    TRANSACTION_VALUE = 3,
+}
+
+export enum DeterminationMethod__Type2 {
+    LISTED_PRICE_OR_MAXIMUM_SUGGESTED_PRICE = 0,
+    NEGATIVE_LIST_VALUE = 1,
+    POSITIVE_LIST_VALUE = 2,
+    NEUTRAL_LIST_VALUE = 3,
+    ADDED_VALUE_MARGIN_PERCENT = 4,
+    TARIFF_VALUE = 5,
+    OPERATION_VALUE = 6,
+}
+
+export enum ExemptionReason__Type1 {
+    USE_IN_AGRICULTURE = 3,
+    OTHERS = 9,
+    AGRICULTURAL_PROMOTION = 12,
+}
+
+export enum ExemptionReason__Type2 {
+    MOTORCYCLE_UTILITIES_IN_FREE_AREA = 6,
+    SUFRAMA = 7,
+    OTHERS = 9,
+}
+
+export enum ExemptionReason__Type3 {
+    TAXI = "1",
+    AGRICULTURAL_PRODUCER = "3",
+    FLEET_OWNER_LESSOR = "4",
+    DIPLOMATIC_CONSULAR = "5",
+    UTILITIES_AND_MOTORCYCLES_IN_THE_WESTERN_AMAZON_AND_FREE_TRADE_AREAS = "6",
+    SUFRAMA = "7",
+    SALE_TO_A_PUBLIC_BODY = "8",
+    OTHERS = "9",
+    DISABLED_DRIVER = "10",
+    NON_DRIVER_DISABLED = "11",
+    RIO_2016_OLYMPICS = "16",
+    TAX_AUTHORITIES_REQUESTED = "90",
+}
+
+export enum ItemValueDeduction {
+    NO = 0,
+    YES = 1,
+}
+
+// @@@
+export enum ICMSCST {}
+
+export enum CSOSN {}
+
+export enum IPITaxStatusCode {
+    ENTRY_WITH_CREDIT_RECOVERY = "00",
+    INPUT_TAXED_AT_ZERO_RATE = "01",
+    EXEMPT_ENTRY = "02",
+    NON_TAXED_ENTRY = "03",
+    IMMUNE_ENTRY = "04",
+    ENTRY_WITH_SUSPENSION = "05",
+    OTHER_ENTRIES = "49",
+    TAXED_EXIT = "50",
+    OUTPUT_TAXED_AT_ZERO_RATE = "51",
+    EXEMPT_EXIT = "52",
+    UNTAXED_EXIT = "53",
+    IMMUNE_EXIT = "54",
+    EXIT_WITH_SUSPENSION = "55",
+    OTHER_OUTPUTS = "99",
+}
+
+type __Tax = {
+    vTotTrib?: string;
+    PIS?: PIS;
+    PISST?: (PISST & { vBC: string; pPIS: string }) | (PISST & { qBCProd: string; vAliqProd: string });
+    COFINS?: COFINS;
+    COFINSST?: (COFINSST & { vBC: string; pCOFINS: string }) | (COFINSST & { qBCProd: string; vAliqProd: string });
+    ICMSUFDest?: {
+        vBCUFDest: string;
+        vBCFCPUFDest?: string;
+        pFCPUFDest?: string;
+        pICMSUFDest: string;
+        pICMSInter: ICMSInterstateTaxRate;
+        pICMSInterPart: string;
+        vFCPUFDest?: string;
+        vICMSUFDest: string;
+        vICMSUFRemet: string;
+    };
+};
+
+type __IPI = {
+    CNPJProd?: string;
+    cSelo?: string;
+    qSelo?: string;
+    cEnq: string;
+};
+
+type IPI__Type1 = __IPI & {
+    IPITrib:
+        | ({
+              CST:
+                  | IPITaxStatusCode.ENTRY_WITH_CREDIT_RECOVERY
+                  | IPITaxStatusCode.OTHER_ENTRIES
+                  | IPITaxStatusCode.TAXED_EXIT
+                  | IPITaxStatusCode.OTHER_OUTPUTS;
+              vIPI: string;
+          } & {
+              vBC: string;
+              pIPI: string;
+          })
+        | ({
+              CST:
+                  | IPITaxStatusCode.ENTRY_WITH_CREDIT_RECOVERY
+                  | IPITaxStatusCode.OTHER_ENTRIES
+                  | IPITaxStatusCode.TAXED_EXIT
+                  | IPITaxStatusCode.OTHER_OUTPUTS;
+              vIPI: string;
+          } & {
+              qUnid: string;
+              vUnid: string;
+          });
+};
+
+type IPI__Type2 = __IPI & {
+    IPINT: {
+        CST:
+            | IPITaxStatusCode.INPUT_TAXED_AT_ZERO_RATE
+            | IPITaxStatusCode.EXEMPT_ENTRY
+            | IPITaxStatusCode.NON_TAXED_ENTRY
+            | IPITaxStatusCode.IMMUNE_ENTRY
+            | IPITaxStatusCode.ENTRY_WITH_SUSPENSION
+            | IPITaxStatusCode.OUTPUT_TAXED_AT_ZERO_RATE
+            | IPITaxStatusCode.EXEMPT_EXIT
+            | IPITaxStatusCode.UNTAXED_EXIT
+            | IPITaxStatusCode.IMMUNE_EXIT
+            | IPITaxStatusCode.EXIT_WITH_SUSPENSION;
+    };
+};
+
+type IPI = IPI__Type1 | IPI__Type2;
+
+export enum ExibilidadeISS {
+    REQUIRABLE = 1,
+    NO_INCIDENT = 2,
+    EXEMPTION = 3,
+    EXPORT = 4,
+    IMMUNITY = 5,
+    REQUIREMENT_SUSP_JUDICIAL = 6,
+    REQUIREMENT_SUSP_ADM = 7,
+}
+
+export enum TaxIncentiveIndicator {
+    YES = 1,
+    NO = 2,
+}
+
+type Tax__Type1 = __Tax & {
+    ICMS:
+        | {
+              ICMS00: {
+                  orig: MerchandiseOrigin;
+                  CST: "00";
+                  modBC: DeterminationMethod__Type1;
+                  vBC: string;
+                  pICMS: string;
+                  vICMS: string;
+                  pFCP?: string;
+                  vFCP?: string;
+              };
+          }
+        | {
+              ICMS02: {
+                  orig: MerchandiseOrigin;
+                  CST: "02";
+                  qBCMono?: string;
+                  adRemICMS: string;
+                  vICMSMono: string;
+              };
+          }
+        | {
+              ICMS10: {
+                  orig: MerchandiseOrigin;
+                  CST: "10";
+                  modBC: DeterminationMethod__Type1;
+                  vBC: string;
+                  pICMS: string;
+                  vICMS: string;
+                  vBCFCP?: string;
+                  pFCP?: string;
+                  vFCP?: string;
+                  modBCST: DeterminationMethod__Type2;
+                  pMVAST: string;
+                  pRedBCST: string;
+                  vBCST: string;
+                  pICMSST: string;
+                  vICMSST: string;
+                  vBCFCPST?: string;
+                  pFCPST?: string;
+                  vFCPST?: string;
+                  vICMSSTDeson?: string;
+                  motDesICMSST?: ExemptionReason__Type1;
+              };
+          }
+        | {
+              ICMS15: {
+                  orig: MerchandiseOrigin;
+                  CST: "15";
+                  qBCMono?: string;
+                  adRemICMS: string;
+                  vICMSMono: string;
+                  qBCMonoReten?: string;
+                  adRemICMSReten: string;
+                  vICMSMonoReten: string;
+                  pRedAdRem?: string;
+                  motRedAdRem?: AdremReductionReason;
+              };
+          }
+        | {
+              ICMS20: {
+                  orig: MerchandiseOrigin;
+                  CST: "20";
+                  modBC: DeterminationMethod__Type1;
+                  pRedBC: string;
+                  vBC: string;
+                  pICMS: string;
+                  vICMS: string;
+                  vBCFCP?: string;
+                  pFCP?: string;
+                  vFCP?: string;
+                  vICMSDeson?: string;
+                  motDesICMS?: ExemptionReason__Type1;
+                  indDeduzDeson?: ItemValueDeduction;
+              };
+          }
+        | {
+              ICMS30: {
+                  orig: MerchandiseOrigin;
+                  CST: "30";
+                  modBCST: DeterminationMethod__Type2;
+                  pMVAST: string;
+                  pRedBCST?: string;
+                  vBCST: string;
+                  pICMSST: string;
+                  vICMSST: string;
+                  vBCFCPST?: string;
+                  pFCPST?: string;
+                  vFCPST?: string;
+                  vICMSDeson?: string;
+                  motDesICMS?: ExemptionReason__Type2;
+                  indDeduzDeson?: ItemValueDeduction;
+              };
+          }
+        | {
+              ICMS40: {
+                  orig: MerchandiseOrigin;
+                  CST: "40" | "41" | "50";
+                  vICMSDeson?: string;
+                  motDesICMS?: ExemptionReason__Type3;
+                  indDeduzDeson?: ItemValueDeduction;
+              };
+          }
+        | {
+              ICMS51: {
+                  orig: MerchandiseOrigin;
+                  CST: "51";
+                  modBC?: DeterminationMethod__Type1;
+                  pRedBC?: string;
+                  cBenefRBC?: string;
+                  vBC?: string;
+                  pICMS?: string;
+                  vICMSOp?: string;
+                  pDif?: string;
+                  vICMSDif?: string;
+                  vICMS?: string;
+                  vBCFCP?: string;
+                  pFCP?: string;
+                  vFCP?: string;
+                  pFCPDif?: string;
+                  vFCPDif?: string;
+                  vFCPEfet?: string;
+              };
+          }
+        | {
+              ICMS53: {
+                  orig: MerchandiseOrigin;
+                  CST: "53";
+                  qBCMono?: string;
+                  adRemICMS?: string;
+                  vICMSMonoOp?: string;
+                  pDif?: string;
+                  vICMSMonoDif?: string;
+                  vICMSMono?: string;
+                  qBCMonoDif?: string;
+                  adRemICMSDif?: string;
+              };
+          }
+        | {
+              ICMS60: {
+                  orig: MerchandiseOrigin;
+                  CST: "60";
+                  vBCSTRet?: string;
+                  pST?: string;
+                  vICMSSubstituto?: string;
+                  vICMSSTRet?: string;
+                  vBCFCPSTRet?: string;
+                  pFCPSTRet?: string;
+                  vFCPSTRet?: string;
+                  pRedBCEfet?: string;
+                  vBCEfet?: string;
+                  pICMSEfet?: string;
+                  vICMSEfet?: string;
+              };
+          }
+        | {
+              ICMS61: {
+                  orig: MerchandiseOrigin;
+                  CST: "61";
+                  qBCMonoRet?: string;
+                  adRemICMSRet: string;
+                  vICMSMonoRet: string;
+              };
+          }
+        | {
+              ICMS70: {
+                  orig: MerchandiseOrigin;
+                  CST: "70";
+                  modBC: DeterminationMethod__Type1;
+                  pRedBC: string;
+                  vBC: string;
+                  pICMS: string;
+                  vICMS: string;
+                  vBCFCP?: string;
+                  pFCP?: string;
+                  vFCP?: string;
+                  modBCST: DeterminationMethod__Type2;
+                  pMVAST?: string;
+                  pRedBCST?: string;
+                  vBCST: string;
+                  pICMSST: string;
+                  vICMSST: string;
+                  vBCFCPST?: string;
+                  pFCPST?: string;
+                  vFCPST?: string;
+                  vICMSDeson?: string;
+                  motdesicms?: ExemptionReason__Type1;
+                  indDeduzDeson?: ItemValueDeduction;
+                  vICMSSTDeson?: string;
+                  motDesICMSST?: ExemptionReason__Type1;
+              };
+          }
+        | {
+              ICMS90: {
+                  orig: MerchandiseOrigin;
+                  CST: "90";
+                  modBC?: DeterminationMethod__Type1;
+                  vBC?: string;
+                  pRedBC?: string;
+                  pICMS?: string;
+                  vICMS?: string;
+                  vBCFCP?: string;
+                  pFCP?: string;
+                  vFCP?: string;
+                  modBCST?: DeterminationMethod__Type2;
+                  pMVAST?: string;
+                  pRedBCST?: string;
+                  vBCST?: string;
+                  pICMSST?: string;
+                  vICMSST?: string;
+                  vBCFCPST?: string;
+                  pFCPST?: string;
+                  vFCPST?: string;
+                  vICMSDeson?: string;
+                  motDesICMS?: ExemptionReason__Type1;
+                  indDeduzDeson?: ItemValueDeduction;
+                  vICMSSTDeson?: string;
+                  motDesICMSST?: ExemptionReason__Type1;
+              };
+          }
+        | {
+              ICMSPart: {
+                  orig: MerchandiseOrigin;
+                  CST: "10" | "90";
+                  modBC: DeterminationMethod__Type1;
+                  vBC: string;
+                  pRedBC?: string;
+                  pICMS: string;
+                  vICMS: string;
+                  modBCST: DeterminationMethod__Type2;
+                  pMVAST?: string;
+                  pRedBCST?: string;
+                  vBCST: string;
+                  pICMSST: string;
+                  vICMSST: string;
+                  vBCFCPST?: string;
+                  pFCPST: string;
+                  vFCPST: string;
+                  pBCOp: string;
+                  UFST: UFIssuer;
+              };
+          }
+        | {
+              ICMSST: {
+                  orig: MerchandiseOrigin;
+                  CST: "41" | "60";
+                  vBCSTRet: string;
+                  pST?: string;
+                  vICMSSubstituto?: string;
+                  vICMSSTRet: string;
+                  vBCFCPSTRet?: string;
+                  pFCPSTRet?: string;
+                  vFCPSTRet?: string;
+                  vBCSTDest: string;
+                  vICMSSTDest: string;
+                  pRedBCEfet?: string;
+                  vBCEfet?: string;
+                  pICMSEfet?: string;
+                  vICMSEfet?: string;
+              };
+          }
+        | {
+              ICMSSN101: {
+                  orig: MerchandiseOrigin;
+                  CSOSN: "101";
+                  pCredSN: string;
+                  vCredICMSSN: string;
+              };
+          }
+        | {
+              ICMSSN102: {
+                  orig: MerchandiseOrigin;
+                  CSOSN: "102" | "103" | "300" | "400";
+              };
+          }
+        | {
+              ICMSSN201: {
+                  orig: MerchandiseOrigin;
+                  CSOSN: "201";
+                  modBCST: DeterminationMethod__Type2;
+                  pMVAST?: string;
+                  pRedBCST?: string;
+                  vBCST: string;
+                  pICMSST: string;
+                  vICMSST: string;
+                  vBCFCPST?: string;
+                  pFCPST?: string;
+                  vFCPST?: string;
+                  pCredSN: string;
+                  vCredICMSSN: string;
+              };
+          }
+        | {
+              ICMSSN202: {
+                  orig: MerchandiseOrigin;
+                  CSOSN: "202" | "203";
+                  modBCST: DeterminationMethod__Type2;
+                  pMVAST?: string;
+                  pRedBCST?: string;
+                  vBCST: string;
+                  pICMSST: string;
+                  vICMSST: string;
+                  vBCFCPST?: string;
+                  pFCPST?: string;
+                  vFCPST?: string;
+              };
+          }
+        | {
+              ICMSSN500: {
+                  orig: MerchandiseOrigin;
+                  CSOSN: "500";
+                  vBCSTRet?: string;
+                  pST?: string;
+                  vICMSSubstituto?: string;
+                  vICMSSTRet?: string;
+                  vBCFCPSTRet?: string;
+                  pFCPSTRet?: string;
+                  vFCPSTRet?: string;
+                  pRedBCEfet?: string;
+                  vBCEfet?: string;
+                  pICMSEfet?: string;
+                  vICMSEfet?: string;
+              };
+          }
+        | {
+              ICMSSN900: {
+                  orig: MerchandiseOrigin;
+                  CSOSN: "900";
+                  modBC: DeterminationMethod__Type1;
+                  vBC?: string;
+                  pRedBC?: string;
+                  pICMS?: string;
+                  vICMS?: string;
+                  modBCST: DeterminationMethod__Type2;
+                  pMVAST?: string;
+                  pRedBCST?: string;
+                  vBCST: string;
+                  pICMSST: string;
+                  vICMSST: string;
+                  vBCFCPST?: string;
+                  pFCPST?: string;
+                  vFCPST?: string;
+                  pCredSN?: string;
+                  vCredICMSSN?: string;
+              };
+          };
+    IPI?: IPI;
+    II?: {
+        vBC: string;
+        vDespAdu: string;
+        vII: string;
+        vIOF: string;
+    };
+};
+
+type Tax__Type2 = __Tax & {
+    IPI: IPI;
+    ISSQN: {
+        vBC: string;
+        vAliq: string;
+        vISSQN: string;
+        cMunFG: CodeCityIBGE;
+        cListServ: string;
+        vDeducao?: string;
+        vOutro?: string;
+        vDescIncond?: string;
+        vDescCond?: string;
+        vISSRet?: string;
+        indISS: ExibilidadeISS;
+        cServico?: string;
+        cMun?: CodeCityIBGE;
+        cPais?: string;
+        nProcesso?: string;
+        indIncentivo: TaxIncentiveIndicator;
+    };
+};
+
+export type Tax = Tax__Type1 | Tax__Type2;
+
+export enum AdremReductionReason {
+    PUBLIC_PASSENGER_TRANSPORT = 1,
+    OTHERS = 9,
+}
+
+type __Transport = {
+    modFrete: ShippingMethod;
+    transporta?: (Transporter & { CNPJ?: string }) | (Transporter & { CPF?: string });
+    retTransp?: {
+        vServ: string;
+        vBCRet: string;
+        pICMSRet: string;
+        vICMSRet: string;
+        CFOP: string;
+        cMunFG: CodeCityIBGE;
+    };
+    vol?: {
+        qVol?: string;
+        esp?: string;
+        marca?: string;
+        nVol?: string;
+        pesoL?: string;
+        pesoB?: string;
+        lacres?: { nLacre: string }[];
+    }[];
+};
+
+// schema: TVeiculo
+type Vehicle = {
+    placa: string;
+    UF?: UFIssuer & "EX";
+    RNTC?: string;
+};
+
+type Transport__Type1 = __Transport & {
+    veicTransp?: Vehicle;
+    reboque?: Vehicle[];
+};
+
+type Transport__Type2 = __Transport & {
+    vagao?: string;
+};
+
+type Transport__Type3 = __Transport & {
+    balsa?: string;
+};
+
+type Transport = Transport__Type1 | Transport__Type2 | Transport__Type3;
+
 // schema: TNFe
 export type SefazNFE = {
     infNFE: {
@@ -724,7 +1322,7 @@ export type SefazNFE = {
             serie: string;
             nNF: string;
             dhEmi: string;
-            dhSaiEnt: string;
+            dhSaiEnt?: string;
             tpNF: TaxDocumentType;
             idDest: OperationDestinationLocationIdentifier;
             cMunFG: CodeCityIBGE;
@@ -759,30 +1357,11 @@ export type SefazNFE = {
         dest?: (Recipient & { CNPJ: string }) | (Recipient & { CPF: string }) | (Recipient & { idEstrangeiro: string });
         retirada?: Local;
         entrega?: Local;
-        autXML?: { CPF: string } | { CNPJ: string };
+        autXML?: ({ CPF: string } | { CNPJ: string })[];
         det: {
             $: { nItem: string };
             prod: Product;
-            imposto: {
-                vTotTrib?: string;
-                PIS?: PIS;
-                PISST?: (PISST & { vBC: string; pPIS: string }) | (PISST & { qBCProd: string; vAliqProd: string });
-                COFINS?: CONFINS;
-                COFINSST?:
-                    | (COFINSST & { vBC: string; pCOFINS: string })
-                    | (COFINSST & { qBCProd: string; vAliqProd: string });
-                ICMSUFDest?: {
-                    vBCUFDest: string;
-                    vBCFCPUFDest?: string;
-                    pFCPUFDest?: string;
-                    pICMSUFDest: string;
-                    pICMSInter: ICMSInterstateTaxRate;
-                    pICMSInterPart: string;
-                    vFCPUFDest?: string;
-                    vICMSUFDest: string;
-                    vICMSUFRemet: string;
-                };
-            };
+            imposto: Tax;
             impostoDevol?: {
                 pDevol: string;
                 IPI: { vIPIDevol: string };
@@ -855,27 +1434,7 @@ export type SefazNFE = {
                 vRetPrev?: string;
             };
         };
-        transp: {
-            modFrete: ShippingMethod;
-            transporta?: (Transporter & { CNPJ?: string }) | (Transporter & { CPF?: string });
-            retTransp?: {
-                vServ: string;
-                vBCRet: string;
-                pICMSRet: string;
-                vICMSRet: string;
-                CFOP: string;
-                cMunFG: CodeCityIBGE;
-            };
-            vol?: {
-                qVol?: string;
-                esp?: string;
-                marca?: string;
-                nVol?: string;
-                pesoL?: string;
-                pesoB?: string;
-                lacres: { nLacre: string }[];
-            }[];
-        };
+        transp: Transport;
         cobr?: {
             fat?: {
                 nFat?: string;

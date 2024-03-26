@@ -7,7 +7,7 @@ export class NFE {
     private XML: XMLClient;
 
     constructor(payload: SefazNFE) {
-        this.payload = NFEValidator.safeParse(payload);
+        this.payload = NFEValidator.parse(payload);
         this.XML = new XMLClient();
     }
 

@@ -1,3 +1,38 @@
+// schema: TCOrgaoIBGE
+export enum IBGEOrganCode {
+    RO = 11,
+    AC = 12,
+    AM = 13,
+    RR = 14,
+    PA = 15,
+    AP = 16,
+    TO = 17,
+    MA = 21,
+    PI = 22,
+    CE = 23,
+    RN = 24,
+    PB = 25,
+    PE = 26,
+    AL = 27,
+    SE = 28,
+    BA = 29,
+    MG = 31,
+    ES = 32,
+    RJ = 33,
+    SP = 35,
+    PR = 41,
+    SC = 42,
+    RS = 43,
+    MS = 50,
+    MT = 51,
+    GO = 52,
+    DF = 53,
+    // NOTE: Cannot detect values keys on the specs
+    S90 = 90,
+    S91 = 91,
+    S92 = 92,
+}
+
 // schema: TUfEmi
 export enum UFIssuer {
     AC = "AC",
@@ -773,9 +808,10 @@ export enum ItemValueDeduction {
     YES = 1,
 }
 
-// @@@
+// TODO: build enum
 export enum ICMSCST {}
 
+// TODO: build enum
 export enum CSOSN {}
 
 export enum IPITaxStatusCode {
@@ -1528,11 +1564,3 @@ export enum WebServiceMode {
     ASYNC = 0,
     SYNC = 1,
 }
-
-// schema: TEnviNFe
-export type RequestGrantAuthorizationToNFE = {
-    $: { versao: "4.00" };
-    idLote: string;
-    indSinc: WebServiceMode;
-    NFe: SefazNFE[];
-};

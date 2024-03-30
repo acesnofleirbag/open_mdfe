@@ -9,7 +9,7 @@ export class XMLClient implements XML {
     }
 
     async xml2obj<T>(payload: string): Promise<T> {
-        return parseStringPromise(payload, { normalize: true });
+        return parseStringPromise(payload, { normalize: false, includeWhiteChars: true });
     }
 
     obj2xml(payload: Record<any, any>): string {

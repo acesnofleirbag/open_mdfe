@@ -356,7 +356,7 @@ export const WebServices = {
             homologation: "https://nfe-homologacao.svrs.rs.gov.br/ws/NfeRetAutorizacao/NFeRetAutorizacao4.asmx",
         },
     },
-    SVCAN: {
+    "SVC-AN": {
         useless: {
             production: "https://www.svc.fazenda.gov.br/NFeInutilizacao4/NFeInutilizacao4.asmx",
             homologation: "https://hom.svc.fazenda.gov.br/NFeInutilizacao4/NFeInutilizacao4.asmx",
@@ -382,7 +382,7 @@ export const WebServices = {
             homologation: "https://hom.svc.fazenda.gov.br/NFeRetAutorizacao4/NFeRetAutorizacao4.asmx",
         },
     },
-    SVCRS: {
+    "SVC-RS": {
         protocolFetching: {
             production: "https://nfe.svrs.rs.gov.br/ws/NfeConsulta/NfeConsulta4.asmx",
             homologation: "https://nfe-homologacao.svrs.rs.gov.br/ws/NfeConsulta/NfeConsulta4.asmx",

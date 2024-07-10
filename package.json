@@ -1,7 +1,7 @@
 {
-  "name": "@acesnofleirbag/open-sefaz",
+  "name": "@acesnofleirbag/open-mdfe",
   "version": "1.0.0",
-  "description": "Sefaz Integration",
+  "description": "SEFAZ and others MDF-e integrations",
   "main": "index.js",
   "scripts": {
     "check": "tsc --noEmit",
@@ -9,6 +9,9 @@
     "fmt": "prettier --write \"lib/**/*.ts\" \"tests/**/*.ts\""
   },
   "keywords": [
+    "MDF-e",
+    "mdfe",
+    "SEFAZ",
     "sefaz",
     "NF-e",
     "NFC-e",

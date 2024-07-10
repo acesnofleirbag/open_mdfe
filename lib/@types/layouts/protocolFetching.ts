@@ -1,4 +1,5 @@
 import { EnvironmentIdentifier, IBGEOrganCode, UFCodeIBGE } from "./nfe";
+import { VERSION } from "./version";
 
 type __Event = {
     $: { Id: string };
@@ -33,7 +34,7 @@ type __EventReturn = {
 // schema: TConsSitNFe
 export type ProtocolFetchingRequest = {
     consSitNFe: {
-        $: { versao: null };
+        $: { versao: VERSION };
         tpAmb: EnvironmentIdentifier;
         xServ: "CONSULTAR";
         chNFe: string;
@@ -43,7 +44,7 @@ export type ProtocolFetchingRequest = {
 // schema: TRetConsSitNFe
 export type ProtocolFetchingResponse = {
     retConsSitNFe: {
-        $: { versao: null };
+        $: { versao: VERSION };
         tpAmb: EnvironmentIdentifier;
         verAplic: string;
         cStat: string;

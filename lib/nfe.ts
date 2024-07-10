@@ -15,7 +15,11 @@ export class NFE {
         return this.XML.obj2xml(this.payload);
     }
 
-    async toObject(xml: string): Promise<SefazNFE> {
+    toObject() {
+        return this.payload;
+    }
+
+    async XMLToObject(xml: string): Promise<SefazNFE> {
         return this.XML.xml2obj<SefazNFE>(xml);
     }
 }

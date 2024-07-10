@@ -1,6 +1,6 @@
 # OPEN SEFAZ
 
-NodeJS package para emissão de NF-e, NFC-e e consulta de dados
+NodeJS package para MDF-e (NF-e, NFC-e, consulta de dados, etc..)
 
 ### Requisitos
 
@@ -9,17 +9,17 @@ NodeJS package para emissão de NF-e, NFC-e e consulta de dados
 ### Instalação
 
 ```bash
-$ npm install @acesnofleirbag/open-sefaz
+$ npm install @acesnofleirbag/open-mdfe
 ```
 
 ### Especificação
 
 A especificação implementada encontra-se na pasta `/specs`
 
-### Como Gerar O Certificado Digital
+### Para obter o certificado digital (e-CNPJ A1)
 
-https://serasa.certificadodigital.com.br/blog/certificado-digital/icp-brasil-2/
+[CertSign](https://www.certisign.com.br/)
 
 ### Exemplos De Uso
 
-Para exemplos de uso veja a pasta `/docs`
+Para exemplos de uso veja os casos de testes na pasta `/tests`

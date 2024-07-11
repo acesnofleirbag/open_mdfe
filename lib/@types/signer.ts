@@ -1,5 +1,5 @@
 export interface ISigner {
-    signXML(): void;
+    signXML(envelope: string, tagRef: string): string;
 
-    signXML_X509(): void;
+    signXML_X509(envelope: string, tagRef: string): string;
 }

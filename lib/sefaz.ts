@@ -13,22 +13,27 @@ import { DFeDistributionRequest, DFeDistributionResponse } from "./@types/layout
 import { EventReceptionRequest, EventReceptionResponse } from "./@types/layouts/eventReception";
 import { CancelRequest, CancelResponse } from "./@types/layouts/cancelEvent";
 import { FixLetterRequest, FixLetterResponse } from "./@types/layouts/fixLetterEvent";
-import { NFE } from "./nfe";
 import { XMLClient } from "./adapters/xml";
 import { WebServices } from "./core/static/webServices";
 import { ContingencyAuthorizerNotFoundError } from "./errors/contingencyAuthorizerNotFoundError";
 import { AuthorizerNotFoundError } from "./errors/authorizerNotFoundError";
+import { Signer } from "./signer";
+import { Cert } from "./@types/cert";
+import { EnvironmentConflictError } from "./errors/environmentConflict";
 
 export class SEFAZ implements SefazOperations {
     private httpClient: HTTPClient<AxiosRequestConfig>;
     private XML: XMLClient;
+    private signer: Signer;
 
     constructor(
         private readonly environment: EnvironmentIdentifier,
         private readonly UF: UFIssuer,
+        readonly cert: Cert,
     ) {
         this.httpClient = new AxiosHttpClient();
         this.XML = new XMLClient();
+        this.signer = new Signer(cert);
     }
 
     private getEnvironment() {
@@ -118,17 +123,48 @@ export class SEFAZ implements SefazOperations {
         }
     }
 
+    private makeSoapEnvelope(payload: any, webServiceName: string) {
+        const document = {
+            "soap12:Envelope": {
+                $: {
+                    "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+                    "xmlns:xsd": "http://www.w3.org/2001/XMLSchema",
+                    "xmlns:soap12": "http://www.w3.org/2003/05/soap-envelope",
+                },
+                "soap12:Header": {
+                    nfeCabecMsg: {
+                        $: {
+                            xmlns: `http://www.portalfiscal.inf.br/nfe/wsdl/${webServiceName}`,
+                        },
+                        versaoDados: "4.00",
+                        cUF: this.UF,
+                    },
+                },
+                "soap12:Body": {
+                    nfeDadosMsg: {
+                        $: { xmlns: `http://portalfiscal.inf.br/nfe/wsdl/${webServiceName}` },
+                        ...payload,
+                    },
+                },
+            },
+        };
+
+        return this.XML.obj2xml(document);
+    }
+
     async requestAuthorization(payload: AuthorizationRequest): Promise<AuthorizationResponse> {
+        if (payload.enviNFe.NFe.some((nfe) => nfe.infNFE.ide.tpAmb !== this.environment)) {
+            throw new EnvironmentConflictError();
+        }
+
         const environment = this.getEnvironment();
-        // @ts-ignore
-        const NFes = payload.NFe.map((NFePayload) => new NFE(NFePayload));
 
-        const envelope = payload;
+        const envelope = this.makeSoapEnvelope(payload, "NFeAutorizacao4");
+        const signedEnvelope = this.signer.signXML_X509(envelope, "infNFE");
 
-        // @ts-ignore
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).authorization[environment],
-            envelope,
+            signedEnvelope,
         );
 
         return this.XML.xml2obj(data);
@@ -137,12 +173,12 @@ export class SEFAZ implements SefazOperations {
     async checkBatchAuthorization(payload: AuthorizationResultRequest): Promise<AuthorizationResultResponse> {
         const environment = this.getEnvironment();
 
-        const envelope = payload;
+        const envelope = this.makeSoapEnvelope(payload, "@@@");
+        const signedEnvelope = this.signer.signXML_X509(envelope, "@@@");
 
-        // @ts-ignore
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).authorization[environment],
-            envelope,
+            signedEnvelope,
         );
 
         return this.XML.xml2obj(data);
@@ -151,12 +187,12 @@ export class SEFAZ implements SefazOperations {
     async fetchNFE(payload: ProtocolFetchingRequest): Promise<ProtocolFetchingResponse> {
         const environment = this.getEnvironment();
 
-        const envelope = payload;
+        const envelope = this.makeSoapEnvelope(payload, "@@@");
+        const signedEnvelope = this.signer.signXML_X509(envelope, "@@@");
 
-        // @ts-ignore
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).authorization[environment],
-            envelope,
+            signedEnvelope,
         );
 
         return this.XML.xml2obj(data);
@@ -165,12 +201,12 @@ export class SEFAZ implements SefazOperations {
     async makeUseless(payload: UselessRequest): Promise<UselessResponse> {
         const environment = this.getEnvironment();
 
-        const envelope = payload;
+        const envelope = this.makeSoapEnvelope(payload, "NfeInutilizacao4");
+        const signedEnvelope = this.signer.signXML_X509(envelope, "@@@");
 
-        // @ts-ignore
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).authorization[environment],
-            envelope,
+            signedEnvelope,
         );
 
         return this.XML.xml2obj(data);
@@ -179,12 +215,12 @@ export class SEFAZ implements SefazOperations {
     async checkServiceStatus(payload: ServiceStatusRequest): Promise<ServiceStatusResponse> {
         const environment = this.getEnvironment();
 
-        const envelope = payload;
+        const envelope = this.makeSoapEnvelope(payload, "NfeStatusServico4");
+        const signedEnvelope = this.signer.signXML_X509(envelope, "@@@");
 
-        // @ts-ignore
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).authorization[environment],
-            envelope,
+            signedEnvelope,
         );
 
         return this.XML.xml2obj(data);
@@ -193,12 +229,12 @@ export class SEFAZ implements SefazOperations {
     async fetchRegister(payload: FetchRegisterRequest): Promise<FetchRegisterResponse> {
         const environment = this.getEnvironment();
 
-        const envelope = payload;
+        const envelope = this.makeSoapEnvelope(payload, "@@@");
+        const signedEnvelope = this.signer.signXML_X509(envelope, "@@@");
 
-        // @ts-ignore
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).authorization[environment],
-            envelope,
+            signedEnvelope,
         );
 
         return this.XML.xml2obj(data);
@@ -207,12 +243,12 @@ export class SEFAZ implements SefazOperations {
     async distributeDFE(payload: DFeDistributionRequest): Promise<DFeDistributionResponse> {
         const environment = this.getEnvironment();
 
-        const envelope = payload;
+        const envelope = this.makeSoapEnvelope(payload, "NFeDistribuicaoDFe");
+        const signedEnvelope = this.signer.signXML_X509(envelope, "@@@");
 
-        // @ts-ignore
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).authorization[environment],
-            envelope,
+            signedEnvelope,
         );
 
         return this.XML.xml2obj(data);
@@ -221,12 +257,12 @@ export class SEFAZ implements SefazOperations {
     async registerEvent(payload: EventReceptionRequest): Promise<EventReceptionResponse> {
         const environment = this.getEnvironment();
 
-        const envelope = payload;
+        const envelope = this.makeSoapEnvelope(payload, "@@@");
+        const signedEnvelope = this.signer.signXML_X509(envelope, "@@@");
 
-        // @ts-ignore
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).authorization[environment],
-            envelope,
+            signedEnvelope,
         );
 
         return this.XML.xml2obj(data);
@@ -236,12 +272,12 @@ export class SEFAZ implements SefazOperations {
     async cancel(payload: CancelRequest): Promise<CancelResponse> {
         const environment = this.getEnvironment();
 
-        const envelope = payload;
+        const envelope = this.makeSoapEnvelope(payload, "@@@");
+        const signedEnvelope = this.signer.signXML_X509(envelope, "@@@");
 
-        // @ts-ignore
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).authorization[environment],
-            envelope,
+            signedEnvelope,
         );
 
         return this.XML.xml2obj(data);
@@ -250,12 +286,12 @@ export class SEFAZ implements SefazOperations {
     async sendFixLetter(payload: FixLetterRequest): Promise<FixLetterResponse> {
         const environment = this.getEnvironment();
 
-        const envelope = payload;
+        const envelope = this.makeSoapEnvelope(payload, "@@@");
+        const signedEnvelope = this.signer.signXML_X509(envelope, "@@@");
 
-        // @ts-ignore
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).authorization[environment],
-            envelope,
+            signedEnvelope,
         );
 
         return this.XML.xml2obj(data);

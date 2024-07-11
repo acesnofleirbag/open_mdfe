@@ -28,15 +28,22 @@ import { AuthorizationRequest } from "../lib/@types/layouts/authorization";
 import { ProtocolFetchingRequest } from "../lib/@types/layouts/protocolFetching";
 import { SEFAZ } from "../lib/sefaz";
 
+// NOTE: To generate a self signed certificate for envelope structure checking, execute:
+// $ openssl req -nodes -new -x509 -keyout key.pem -out cert.pem
+
 // WARN: all tests make real requests for the SEFAZ homologation environments
 
 test("Request authorization", async () => {
     // arrange
-    const sefaz = new SEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP);
+    const cert = {
+        key: __dirname + "/cert/key.pem",
+        cert: __dirname + "/cert/cert.pem",
+    };
+    const sefaz = new SEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
     const nfe = new NFE({
         infNFE: {
             $: {
-                Id: "",
+                Id: "NFe31060243816719000108550000000010011234567900",
                 versao: "4.00",
             },
             det: [
@@ -52,7 +59,7 @@ test("Request authorization", async () => {
                         cProd: "012345678",
                         qTrib: "1.00",
                         uTrib: "UN",
-                        xProd: "Open MDF-e Test Product",
+                        xProd: "Test Product",
                         indTot: ProductComposeTotal.PRODUCT_EQUAL_TOTAL_VALUE,
                         vUnCom: "100.00",
                         nRECOPI: "20240101120000000000",
@@ -83,11 +90,11 @@ test("Request authorization", async () => {
                 },
             ],
             ide: {
-                cDV: "",
-                cNF: "",
+                cDV: "0",
+                cNF: "12345678",
                 cUF: UFCodeIBGE.SP,
                 mod: TaxDocumentModel.NFE,
-                nNF: "",
+                nNF: "123456789",
                 tpNF: TaxDocumentType.INPUT,
                 dhEmi: "2024-01-01T12:00:00-03:00",
                 natOp: "Venda de produto",
@@ -158,8 +165,8 @@ test("Request authorization", async () => {
     const payload = nfe.toObject();
     const envelope: AuthorizationRequest = {
         enviNFe: {
-            $: { versao: "4.00" },
-            idLote: "",
+            $: { versao: "4.00", xmlns: "https://www.portalfiscal.inf.br/nfe" },
+            idLote: "01234567",
             indSinc: WebServiceMode.ASYNC,
             NFe: [payload],
         },
@@ -174,7 +181,11 @@ test("Request authorization", async () => {
 
 test.todo("Fetch NF-e", async () => {
     // arrange
-    const sefaz = new SEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP);
+    const cert = {
+        key: __dirname + "/cert/key.pem",
+        cert: __dirname + "/cert/cert.pem",
+    };
+    const sefaz = new SEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
 
     const envelope: ProtocolFetchingRequest = {
         consSitNFe: {

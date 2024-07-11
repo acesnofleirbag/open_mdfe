@@ -64,7 +64,7 @@ const Address = z.object({
     UF: z.nativeEnum(UFIssuer),
     CEP: z.string().regex(new RegExp("[0-9]{8}")),
     cPais: z.literal("1058").optional(),
-    xPais: z.literal("Brasil").or(z.literal("BRASIL")),
+    xPais: z.literal("Brasil").or(z.literal("BRASIL")).optional(),
     fone: z.string().regex(new RegExp("[0-9]{6,14}")).optional(),
 });
 

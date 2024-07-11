@@ -1,796 +1,1323 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>DANFE</title>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <title>DANFE</title>
     <style type="text/css">
-        html, body, p, ol, ul, li, dl, dt, dd, blockquote, figure, fieldset, legend, textarea, pre, iframe, hr, h1, h2,
-        h3, h4, h5, h6 {
+        html, body, div, span, applet, object, iframe,
+        h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+        a, abbr, acronym, address, big, cite, code,
+        del, dfn, em, img, ins, kbd, q, s, samp,
+        small, strike, strong, sub, sup, tt, var,
+        b, u, i, center,
+        dl, dt, dd, ol, ul, li,
+        fieldset, form, label, legend,
+        table, caption, tbody, tfoot, thead, tr, th, td,
+        article, aside, canvas, details, embed, 
+        figure, figcaption, footer, header, hgroup, 
+        menu, nav, output, ruby, section, summary,
+        time, mark, audio, video {
             margin: 0;
             padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+        article, aside, details, figcaption, figure, 
+        footer, header, hgroup, menu, nav, section {
+            display: block;
+        }
+        body {
+            line-height: 1;
+        }
+        ol, ul {
+            list-style: none;
+        }
+        blockquote, q {
+            quotes: none;
+        }
+        blockquote:before, blockquote:after,
+        q:before, q:after {
+            content: '';
+            content: none;
+        }
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        :root {
+            --A4-width-in-px: 2480;
+            --A4-height-in-px: 4508;
+            --A4-width-in-cm: 21;
+            --A4-height-in-cm: 29.7;
         }
 
         * {
-            box-sizing: inherit;
+            box-sizing: border-box;
+        }
+
+        .header {
+            font-weight: bold;
+        }
+
+        .label {
+            margin-bottom: 1px;
+        }
+
+        .text-xs {
+            font-size: 20px;
+        }
+
+        .text-sm {
+            font-size: 24px;
+        }
+
+        .text-base {
+            font-size: 30px;
+        }
+
+        .text-lg {
+            font-size: 36px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .font-bold {
+            font-weight: bold;
+        }
+
+        .text-static {
+            position: absolute;
+            bottom: 10px;
+        }
+
+        .text-static-right {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
         }
 
         .container {
-            margin: 0 auto;
-            position: relative;
-            max-width: 960px;
+            width: calc(var(--A4-width-in-px) * 1px);
+            height: calc(var(--A4-height-in-px) * 1px);
         }
 
-        .columns {
-            display: flex; 
-            margin-top: -0.75rem;
-        }
-
-        .column {
-            display: block;
-            -ms-flex-preferred-size: 0;
-            flex-basis: 0;
-            -webkit-box-flex: 1;
-            -ms-flex-positive: 1;
-            flex-grow: 1;
-            -ms-flex-negative: 1;
-            flex-shrink: 1;
-        }
-
-        .columns:not(:last-child) {
-            margin-bottom: calc(1.5rem - 0.75rem);
-        }
-
-        .is-pulled-right {
-            float: right !important;
-        }
-
-        .is-pulled-left {
-            float: left !important;
-        }
-
-        .column.is-1 {
-            -webkit-box-flex: 0;
-            -ms-flex: none;
-            flex: none;
-            width: 8.33333%;
-        }
-
-        span {
-            font-style: inherit;
-            font-weight: inherit;
-        }
-
-        *:before,
-            *:after {
-                -webkit-box-sizing: inherit;
-                box-sizing: inherit;
-            }
-
-            table {
-                border-collapse: collapse;
-                border-spacing: 0;
-            }
-
-            td,
-            th {
-                padding: 0;
-                text-align: left;
-            }
-
-            .content.is-small {
-                font-size: 0.75rem;
-            }
-
-            .content.is-medium {
-                font-size: 1.25rem;
-            }
-
-            .content.is-large {
-                font-size: 1.5rem;
-            }
-
-        html,
-        body {
-            font-family: Courier New;
-            margin: 12px;
-            margin-top: 0px;
-            line-height: 1;
-            color: black !important;
-            font-size: 11px;
-            font-weight: 500 !important;
-        }
-
-        .area {
-            width: 778px !important;
-        }
-
-        .quadro_codigo_barra {
-            padding: 0px !important;
-        }
-
-        .codigo_barra {
-            height: 56px;
-        }
-
-        .chave {
-            height: 33px;
-            font-size: 82%;
-            font-weight: bold;
-            text-align: center;
-        }
-
-        .protocolo,
-        .consulta,
-        .chave {
+        #canhoto .descricao {
             padding: 2px;
-        }
-
-        .protocolo {
-            flex: 0 0 296px;
-        }
-
-        .codigo_barra,
-        .chave {
-            border-bottom: 1px solid black;
-        }
-
-        .consulta {
-            font-size: 10px;
-            text-align: center;
-        }
-
-        .quadro_danfe {
-            flex: 0 0 96px;
-            line-height: 1.1;
-        }
-
-        .quadro_identificacao {
-            flex: 0 0 378px;
-            font-weight: bold;
-            font-size: 13px
-        }
-
-        .quadro_cabecalho {
-            height: 149px !important;
-        }
-
-        div.quadro div.columns:nth-child(2) {
-            border-top: 1px solid black;
-        }
-
-        div.quadro div.columns:first-child div.column {
-            padding: 0px;
-        }
-
-        .linha div.column:first-child {
             border-left: 1px solid black;
-        }
-
-        .quadro .linha div.column {
-            border-bottom: 1px solid black;
+            border-top: 1px solid black;
             border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((16.10 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((0.42 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
         }
 
-        .conteudo_campo {
-            padding: 0 0 0 2px;
-        }
-
-        .quadro.imposto div.linha div.column div:nth-child(2),
-        .direita {
-            text-align: right;
-        }
-
-        .quadro div.columns:first-child div.column {
-            margin-top: 5px;
-        }
-
-        .grupo .quadro .linha {
-            height: 33px;
-        }
-
-        .grupo {
-            margin-top: 5px;
-        }
-
-        .tcampo {
-            font-weight: bold;
-            font-size: 8px;
-            padding-bottom: 2px;
-            padding-left: 2px;
-            text-align: left;
-        }
-
-        .texto_recibo {
-            font-weight: bold;
-            font-size: 9px;
-            text-align: left;
-        }
-
-        .center {
-            text-align: center;
-        }
-
-        .bold {
-            font-weight: bold;
-        }
-
-        .operacao {
-            font-size: 14px;
-            border: 1px solid black;
+        #canhoto .nfe-numero-serie {
             padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((1.70 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((4.45 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((16.35 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((0.42 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
-        .numero,
-        .canhoto_nr {
-            font-size: 11px;
-            font-weight: bold;
-        }
-
-        .danfe {
-            font-size: 13px;
-            font-weight: bold;
-        }
-
-        .itens {
-            font-size: 10px;
-        }
-
-
-        .data {
-            flex: 0 0 100px;
-            text-align: center;
-        }
-
-        .uf {
-            flex: 0 0 30px;
-        }
-
-        .placa {
-            flex: 0 0 70px;
-        }
-
-        .nome {
-            flex: 0 0 300px;
-        }
-
-        .fisco {
-            flex: 0 0 284px;
-        }
-
-        .complemento {
-            height: 114px !important;
-        }
-
-        .complemento {
-            font-size: 10px;
-        }
-
-        .canhoto_nr {
-            flex: 0 0 171px;
-        }
-
-        .area_canhoto_nr {
-            height: 65px;
-            border-left: 0px !important;
-            line-height: 1.5;
-            padding-left: 3px !important;
-        }
-
-        .canhoto_assinatura {
-            flex: 0 0 458px;
-        }
-
-        .duplicatas .duplicata {
-            font-size: 0.9rem;
-            text-align: center;
-            padding-right: 3px;
-            padding-left: 3px;
-
-            border-right: 1px solid gray;
-        }
-
-        .duplicatas .duplicata div {
-            margin-top: 2px;
-        }
-
-        .duplicatas .tcampo {
-            font-size: 0.8rem;
-            margin-top: 1px;
-        }
-
-        table td,
-        table th {
-            border: 1px solid black;
-            border-top: 0px solid black;
+        #canhoto .data-recebimento {
             padding: 2px;
-            color: black;
+            border-left: 1px solid black;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((4.10 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((1.27 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
         }
 
-        table {
-            margin-bottom: 1px;
-            width: 100%;
+        #canhoto .identificacao-assinatura-recebedor {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((12 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((4.35 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((1.27 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
         }
+
+        .separator {
+            border-bottom: 1px dashed black;
+            width: calc(((20.57 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            height: 1px;
+            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((2.34 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #dados-NFe .quadro-identificacao-emitente {
+            padding: 2px;
+            border-left: 1px solid black;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((3.92 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((10 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((2.54 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        #dados-NFe .quadro-descricao-danfe {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((3.92 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((2.54 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((10.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((2.54 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        #dados-NFe .quadro-codigo-de-barras-chave {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((1.48 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((8 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((12.79 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((2.54 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #dados-NFe .codigo-barras-chave {
+            border-left: 1px solid black;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((1 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((7.20 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            position: relative;
+        }
+
+        #dados-NFe .chave-acesso {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid transparent;
+            height: calc(((0.96 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((8 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((12.79 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((4.02 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #dados-NFe .quadro-tipo-operacao {}
+
+        #dados-NFe .quadro-numero-serie-nfe {}
+
+        #dados-NFe .quadro-codigo-barras-dados {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((1.48 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((8 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((12.79 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((4.98 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #dados-NFe .codigo-barras-dados {}
+
+        #dados-NFe .natureza-operacao {
+            padding: 2px;
+            border-left: 1px solid black;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((12.54 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((6.46 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #dados-NFe .dados-nfe {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((8 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((12.79 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((6.46 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #dados-NFe .inscricao-estadual-emitente {
+            padding: 2px;
+            border-left: 1px solid black;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((6.86 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((7.31 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #dados-NFe .inscricao-estadual-st-emitente {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((6.86 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((7.11 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((7.31 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #dados-NFe .cnpj-emitente {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((6.82 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((13.97 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((7.31 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #destinatario .razao-social {
+            padding: 2px;
+            border-left: 1px solid black;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((12.32 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((8.58 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #destinatario .cnpj {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((5.32 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((12.57 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((8.58 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #destinatario .data-emissao {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((2.92 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((17.89 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((8.58 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #destinatario .endereco {
+            padding: 2px;
+            border-left: 1px solid black;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((10.16 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((9.43 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #destinatario .bairro {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((4.83 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((10.41 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((9.43 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #destinatario .cep {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((2.65 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((15.24 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((9.43 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #destinatario .data-entrada-saida {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((2.92 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((17.89 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((9.43 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #destinatario .municipio {
+            padding: 2px;
+            border-left: 1px solid black;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((7.11 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((10.28 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #destinatario .fone-fax {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((4.06 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((7.36 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((10.28 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #destinatario .uf {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((1.14 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((11.42 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((10.28 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #destinatario .inscricao-estadual {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((5.33 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((12.56 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((10.28 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #destinatario .hora-entrada-saida {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((2.92 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((17.89 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((10.28 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #duplicatas .fatura {
+            padding: 2px;
+            border-left: 1px solid black;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((20.57 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((11.51 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #calculo-imposto .base-calculo-icms {
+            padding: 2px;
+            border-left: 1px solid black;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((4.06 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((12.78 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #calculo-imposto .valor-icms {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((4.06 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((4.31 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((12.78 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #calculo-imposto .base-calculo-icms-st {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((4.06 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((8.37 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((12.78 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #calculo-imposto .valor-icms-st {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((4.06 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((12.43 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((12.78 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #calculo-imposto .valor-total-dos-produtos {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((4.32 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((16.49 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((12.78 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #calculo-imposto .valor-frete {
+            padding: 2px;
+            border-left: 1px solid black;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((3.30 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((13.63 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #calculo-imposto .valor-seguro {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((3.30 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((3.55 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((13.63 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #calculo-imposto .desconto {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((3.30 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((6.85 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((13.63 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #calculo-imposto .outras-despesas-acessorias {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((3.30 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((10.15 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((13.63 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #calculo-imposto .valor-ipi {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((3.30 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((13.45 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((13.63 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #calculo-imposto .valor-total-nota {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((4.06 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((16.75 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((13.63 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #transportador .razao-social {
+            padding: 2px;
+            border-left: 1px solid black;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((9.02 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((14.90 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #transportador .frete-por-conta {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((2.79 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((9.27 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((14.90 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #transportador .codigo-antt {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((1.78 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((12.06 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((14.90 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #transportador .placa-veiculo {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((2.29 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((13.84 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((14.90 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #transportador .uf-veiculo {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((0.76 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((16.13 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((14.90 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #transportador .cnpj-cpf {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((3.94 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((16.89 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((14.90 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #transportador .endereco {
+            padding: 2px;
+            border-left: 1px solid black;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((9.02 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((15.75 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #transportador .municipio {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((6.86 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((9.27 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((15.75 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #transportador .uf {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((0.76 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((16.13 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((15.75 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #transportador .inscricao-estadual {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((3.94 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((16.89 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((15.75 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #transportador .quantidade-volumes {
+            padding: 2px;
+            border-left: 1px solid black;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((2.92 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((16.60 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #transportador .especie {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((3.05 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((3.17 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((16.60 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #transportador .marca {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((3.05 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((6.22 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((16.60 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #transportador .numeracao {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((4.83 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((9.27 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((16.60 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #transportador .peso-bruto {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((3.43 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((14.10 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((16.60 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #transportador .peso-liquido {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid transparent;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((3.30 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((17.53 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((16.60 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #dados-produtos .quadro-dados-produtos-servicos {
+            padding: 2px;
+            border-left: 1px solid black;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((6.77 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((20.57 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((17.87 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #calculo-issqn .inscricao-municipal {
+            padding: 2px;
+            border-left: 1px solid black;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((5.08 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((25.06 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #calculo-issqn .valor-total-servicos {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((5.08 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((5.33 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((25.06 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #calculo-issqn .base-calculo-issqn {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((5.08 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((10.41 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((25.06 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #calculo-issqn .valor-issqn {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((5.33 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((15.49 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((25.06 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #dados-adicionais .informacoes-complementares {
+            padding: 2px;
+            border-left: 1px solid black;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((3.07 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((12.95 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((26.33 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        #reservado-fisco .reservado-fisco {
+            padding: 2px;
+            border-left: 1px solid transparent;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            height: calc(((3.07 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((7.62 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((13.17 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((26.33 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        h3#destinatario,
+        h3#duplicatas,
+        h3#calculo-imposto,
+        h3#transportador,
+        h3#dados-produtos,
+        h3#calculo-issqn,
+        h3#dados-adicionais {
+            font-size: 28px;
+        }
+
+        h3#destinatario {
+            height: calc(((0.42 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((8.38 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        h3#duplicatas {
+            height: calc(((0.42 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((11.31 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        h3#calculo-imposto {
+            height: calc(((0.42 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((12.58 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        h3#transportador {
+            height: calc(((0.42 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((14.70 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        h3#dados-produtos {
+            height: calc(((0.42 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((17.67 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        h3#calculo-issqn {
+            height: calc(((0.42 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((24.86 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+
+        h3#dados-adicionais {
+            height: calc(((0.42 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((26.13 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            position: absolute;
+        }
+    </section>
     </style>
+</head>
+<body class="container">
+    <section id="canhoto">
+            <div class="descricao">
+                <p class="text-sm text-center">Recebemos de {{Alpha Digital}} os produtos e/ou serviços constantes na NFe indicada ao lado.</p>
+                <p class="text-sm text-center">Emissão: {{07/06/2024}} Dest/Reme: {{Gabriel Fonseca}} Valor Total:
+                    {{112.80}} </p>
+            </div>
 
-    <body>
-        <div class="container area">
-            <!-- Canhoto  -->
-            <div class="columns grupo">
-                <div class="column">
-                    <div class="quadro">
-                        <div class="columns">
-                            <div class="column">
-                            </div>
-                        </div>
-                        <div class="columns linha">
-                            <div class="column campo">
-                                <div class="texto_recibo conteudo_campo">
-                                    RECEBEMOS DE '{{emitente.nome}}' OS PRODUTOS E/OU SERVIÇOS CONSTANTES DA NOTA FISCAL ELETRÔNICA INDICADA ABAIXO. EMISSÃO: {{data_emissao}} - VALOR TOTAL: {{total_nota}} - DESTINATÁRIO: {{destinatario.nome}} - ENDEREÇO: {{destinatario.endereco}}, {{destinatario.numero}}, {{destinatario.bairro}} - {{destinatario.municipio}}/{{destinatario.uf}}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="columns linha">
-                            <div class="column">
-                                <div class="tcampo">DATA DE RECEBIMENTO</div>
-                            </div>
-                            <div class="column canhoto_assinatura">
-                                <div class="tcampo">IDENTIFICAÇÃO E ASSINATURA DO RECEBEDOR</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="column canhoto_nr">
-                    <div class="quadro">
-                        <div class="columns">
-                            <div class="column ">
-                            </div>
-                        </div>
-                        <div class="columns  linha">
-                            <div class="column  area_canhoto_nr">
-                                <div class="center">NF-e</div>
-                                <div class="">Nº {{numero}}</div>
-                                <div class="">SÉRIE: {{serie}}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="data-recebimento">
+                <p class="text-sm label">DATA DO RECEBIMENTO</p>
+                <p class="text-base text-static">{{}}</p>
             </div>
-            <!-- Cabeçalho  -->
-            <div class="columns grupo">
-                <div class="column ">
-                    <div class="quadro">
-                        <div class="columns">
-                            <div class="column ">
-                            </div>
-                        </div>
-                        <div class="columns linha quadro_cabecalho">
-                            <div class="column  quadro_identificacao">
-                                <div class="conteudo_campo">{{emitente.nome}}</div>
-                                <div class="conteudo_campo">{{emitente.fantasia}}</div>
-                                <div class="conteudo_campo">{{emitente.endereco}}, {{emitente.numero}}</div>
-                                <div class="conteudo_campo">{{emitente.complemento}}</div>
-                                <div class="conteudo_campo">{{emitente.bairro}} - {{emitente.municipio}} / {{emitente.uf}}</div>
-                                <div class="conteudo_campo">CEP:{{emitente.cep}} - Fone: {{emitente.telefone}}</div>
-                            </div>
-                            <div class="column quadro_danfe">
-                                <div class="center danfe">DANFE</div>
-                                <div class="center">DOCUMENTO AUXILIAR DA NOTA FISCAL ELETRÔNICA</div>
-                                <br>
-                                <span class="numero center">
-                                    <div class="center is-pulled-right operacao">{{operacao}}</div>
-                                    <div>0- ENTRADA</div>
-                                    <div>1- SAÍDA</div>
-                                    <br>
-                                    <div>Nº {{numero}}</div>
-                                    <div>SÉRIE {{serie}}</div>
-                                    <div>FOLHA ?/?</div>
-                                </span>
-                            </div>
-                            <div class="column quadro_codigo_barra ">
-                                <div class="codigo_barra">barra</div>
-                                <div class="chave">
-                                    <div class="tcampo">CHAVE DE ACESSO</div>
-                                    {{chave}}
-                                </div>
-                                <div class="consulta">
-                                    <br> Consulta de autenticidade no portal nacional da NF-e
-                                    <span style="text-decoration: underline">www.nfe.fazenda.gov.br/portal</span> ou no site da Sefaz Autorizadora
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="columns grupo">
-                <div class="column ">
-                    <div class="quadro">
-                        <div class="columns">
-                            <div class="column ">
-                            </div>
-                        </div>
-                        <div class="columns linha">
-                            <div class="column campo">
-                                <div class="tcampo">NATUREZA DA OPERAÇÃO</div>
-                                <span class="conteudo_campo">{{natureza}}</span>
-                            </div>
-                            <div class="column protocolo center">
-                                <div class="tcampo">PROTOCOLO DE AUTORIZACAO DE USO </div>
-                                <span class="conteudo_campo">{{protocolo}} - {{data_protocolo}}</span>
-                            </div>
-                        </div>
-                        <div class="columns linha">
-                            <div class="column">
-                                <div class="tcampo">INSCRIÇÃO ESTADUAL</div>
-                                <span class="conteudo_campo">{{emitente.ie}}</span>
-                            </div>
-                            <div class="column">
-                                <div class="tcampo">INSCRIÇÃO ESTADUAL DO SUBST. TRIB.</div>
-                                <span class="conteudo_campo">{{emitente.ie_st}}</span>
-                            </div>
-                            <div class="column">
-                                <div class="tcampo">C.N.P.J.</div>
-                                <span class="conteudo_campo">{{emitente.inscricao_nacional}}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- DEstinatário / remetente -->
-            <div class="columns grupo">
-                <div class="column ">
-                    <div class="quadro">
-                        <div class="columns">
-                            <div class="column bold">
-                                DESTINATÁRIO/REMETENTE
-                            </div>
-                        </div>
-                        <div class="columns linha">
-                            <div class="column ">
-                                <div class="tcampo">NOME/RAZÃO SOCIAL</div>
-                                <span class="conteudo_campo">{{destinatario.nome}}</span>
-                            </div>
-                            <div class="column ">
-                                <div class="tcampo">C.N.P.J./C.P.F.</div>
-                                <span class="conteudo_campo">{{destinatario.inscricao_nacional}}</span>
-                            </div>
-                            <div class="column data">
-                                <div class="tcampo">DATA DA EMISSÃO</div>
-                                <span class="conteudo_campo">{{data_emissao}}</span>
-                            </div>
-                        </div>
-                        <div class="columns linha">
-                            <div class="column">
-                                <div class="tcampo">ENDEREÇO</div>
-                                <span class="conteudo_campo">{{destinatario.endereco}}, {{destinatario.numero}}</span>
-                            </div>
-                            <div class="column ">
-                                <div class="tcampo ">BAIRRO/DISTRITO</div>
-                                <span class="conteudo_campo">{{destinatario.bairro}}</span>
-                            </div>
-                            <div class="column ">
-                                <div class="tcampo">CEP</div>
-                                <span class="conteudo_campo">{{destinatario.cep}}</span>
-                            </div>
-                            <div class="column data">
-                                <div class="tcampo">DATA SAÍDA/ENTRADA</div>
-                                <span class="conteudo_campo">{{data_entradasaida}}</span>
-                            </div>
-                        </div>
-                        <div class="columns linha">
-                            <div class="column">
-                                <div class="tcampo">MUNICÍPIO</div>
-                                <span class="conteudo_campo">{{destinatario.municipio}}</span>
-                            </div>
-                            <div class="column">
-                                <div class="tcampo">FONE/FAX</div>
-                                <span class="conteudo_campo">{{destinatario.telefone}}</span>
-                            </div>
-                            <div class="column uf">
-                                <div class="tcampo">UF</div>
-                                <span class="conteudo_campo">{{destinatario.uf}}</span>
-                            </div>
-                            <div class="column">
-                                <div class="tcampo">INSCRIÇÃO ESTADUAL</div>
-                                <span class="conteudo_campo">{{destinatario.ie}}</span>
-                            </div>
-                            <div class="column data">
-                                <div class="tcampo">HORA DA SAÍDA</div>
-                                <span class="conteudo_campo">{{hora_entradasaida}}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Faturas  -->
-            {{#if duplicatas}}
-                <div class="columns grupo">
-                    <div class="column ">
-                        <div class="quadro duplicatas">
-                            <div class="columns">
-                                <div class="column bold">
-                                    FATURA/DUPLICATAS
-                                </div>
-                            </div>
-                            <div class="columns linha">
-                                <div class="column is-1">
-                                    <div class="tcampo">NÚMERO</div>
-                                    <div class="tcampo">VENCIMENTO</div>
-                                    <div class="tcampo">VALOR</div>
-                                </div>
-                                <div class="column">
-                                    {{#each duplicatas}}
-                                        <div class=" duplicata is-pulled-left">
-                                            <div>{{this.numero}}</div>
-                                            <div>{{this.vencimento}}</div>
-                                            <div>{{this.valor}}</div>
-                                        </div>
-                                    {{/each}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {{/if}}
-            <!-- Impostos  -->
-            <div class="columns grupo">
-                <div class="column ">
-                    <div class="quadro imposto">
-                        <div class="columns">
-                            <div class="column bold">
-                                CÁLCULO DO IMPOSTO
-                            </div>
-                        </div>
-                        <div class="columns linha">
-                            <div class="column">
-                                <div class="tcampo">BASE DE CÁLCULO DO ICMS</div>
-                                <div>{{base_calculo_icms}}</div>
-                            </div>
-                            <div class="column">
-                                <div class="tcampo">VALOR DO ICMS</div>
-                                <div>{{imposto_icms}}</div>
-                            </div>
-                            <div class="column">
-                                <div class="tcampo">BASE DE CÁLCULO DO ICMS ST</div>
-                                <div>{{base_calculo_icms_st}}</div>
-                            </div>
-                            <div class="column">
-                                <div class="tcampo">VALOR DO ICMS ST</div>
-                                <div>{{imposto_icms_st}}</div>
-                            </div>
-                            <div class="column">
-                                <div class="tcampo">VALOR TOTAL APROX. TRIB.</div>
-                                <div>{{imposto_tributos}}</div>
-                            </div>
-                            <div class="column">
-                                <div class="tcampo">VALOR TOTAL DOS PRODUTOS</div>
-                                <div>{{total_produtos}}</div>
-                            </div>
-                        </div>
-                        <div class="columns linha">
-                            <div class="column">
-                                <div class="tcampo">VALOR DO FRETE</div>
-                                <div>{{total_frete}}</div>
-                            </div>
-                            <div class="column">
-                                <div class="tcampo">VALOR DO SEGURO</div>
-                                <div>{{total_seguro}}</div>
-                            </div>
-                            <div class="column">
-                                <div class="tcampo">DESCONTO</div>
-                                <div>{{total_desconto}}</div>
-                            </div>
-                            <div class="column">
-                                <div class="tcampo">OUTRAS DESPESAS ACESSÓRIAS</div>
-                                <div>{{total_despesas}}</div>
-                            </div>
-                            <div class="column">
-                                <div class="tcampo">VALOR DO IPI</div>
-                                <div>{{total_ipi}}</div>
-                            </div>
-                            <div class="column">
-                                <div class="tcampo">VALOR TOTAL DA NOTA</div>
-                                <div>{{total_nota}}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- transportadora -->
-            <div class="columns grupo">
-                <div class="column ">
-                    <div class="quadro">
-                        <div class="columns">
-                            <div class="column bold">
-                                TRANSPORTADOR/VOLUMES TRANSPORTADOS
-                            </div>
-                        </div>
-                        <div class="columns linha">
-                            <div class="column nome">
-                                <div class="tcampo">RAZÃO SOCIAL</div>
-                                <span class="conteudo_campo">{{transportador.nome}}</span>
-                            </div>
-                            <div class="column">
-                                <div class="tcampo">FRETE POR CONTA DO</div>
-                                <span class="conteudo_campo">{{modalidade_frete}} - {{modalidade_frete_texto}}</span>
-                            </div>
-                            <div class="column">
-                                <div class="tcampo">CÓDIGO ANTT</div>
-                                <span class="conteudo_campo">{{veiculo_antt}}</span>
-                            </div>
-                            <div class="column placa">
-                                <div class="tcampo">PLACA DO VEÍCULO</div>
-                                <span class="conteudo_campo">{{veiculo_placa}}</span>
-                            </div>
-                            <div class="column uf">
-                                <div class="tcampo">UF</div>
-                                <span class="conteudo_campo">{{veiculo_placa_uf}}</span>
-                            </div>
-                            <div class="column">
-                                <div class="tcampo">C.N.P.J./C.P.F.</div>
-                                <span class="conteudo_campo">{{transportador.inscricao_nacional}}</span>
-                            </div>
-                        </div>
-                        <div class="columns linha">
-                            <div class="column">
-                                <div class="tcampo">ENDEREÇO</div>
-                                <span class="conteudo_campo">{{transportador.endereco}}, {{transportador.numero}}</span>
-                            </div>
-                            <div class="column">
-                                <div class="tcampo">MUNICÍPIO</div>
-                                <span class="conteudo_campo">{{transportador.municipio}}</span>
-                            </div>
-                            <div class="column uf">
-                                <div class="tcampo">UF</div>
-                                <span class="conteudo_campo">{{transportador.uf}}</span>
-                            </div>
-                            <div class="column">
-                                <div class="tcampo">INSCRIÇÃO ESTADUAL</div>
-                                <span class="conteudo_campo">{{transportador.ie}}</span>
-                            </div>
-                        </div>
-                        <div class="columns linha">
-                            <div class="column direita">
-                                <div class="tcampo">QUANTIDADE</div>
-                                <span class="conteudo_campo">{{volume_quantidade}}</span>
-                            </div>
-                            <div class="column">
-                                <div class="tcampo">ESPÉCIE</div>
-                                <span class="conteudo_campo">{{volume_especie}}</span>
-                            </div>
-                            <div class="column">
-                                <div class="tcampo">MARCA</div>
-                                <span class="conteudo_campo">{{volume_marca}}</span>
-                            </div>
-                            <div class="column">
-                                <div class="tcampo">NUMERAÇÃO</div>
-                                <span class="conteudo_campo">{{volume_numeracao}}</span>
-                            </div>
-                            <div class="column direita">
-                                <div class="tcampo">PESO BRUTO</div>
-                                <span class="conteudo_campo">{{volume_pesoBruto}}</span>
-                            </div>
-                            <div class="column direita">
-                                <div class="tcampo">PESO LÍQUIDO</div>
-                                <span class="conteudo_campo">{{volume_pesoLiquido}}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Itens  -->
-            <div class="columns grupo">
-                <div class="column ">
-                    <div class="quadro">
-                        <div class="columns">
-                            <div class="column bold">
-                                DADOS DOS PRODUTOS/SERVIÇOS
-                            </div>
-                        </div>
-                        <div class="columns">
-                            <table class="table is-bordered itens">
-                                <thead>
-                                    <tr>
-                                        <th>CÓDIGO</th>
-                                        <th>DESCRIÇÃO</th>
-                                        <th>NCM/SH</th>
-                                        <th>CST</th>
-                                        <th>CFOP</th>
-                                        <th>UN.</th>
-                                        <th>QUANT.</th>
-                                        <th>V.UNIT.</th>
-                                        <th>V.DESC.</th>
-                                        <th>V.TOTAL</th>
-                                        <th>BC.ICMS</th>
-                                        <th>V.ICMS</th>
-                                        <th>V.IPI</th>
-                                        <th>%ICMS</th>
-                                        <th>%IPI</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {{#each itens}}
-                                        <tr>
-                                            <td>{{this.codigo}}</td>
-                                            <td>{{this.descricao}}</td>
-                                            <td>{{this.ncm}}</td>
-                                            <td>{{this.cst}}</td>
-                                            <td>{{this.cfop}}</td>
-                                            <td>{{this.unidade}}</td>
-                                            <td class="direita">{{this.quantidade}}</td>
-                                            <td class="direita">{{this.valor}}</td>
-                                            <td class="direita">{{this.desconto}}</td>
-                                            <td class="direita">{{this.total}}</td>
-                                            <td class="direita">{{this.base_calculo}}</td>
-                                            <td class="direita">{{this.icms}}</td>
-                                            <td class="direita">{{this.ipi}}</td>
-                                            <td class="direita">{{this.porcentagem_icms}}</td>
-                                            <td class="direita">{{this.porcentagem_ipi}}</td>
-                                        </tr>
-                                    {{/each}}
 
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+            <div class="identificacao-assinatura-recebedor">
+                <p class="text-sm label">IDENTIFICAÇÃO E ASSINATURA DO RECEBEDOR</p>
+                <p class="text-base text-static">{{}}</p>
             </div>
-            <!-- Serviço  -->
-            {{#if total_servico}}
-                <div class="columns grupo">
-                    <div class="column ">
-                        <div class="quadro">
-                            <div class="columns">
-                                <div class="column bold">
-                                    CÁLCULO DO ISSQN
-                                </div>
-                            </div>
-                            <div class="columns linha">
-                                <div class="column">
-                                    <div class="tcampo">INSCRIÇÃO MUNICIPAL</div>
-                                    <span class="conteudo_campo">{{emitente.inscricao_municipal}}</span>
-                                </div>
-                                <div class="column">
-                                    <div class="tcampo">VALOR TOTAL DOS SERVIÇOS</div>
-                                    <div class="conteudo_campo direita">{{total_servico}}</div>
-                                </div>
-                                <div class="column">
-                                    <div class="tcampo">BASE DE CÁLCULO DO ISSQN</div>
-                                    <div class="conteudo_campo direita">{{base_calculo_issqn}}</div>
-                                </div>
-                                <div class="column">
-                                    <div class="tcampo">VALOR DO ISSQN</div>
-                                    <div class="conteudo_campo direita">{{total_issqn}}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {{/if}}
-            <!-- Dados adicionais  -->
-            <div class="columns grupo">
-                <div class="column ">
-                    <div class="quadro">
-                        <div class="columns">
-                            <div class="column bold">
-                                DADOS ADICIONAIS
-                            </div>
-                        </div>
-                        <div class="columns linha complemento">
-                            <div class="column">
-                                <div class="tcampo">INFORMAÇÕES COMPLEMENTARES</div>
-                                <span class="conteudo_campo">{{informacoes_fisco}}</span>
-                                <span class="conteudo_campo">{{informacoes_complementares}}</span>
-                                <span class="conteudo_campo">{{observacao}}</span>
-                            </div>
-                            <div class="column fisco">
-                                <div class="tcampo">RESERVADO AO FISCO</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+        <div class="nfe-numero-serie">
+            <p class="text-lg text-center font-bold">NF-e</p>
+            <p class="text-lg text-center font-bold" style="margin: 20px;">N° {{000.045.043}}</p>
+            <p class="text-lg text-center font-bold">Série {{003}}</p>
+        </div>
+    </section>
+
+    <div class="separator"></div>
+
+    <section id="dados-NFe">
+        <div class="quadro-identificacao-emitente">
+            <p class="font-bold" style="font-size: 48px;">{{psi7 - Printing Solutions & Internet 7 S.A}}</p>
+            <div>
+                <p class="text-base">{{RUA SECUNDINO DOMINGUES}}, {{300}}</p>
+                <p class="text-base" style="margin: 20px 0;">{{JARDIM INDEPENDÊNCIA}} - {{SAO PAULO}} - {{SP}}</p>
+                <p class="text-base">CEP: {{03223-110}}</p>
+            </div>
+            <div>
+                <p class="text-base" style="margin-bottom: 20px;">Fone: {{(11) 2928-4900}}</p>
+                <p class="text-base">Email: {{it@psi7.com.br}}</p>
             </div>
         </div>
-    </body>
+        <div class="quadro-descricao-danfe">
+            <div>
+            <p class="text-lg text-center font-bold">DANFE</p>
+            <p class="text-sm text-center">Documento Auxiliar da Nota Fiscal Eletrônica</p>
+            </div>
+            <div style="width: 100%; display: flex; justify-content: space-around; align-items: center;">
+                <div>
+                    <p class="text-base">0 - ENTRADA</p>
+                    <p class="text-base">1 - SAÍDA</p>
+                </div>
+                <div style="border: 1px solid black; display: flex; justify-content: center; align-items: center;
+                    height: 50px; width: 50px;">
+                    <p class="text-lg font-bold">{{1}}</p>
+                </div>
+            </div>
+            <div>
+                <p class="text-base font-bold">N° {{000.045.043}}</p>
+                <p class="text-base font-bold" style="margin: 10px 0;">SÉRIE {{003}}</p>
+                <p class="text-base font-bold">Folha {{1/1}}</p>
+            </div>
+        </div>
+        <div class="quadro-codigo-de-barras-chave">
+            <img class="codigo-barras-chave" src="" alt="" />
+        </div>
+        <div class="chave-acesso">
+            <p class="text-sm label">CHAVE DE ACESSO</p>
+            <p class="text-base font-bold text-static">{{3521 0613 4801 8500 0120 5500 3000 0450 4310 6850 7991}}</p>
+        </div>
+        <div class="quadro-tipo-operacao"></div>
+        <div class="quadro-numero-serie-nfe"></div>
+        <div class="quadro-codigo-barras-dados">
+            <p class="text-base text-center">Consulta de autenticidade no portal nacional da NF-e
+                www.nfe.fazenda.gov.br/portal ou no site da Sefaz autorizadora</p>
+        </div>
+        <div class="codigo-barras-dados"></div>
+        <div class="natureza-operacao">
+            <p class="text-sm label">NATUREZA DA OPERAÇÃO</p>
+            <p class="text-lg text-static">{{Vendas}}</p>
+        </div>
+        <div class="dados-nfe">
+            <p class="text-sm label">PROTOCOLO DE AUTORIZAÇÃO DE USO</p>
+            <p class="text-lg text-static font-bold">{{135210627036417 07/06/2021 09:25:10}}</p>
+        </div>
+        <div class="inscricao-estadual-emitente">
+            <p class="text-sm label">INSCRIÇÃO ESTADUAL</p>
+            <p class="text-lg text-static">{{147950804117}}</p>
+        </div>
+        <div class="inscricao-estadual-st-emitente">
+            <p class="text-sm label">INSCRIÇÃO ESTADUAL DO SUBSTITUTO TRIBUTÁRIO</p>
+            <p class="text-lg text-static">{{}}</p>
+        </div>
+        <div class="cnpj-emitente">
+            <p class="text-sm label">CNPJ</p>
+            <p class="text-lg text-static">{{13.480.185/0001-20}}</p>
+        </div>
+    </section>
+
+    <h3 id="destinatario" class="font-bold">DESTINATÁRIO/REMETENTE</h3>
+    <section id="destinatario">
+        <div class="razao-social">
+            <p class="text-sm label">NOME/RAZÃO SOCIAL</p>
+            <p class="text-lg text-static">{{GABRIEL FONSECA}}</p>
+        </div>
+        <div class="cnpj">
+            <p class="text-sm label">CNPJ/CPF</p>
+            <p class="text-lg text-static">{{489.263.268-61}}</p>
+        </div>
+        <div class="data-emissao">
+            <p class="text-sm label">DATA DA EMISSÃO</p>
+            <p class="text-lg text-static">{{07/06/2021}}</p>
+        </div>
+        <div class="endereco">
+            <p class="text-sm label">ENDEREÇO</p>
+            <p class="text-lg text-static">{{Avenida Mato Grosso, 60 Escola Alaor Coutinho}}</p>
+        </div>
+        <div class="bairro">
+            <p class="text-sm label">BAIRRO/DISTRITO</p>
+            <p class="text-lg text-static">{{Brasil}}</p>
+        </div>
+        <div class="cep">
+            <p class="text-sm label">CEP</p>
+            <p class="text-lg text-static">{{45051-485}}</p>
+        </div>
+        <div class="data-entrada-saida">
+            <p class="text-sm label">DATA DA SAÍDA</p>
+            <p class="text-lg text-static">{{07/06/2021}}</p>
+        </div>
+        <div class="municipio">
+            <p class="text-sm label">MUNICÍPIO</p>
+            <p class="text-lg text-static">{{VITÓRIA DA CONQUISTA}}</p>
+        </div>
+        <div class="fone-fax">
+            <p class="text-sm label">TELEFONE/FAX</p>
+            <p class="text-lg text-static">{{(99)99999-9999}}</p>
+        </div>
+        <div class="uf">
+            <p class="text-sm label">UF</p>
+            <p class="text-lg text-static">{{BA}}</p>
+        </div>
+        <div class="inscricao-estadual">
+            <p class="text-sm label">INSCRIÇÃO ESTADUAL</p>
+            <p class="text-lg text-static">{{}}</p>
+        </div>
+        <div class="hora-entrada-saida">
+            <p class="text-sm label">HORA DA SAÍDA</p>
+            <p class="text-lg text-static">{{09:17:07}}</p>
+        </div>
+    </section>
+
+    <h3 id="duplicatas" class="font-bold">DUPLICATAS</h3>
+    <section id="duplicatas">
+        <div class="fatura">
+            <p class="text-sm label">FATURA</p>
+            <p class="text-lg text-static">{{Número: 001; Vencimento: 28/06/2021; Valor R$ 112,80}}</p>
+        </div>
+    </section>
+    
+    <h3 id="calculo-imposto" class="font-bold">CÁLCULO DO IMPOSTO</h3>
+    <section id="calculo-imposto">
+        <div class="base-calculo-icms">
+            <p class="text-sm label">BASE DE CÁLCULO DO ICMS</p>
+            <p class="text-lg text-static-right">{{0,00}}</p>
+        </div>
+        <div class="valor-icms">
+            <p class="text-sm label">VALOR DO ICMS</p>
+            <p class="text-lg text-static-right">{{0,00}}</p>
+        </div>
+        <div class="base-calculo-icms-st">
+            <p class="text-sm label">BASE DE CÁLCULO DO ICMS SUBSTITUIÇÃO</p>
+            <p class="text-lg text-static-right">{{0,00}}</p>
+        </div>
+        <div class="valor-icms-st">
+            <p class="text-sm label">VALOR DO ICMS SUBSTITUIÇÃO</p>
+            <p class="text-lg text-static-right">{{0,00}}</p>
+        </div>
+        <div class="valor-total-dos-produtos">
+            <p class="text-sm label">VALOR TOTAL DOS PRODUTOS</p>
+            <p class="text-lg text-static-right">{{99,57}}</p>
+        </div>
+        <div class="valor-frete">
+            <p class="text-sm label">VALOR DO FRETE</p>
+            <p class="text-lg text-static-right">{{24,30}}</p>
+        </div>
+        <div class="valor-seguro">
+            <p class="text-sm label">VALOR DO SEGURO</p>
+            <p class="text-lg text-static-right">{{0,00}}</p>
+        </div>
+        <div class="desconto">
+            <p class="text-sm label">DESCONTO</p>
+            <p class="text-lg text-static-right">{{11,07}}</p>
+        </div>
+        <div class="outras-despesas-acessorias">
+            <p class="text-sm label">OUTRAS DESPESAS ACESSÓRIAS</p>
+            <p class="text-lg text-static-right">{{0,00}}</p>
+        </div>
+        <div class="valor-ipi">
+            <p class="text-sm label">VALOR DO IPI</p>
+            <p class="text-lg text-static-right">{{0,00}}</p>
+        </div>
+        <div class="valor-total-nota">
+            <p class="text-sm label">VALOR TOTAL DA NOTA</p>
+            <p class="text-lg text-static-right">{{112,80}}</p>
+        </div>
+    </section>
+
+    <h3 id="transportador" class="font-bold">TRANSPORTADOR/VOLUMES TRANSPORTADOS</h3>
+    <section id="transportador">
+        <div class="razao-social">
+            <p class="text-sm label">NOME/RAZÃO SOCIAL</p>
+            <p class="text-lg text-static">{{B2W ENTREGAS}}</p>
+        </div>
+        <div class="frete-por-conta">
+            <p class="text-sm label">FRETE POR CONTA</p>
+            <p class="text-lg text-static">{{0 - REMETENTE}}</p>
+        </div>
+        <div class="codigo-antt">
+            <p class="text-sm label">CÓDIGO ANTT</p>
+            <p class="text-lg text-static">{{}}</p>
+        </div>
+        <div class="placa-veiculo">
+            <p class="text-sm label">PLACA DO VEÍCULO</p>
+            <p class="text-lg text-static">{{}}</p>
+        </div>
+        <div class="uf-veiculo">
+            <p class="text-sm label">UF</p>
+            <p class="text-lg text-static">{{}}</p>
+        </div>
+        <div class="cnpj-cpf">
+            <p class="text-sm label">CNPJ/CPF</p>
+            <p class="text-lg text-static">{{}}</p>
+        </div>
+        <div class="endereco">
+            <p class="text-sm label">ENDEREÇO</p>
+            <p class="text-lg text-static">{{}}</p>
+        </div>
+        <div class="municipio">
+            <p class="text-sm label">MUNICÍPIO</p>
+            <p class="text-lg text-static">{{SAO PAULO}}</p>
+        </div>
+        <div class="uf">
+            <p class="text-sm label">UF</p>
+            <p class="text-lg text-static">{{SP}}</p>
+        </div>
+        <div class="inscricao-estadual">
+            <p class="text-sm label">INSCRIÇÃO ESTADUAL</p>
+            <p class="text-lg text-static">{{}}</p>
+        </div>
+        <div class="quantidade-volumes">
+            <p class="text-sm label">QUANTIDADE</p>
+            <p class="text-lg text-static-right">{{1}}</p>
+        </div>
+        <div class="especie">
+            <p class="text-sm label">ESPÉCIE</p>
+            <p class="text-lg text-static">{{}}</p>
+        </div>
+        <div class="marca">
+            <p class="text-sm label">MARCA</p>
+            <p class="text-lg text-static">{{}}</p>
+        </div>
+        <div class="numeracao">
+            <p class="text-sm label">NUMERAÇÃO</p>
+            <p class="text-lg text-static">{{}}</p>
+        </div>
+        <div class="peso-bruto">
+            <p class="text-sm label">PESO BRUTO</p>
+            <p class="text-lg text-static-right">{{1,270}}</p>
+        </div>
+        <div class="peso-liquido">
+            <p class="text-sm label">PESO LÍQUIDO</p>
+            <p class="text-lg text-static-right">{{1,270}}</p>
+        </div>
+    </section>
+
+    <h3 id="dados-produtos" class="font-bold">DADOS DOS PRODUTOS/SERVIÇOS</h3>
+    <section id="dados-produtos">
+        <div class="quadro-dados-produtos-servicos"></div>
+    </section>
+
+    <h3 id="calculo-issqn" class="font-bold">CÁLCULO DO ISSQN</h3>
+    <section id="calculo-issqn">
+        <div class="inscricao-municipal">
+            <p class="text-sm label">INSCRIÇÃO MUNICIPAL</p>
+            <p class="text-lg text-static">{{}}</p>
+        </div>
+        <div class="valor-total-servicos">
+            <p class="text-sm label">VALOR TOTAL DOS SERVIÇOS</p>
+            <p class="text-lg text-static">{{}}</p>
+        </div>
+        <div class="base-calculo-issqn">
+            <p class="text-sm label">BASE CÁLCULO DO ISSQN</p>
+            <p class="text-lg text-static">{{}}</p>
+        </div>
+        </div>
+        <div class="valor-issqn">
+            <p class="text-sm label">VALOR DO ISSQN</p>
+            <p class="text-lg text-static">{{}}</p>
+        </div>
+    </section>
+
+    <h3 id="dados-adicionais" class="font-bold">DADOS ADICIONAIS</h3>
+    <section id="dados-adicionais">
+        <div class="informacoes-complementares">
+            <p class="text-sm label">INFORMAÇÕES COMPLEMENTARES</p>
+            <p class="text-sm" style="margin-top: 20px;">{{Valor Aproximado de Tributos R$4,18(4,72%) Fonte: IBPT/empresometro.co Venda N°
+                00065333 de 29/05/2021 às 12:10 Pedido N° 100377874 #Site 352957999301 Origem: Submarino}}</p>
+        </div>
+    </section>
+
+    <section id="reservado-fisco">
+        <div class="reservado-fisco">
+            <p class="text-sm label">RESERVADO AO FISCO</p>
+        </div>
+    </section>
+</body>
 </html>

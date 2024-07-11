@@ -309,7 +309,7 @@ export enum RecipientStateSubscriptionIndicator {
     TAXPAYER_EXEMPT_SUBSCRIPTION = 2,
     NON_CONTRIBUTOR = 9,
 }
-// @@@: HERE
+
 type Recipient = {
     /** Razão Social ou nome do destinatário */
     xNome?: string;

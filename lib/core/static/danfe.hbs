@@ -1009,8 +1009,8 @@
 <body class="container">
     <section id="canhoto">
             <div class="descricao">
-                <p class="text-sm text-center">Recebemos de {{Alpha Digital}} os produtos e/ou serviços constantes na NFe indicada ao lado.</p>
-                <p class="text-sm text-center">Emissão: {{07/06/2024}} Dest/Reme: {{Gabriel Fonseca}} Valor Total:
+                <p class="text-sm text-center">Recebemos de {{emitente.nome}} os produtos e/ou serviços constantes na NFe indicada ao lado.</p>
+                <p class="text-sm text-center">Emissão: {{07/06/2024}} Dest/Reme: {{destinatario.nome}} Valor Total:
                     {{112.80}} </p>
             </div>
 
@@ -1026,8 +1026,8 @@
 
         <div class="nfe-numero-serie">
             <p class="text-lg text-center font-bold">NF-e</p>
-            <p class="text-lg text-center font-bold" style="margin: 20px;">N° {{000.045.043}}</p>
-            <p class="text-lg text-center font-bold">Série {{003}}</p>
+            <p class="text-lg text-center font-bold" style="margin: 20px;">N° {{nfe.numero}}</p>
+            <p class="text-lg text-center font-bold">Série {{nfe.serie}}</p>
         </div>
     </section>
 
@@ -1035,15 +1035,16 @@
 
     <section id="dados-NFe">
         <div class="quadro-identificacao-emitente">
-            <p class="font-bold" style="font-size: 48px;">{{psi7 - Printing Solutions & Internet 7 S.A}}</p>
+            <p class="font-bold" style="font-size: 48px;">{{emitente.nome}}</p>
             <div>
-                <p class="text-base">{{RUA SECUNDINO DOMINGUES}}, {{300}}</p>
-                <p class="text-base" style="margin: 20px 0;">{{JARDIM INDEPENDÊNCIA}} - {{SAO PAULO}} - {{SP}}</p>
-                <p class="text-base">CEP: {{03223-110}}</p>
+                <p class="text-base">{{emitente.endereco.logradouro}}, {{emitente.endereco.numero}}</p>
+                <p class="text-base" style="margin: 20px 0;">{{emitente.endereco.bairro}} - {{emitente.endereco.municipio}} -
+                    {{emitente.endereco.uf}}</p>
+                <p class="text-base">CEP: {{emitente.endereco.cep}}</p>
             </div>
             <div>
-                <p class="text-base" style="margin-bottom: 20px;">Fone: {{(11) 2928-4900}}</p>
-                <p class="text-base">Email: {{it@psi7.com.br}}</p>
+                <p class="text-base" style="margin-bottom: 20px;">Fone: {{emitente.fone}}</p>
+                <p class="text-base">Email: {{emitente.email}}</p>
             </div>
         </div>
         <div class="quadro-descricao-danfe">
@@ -1056,14 +1057,19 @@
                     <p class="text-base">0 - ENTRADA</p>
                     <p class="text-base">1 - SAÍDA</p>
                 </div>
-                <div style="border: 1px solid black; display: flex; justify-content: center; align-items: center;
-                    height: 50px; width: 50px;">
-                    <p class="text-lg font-bold">{{1}}</p>
+                <div style=" border: 1px solid black;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 50px;
+                    width: 50px;"
+                >
+                    <p class="text-lg font-bold">{{nfe.type}}</p>
                 </div>
             </div>
             <div>
-                <p class="text-base font-bold">N° {{000.045.043}}</p>
-                <p class="text-base font-bold" style="margin: 10px 0;">SÉRIE {{003}}</p>
+                <p class="text-base font-bold">N° {{nfe.numero}}</p>
+                <p class="text-base font-bold" style="margin: 10px 0;">SÉRIE {{nfe.serie}}</p>
                 <p class="text-base font-bold">Folha {{1/1}}</p>
             </div>
         </div>
@@ -1072,7 +1078,7 @@
         </div>
         <div class="chave-acesso">
             <p class="text-sm label">CHAVE DE ACESSO</p>
-            <p class="text-base font-bold text-static">{{3521 0613 4801 8500 0120 5500 3000 0450 4310 6850 7991}}</p>
+            <p class="text-base font-bold text-static">{{nfe.key}}</p>
         </div>
         <div class="quadro-tipo-operacao"></div>
         <div class="quadro-numero-serie-nfe"></div>
@@ -1083,7 +1089,7 @@
         <div class="codigo-barras-dados"></div>
         <div class="natureza-operacao">
             <p class="text-sm label">NATUREZA DA OPERAÇÃO</p>
-            <p class="text-lg text-static">{{Vendas}}</p>
+            <p class="text-lg text-static">{{nfe.naturezaOperacao}}</p>
         </div>
         <div class="dados-nfe">
             <p class="text-sm label">PROTOCOLO DE AUTORIZAÇÃO DE USO</p>
@@ -1091,7 +1097,7 @@
         </div>
         <div class="inscricao-estadual-emitente">
             <p class="text-sm label">INSCRIÇÃO ESTADUAL</p>
-            <p class="text-lg text-static">{{147950804117}}</p>
+            <p class="text-lg text-static">{{emitente.ie}}</p>
         </div>
         <div class="inscricao-estadual-st-emitente">
             <p class="text-sm label">INSCRIÇÃO ESTADUAL DO SUBSTITUTO TRIBUTÁRIO</p>
@@ -1099,7 +1105,7 @@
         </div>
         <div class="cnpj-emitente">
             <p class="text-sm label">CNPJ</p>
-            <p class="text-lg text-static">{{13.480.185/0001-20}}</p>
+            <p class="text-lg text-static">{{emitente.cnpj}}</p>
         </div>
     </section>
 
@@ -1107,11 +1113,11 @@
     <section id="destinatario">
         <div class="razao-social">
             <p class="text-sm label">NOME/RAZÃO SOCIAL</p>
-            <p class="text-lg text-static">{{GABRIEL FONSECA}}</p>
+            <p class="text-lg text-static">{{destinatario.nome}}</p>
         </div>
         <div class="cnpj">
             <p class="text-sm label">CNPJ/CPF</p>
-            <p class="text-lg text-static">{{489.263.268-61}}</p>
+            <p class="text-lg text-static">{{destinatario.documento}}</p>
         </div>
         <div class="data-emissao">
             <p class="text-sm label">DATA DA EMISSÃO</p>
@@ -1119,15 +1125,15 @@
         </div>
         <div class="endereco">
             <p class="text-sm label">ENDEREÇO</p>
-            <p class="text-lg text-static">{{Avenida Mato Grosso, 60 Escola Alaor Coutinho}}</p>
+            <p class="text-lg text-static">{{destinatario.endereco.logradouro}}</p>
         </div>
         <div class="bairro">
             <p class="text-sm label">BAIRRO/DISTRITO</p>
-            <p class="text-lg text-static">{{Brasil}}</p>
+            <p class="text-lg text-static">{{destinatario.endereco.bairro}}</p>
         </div>
         <div class="cep">
             <p class="text-sm label">CEP</p>
-            <p class="text-lg text-static">{{45051-485}}</p>
+            <p class="text-lg text-static">{{destinatario.endereco.cep}}</p>
         </div>
         <div class="data-entrada-saida">
             <p class="text-sm label">DATA DA SAÍDA</p>
@@ -1135,19 +1141,19 @@
         </div>
         <div class="municipio">
             <p class="text-sm label">MUNICÍPIO</p>
-            <p class="text-lg text-static">{{VITÓRIA DA CONQUISTA}}</p>
+            <p class="text-lg text-static">{{destinatario.endereco.municipio}}</p>
         </div>
         <div class="fone-fax">
             <p class="text-sm label">TELEFONE/FAX</p>
-            <p class="text-lg text-static">{{(99)99999-9999}}</p>
+            <p class="text-lg text-static">{{destinatario.fone}}</p>
         </div>
         <div class="uf">
             <p class="text-sm label">UF</p>
-            <p class="text-lg text-static">{{BA}}</p>
+            <p class="text-lg text-static">{{destinatario.endereco.uf}}</p>
         </div>
         <div class="inscricao-estadual">
             <p class="text-sm label">INSCRIÇÃO ESTADUAL</p>
-            <p class="text-lg text-static">{{}}</p>
+            <p class="text-lg text-static">{{destinatario.ie}}</p>
         </div>
         <div class="hora-entrada-saida">
             <p class="text-sm label">HORA DA SAÍDA</p>
@@ -1215,7 +1221,7 @@
     <section id="transportador">
         <div class="razao-social">
             <p class="text-sm label">NOME/RAZÃO SOCIAL</p>
-            <p class="text-lg text-static">{{B2W ENTREGAS}}</p>
+            <p class="text-lg text-static">{{emitente.nome}}</p>
         </div>
         <div class="frete-por-conta">
             <p class="text-sm label">FRETE POR CONTA</p>
@@ -1239,19 +1245,19 @@
         </div>
         <div class="endereco">
             <p class="text-sm label">ENDEREÇO</p>
-            <p class="text-lg text-static">{{}}</p>
+            <p class="text-lg text-static">{{emitente.endereco.logradouro}}</p>
         </div>
         <div class="municipio">
             <p class="text-sm label">MUNICÍPIO</p>
-            <p class="text-lg text-static">{{SAO PAULO}}</p>
+            <p class="text-lg text-static">{{emitente.endereco.municipio}}</p>
         </div>
         <div class="uf">
             <p class="text-sm label">UF</p>
-            <p class="text-lg text-static">{{SP}}</p>
+            <p class="text-lg text-static">{{emitente.endereco.uf}}</p>
         </div>
         <div class="inscricao-estadual">
             <p class="text-sm label">INSCRIÇÃO ESTADUAL</p>
-            <p class="text-lg text-static">{{}}</p>
+            <p class="text-lg text-static">{{emitente.ie}}</p>
         </div>
         <div class="quantidade-volumes">
             <p class="text-sm label">QUANTIDADE</p>
@@ -1309,8 +1315,7 @@
     <section id="dados-adicionais">
         <div class="informacoes-complementares">
             <p class="text-sm label">INFORMAÇÕES COMPLEMENTARES</p>
-            <p class="text-sm" style="margin-top: 20px;">{{Valor Aproximado de Tributos R$4,18(4,72%) Fonte: IBPT/empresometro.co Venda N°
-                00065333 de 29/05/2021 às 12:10 Pedido N° 100377874 #Site 352957999301 Origem: Submarino}}</p>
+            <p class="text-sm" style="margin-top: 20px;">{{extra}}</p>
         </div>
     </section>
 

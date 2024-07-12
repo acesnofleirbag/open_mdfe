@@ -1,4 +1,5 @@
 import { AccessKeyLayout, AccessKeyVersion } from "./@types/accessKey";
+import { SefazNFE } from "./@types/layouts/nfe";
 import { Env } from "./core/environments";
 import { InvalidAccessKeyError } from "./errors/invalidAccessKeyError";
 
@@ -13,6 +14,23 @@ export class AccessKey {
 
         this.value = value;
         this.version = version;
+    }
+
+    static fromNFe(NFe: SefazNFE) {
+        const payload = NFe.infNFE;
+
+        return (
+            payload.ide.cUF +
+            "@@@" +
+            // @ts-ignore
+            payload.emit.CNPJ +
+            payload.ide.mod +
+            payload.ide.serie +
+            payload.ide.nNF +
+            payload.ide.tpEmis +
+            payload.ide.cNF +
+            payload.ide.cDV
+        );
     }
 
     calculateVerifyingDigit(): number {

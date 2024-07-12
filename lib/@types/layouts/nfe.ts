@@ -2606,7 +2606,10 @@ export type SefazNFE = {
             dPag?: string;
         };
         /** Identificação do Destinatário */
-        dest?: (Recipient & { CNPJ: string }) | (Recipient & { CPF: string }) | (Recipient & { idEstrangeiro: string });
+        dest?:
+            | (Recipient & { CNPJ?: string })
+            | (Recipient & { CPF?: string })
+            | (Recipient & { idEstrangeiro?: string });
         /** Identificação do Local de Retirada (informar apenas quando for diferente do endereço do remetente) */
         retirada?: Local;
         /** Identificação do Local de Entrega (informar apenas quando for diferente do endereço do destinatário) */

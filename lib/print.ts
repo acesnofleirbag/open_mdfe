@@ -3,10 +3,8 @@ import * as Handlebars from "handlebars";
 import { SefazNFE } from "./@types/layouts/nfe";
 import { AccessKey } from "./accessKey";
 
-type Mode = "portrait" | "landscape";
-
 export class Print {
-    DANFE(mode: Mode = "portrait", payload: SefazNFE) {
+    DANFE(mode: "portrait" | "landscape", payload: SefazNFE) {
         const nfe = payload.infNFE;
 
         const layout =

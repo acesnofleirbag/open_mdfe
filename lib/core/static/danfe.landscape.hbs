@@ -48,10 +48,10 @@
         }
 
         :root {
-            --A4-width-in-px: 2480;
-            --A4-height-in-px: 4508;
-            --A4-width-in-cm: 21;
-            --A4-height-in-cm: 29.7;
+            --A4-height-in-px: 2480;
+            --A4-width-in-px: 4508;
+            --A4-height-in-cm: 21;
+            --A4-width-in-cm: 29.7;
             --padding: 5px;
         }
 
@@ -105,6 +105,8 @@
         .container {
             width: calc(var(--A4-width-in-px) * 1px);
             height: calc(var(--A4-height-in-px) * 1px);
+
+            border: 1px solid red;
         }
 
         #canhoto .descricao {
@@ -113,66 +115,64 @@
             border-top: 1px solid black;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((16.10 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((0.42 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((16.95 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((1.02 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((0.13 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((5 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
             display: flex;
-            flex-direction: column;
             justify-content: space-around;
             align-items: center;
         }
 
         #canhoto .nfe-numero-serie {
             padding: var(--padding);
-            border-left: 1px solid transparent;
+            border-left: 1px solid black;
             border-top: 1px solid black;
             border-right: 1px solid black;
-            border-bottom: 1px solid black;
-            height: calc(((1.70 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((4.45 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((16.35 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((0.42 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            border-bottom: 1px solid transparent;
+            height: calc(((4.53 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((2.03 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((0.13 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((0.47 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
         }
 
         #canhoto .data-recebimento {
             padding: var(--padding);
-            border-left: 1px solid black;
-            border-top: 1px solid transparent;
+            border-left: 1px solid transparent;
+            border-top: 1px solid black;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((4.10 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((1.27 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((6.75 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((1.05 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((1.15 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((14.21 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
         #canhoto .identificacao-assinatura-recebedor {
             padding: var(--padding);
             border-left: 1px solid transparent;
-            border-top: 1px solid transparent;
+            border-top: 1px solid black;
             border-right: 1px solid black;
-            border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((12 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((4.35 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((1.27 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            border-bottom: 1px solid transparent;
+            height: calc(((9.21 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((1.02 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((1.15 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((5 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
         .separator {
-            border-bottom: 1px dashed black;
-            width: calc(((20.57 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            height: 1px;
-            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((2.34 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            border-right: 1px dashed black;
+            width: 1px;
+            height: calc(((21 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            left: calc(((2.28 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((0 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -182,10 +182,10 @@
             border-top: 1px solid black;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((3.92 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((10 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((2.54 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((3.10 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((11.43 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((2.41 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((0.47 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
             display: flex;
             flex-direction: column;
@@ -198,10 +198,10 @@
             border-top: 1px solid black;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((3.92 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((2.54 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((10.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((2.54 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((3.10 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((3.05 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((13.84 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((0.47 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
             display: flex;
             flex-direction: column;
@@ -215,10 +215,10 @@
             border-top: 1px solid black;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((1.48 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((8 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((12.79 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((2.54 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((1.19 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((12.57 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((16.89 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((0.47 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
             display: flex;
             justify-content: center;
@@ -233,6 +233,8 @@
             height: calc(((1 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             width: calc(((7.20 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
             position: relative;
+
+            display: none;
         }
 
         #dados-NFe .chave-acesso {
@@ -258,10 +260,10 @@
             border-top: 1px solid black;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((1.48 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((8 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((12.79 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((4.98 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((1.19 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((12.57 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((16.89 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((2.38 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
             display: flex;
             justify-content: center;
@@ -276,23 +278,23 @@
             border-top: 1px solid transparent;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((12.54 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((6.46 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((13.97 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((2.92 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((3.57 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
         #dados-NFe .dados-nfe {
             padding: var(--padding);
-            border-left: 1px solid transparent;
+            border-left: 1px s0,67olid transparent;
             border-top: 1px solid transparent;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((8 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((12.79 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((6.46 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((12.57 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((16.89 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((3.57 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -302,10 +304,10 @@
             border-top: 1px solid transparent;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((6.86 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((7.31 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((8.89 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((2.92 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((4.21 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -315,10 +317,10 @@
             border-top: 1px solid transparent;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((6.86 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((7.11 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((7.31 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((8.89 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((11.81 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((4.21 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -328,10 +330,10 @@
             border-top: 1px solid transparent;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((6.82 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((13.97 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((7.31 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((8.76 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((20.70 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((4.21 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -341,10 +343,10 @@
             border-top: 1px solid black;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((12.32 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((8.58 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((16.38 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((2.92 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((4.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -354,10 +356,10 @@
             border-top: 1px solid black;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((5.32 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((12.57 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((8.58 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((5.84 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((19.30 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((4.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -367,10 +369,10 @@
             border-top: 1px solid black;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((2.92 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((17.89 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((8.58 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((4.32 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((25.14 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((4.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -380,10 +382,10 @@
             border-top: 1px solid transparent;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((10.16 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((9.43 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((12.45 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((2.92 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((5.49 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -393,10 +395,10 @@
             border-top: 1px solid transparent;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((4.83 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((10.41 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((9.43 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((5.84 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((15.37 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((5.49 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -406,10 +408,10 @@
             border-top: 1px solid transparent;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((2.65 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((15.24 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((9.43 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((3.94 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((21.21 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((5.49 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -419,10 +421,10 @@
             border-top: 1px solid transparent;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((2.92 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((17.89 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((9.43 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((4.32 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((25.14 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((5.49 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -432,10 +434,10 @@
             border-top: 1px solid transparent;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((7.11 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((10.28 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((10.03 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((2.92 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((6.13 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -445,10 +447,10 @@
             border-top: 1px solid transparent;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((4.06 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((7.36 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((10.28 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((5.08 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((12.95 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((6.13 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -458,10 +460,10 @@
             border-top: 1px solid transparent;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((1.14 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((11.42 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((10.28 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((1.27 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((18.03 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((6.13 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -471,10 +473,10 @@
             border-top: 1px solid transparent;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((5.33 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((12.56 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((10.28 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((5.84 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((19.30 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((6.13 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -484,10 +486,10 @@
             border-top: 1px solid transparent;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((2.92 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((17.89 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((10.28 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((4.32 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((25.14 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((6.13 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -497,10 +499,10 @@
             border-top: 1px solid black;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((20.57 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((11.51 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((26.54 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((2.92 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((6.77 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -510,10 +512,10 @@
             border-top: 1px solid black;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((4.06 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((12.78 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((5.33 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((2.92 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((7.41 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -523,10 +525,10 @@
             border-top: 1px solid black;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((4.06 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((4.31 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((12.78 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((5.33 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((8.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((7.41 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -536,10 +538,10 @@
             border-top: 1px solid black;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((4.06 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((8.37 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((12.78 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((5.33 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((13.58 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((7.41 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -549,10 +551,10 @@
             border-top: 1px solid black;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((4.06 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((12.43 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((12.78 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((5.33 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((18.91 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((7.41 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -562,10 +564,10 @@
             border-top: 1px solid black;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((4.32 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((16.49 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((12.78 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((5.21 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((24.24 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((7.41 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -575,10 +577,10 @@
             border-top: 1px solid transparent;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((3.30 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((13.63 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((4.32 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((2.92 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((8.05 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -588,10 +590,10 @@
             border-top: 1px solid transparent;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((3.30 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((3.55 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((13.63 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((4.32 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((7.24 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((8.05 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -601,10 +603,10 @@
             border-top: 1px solid transparent;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((3.30 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((6.85 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((13.63 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((4.32 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((11.56 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((8.05 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -614,10 +616,10 @@
             border-top: 1px solid transparent;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((3.30 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((10.15 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((13.63 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((4.32 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((15.88 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((8.05 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -627,10 +629,10 @@
             border-top: 1px solid transparent;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((3.30 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((13.45 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((13.63 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((4.32 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((20.20 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((8.05 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -640,10 +642,10 @@
             border-top: 1px solid transparent;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((4.06 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((16.75 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((13.63 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((4.95 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((24.52 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((8.05 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -653,10 +655,10 @@
             border-top: 1px solid black;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((9.02 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((14.90 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((11.56 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((2.92 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((8.69 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -666,10 +668,10 @@
             border-top: 1px solid black;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             width: calc(((2.79 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((9.27 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((14.90 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            left: calc(((14.48 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((8.69 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -679,10 +681,10 @@
             border-top: 1px solid black;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((1.78 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((12.06 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((14.90 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((2.54 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((14.48 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((8.69 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -692,10 +694,10 @@
             border-top: 1px solid black;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((2.29 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((13.84 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((14.90 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((3.81 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((19.81 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((8.69 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -705,10 +707,10 @@
             border-top: 1px solid black;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((0.76 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((16.13 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((14.90 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((1.02 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((23.62 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((8.69 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -718,10 +720,10 @@
             border-top: 1px solid black;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((3.94 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((16.89 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((14.90 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((4.83 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((24.64 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((8.69 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -731,10 +733,10 @@
             border-top: 1px solid transparent;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((9.02 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((15.75 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((11.56 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((2.92 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((9.33 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -744,10 +746,10 @@
             border-top: 1px solid transparent;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((6.86 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((9.27 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((15.75 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((9.14 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((14.48 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((9.33 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -757,10 +759,10 @@
             border-top: 1px solid transparent;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((0.76 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((16.13 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((15.75 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((1.02 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((23.62 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((9.33 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -770,10 +772,10 @@
             border-top: 1px solid transparent;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((3.94 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((16.89 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((15.75 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((4.83 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((24.64 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((9.33 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -783,10 +785,10 @@
             border-top: 1px solid transparent;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((2.92 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((16.60 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((3.56 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((2.92 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((9.97 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -796,10 +798,10 @@
             border-top: 1px solid transparent;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((3.05 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((3.17 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((16.60 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((3.81 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((6.48 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((9.97 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -809,10 +811,10 @@
             border-top: 1px solid transparent;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((3.05 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((6.22 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((16.60 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((4.19 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((10.29 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((9.97 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -822,10 +824,10 @@
             border-top: 1px solid transparent;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((4.83 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((9.27 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((16.60 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((5.08 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((14.48 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((9.97 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -835,10 +837,10 @@
             border-top: 1px solid transparent;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((3.43 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((14.10 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((16.60 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((5.08 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((19.56 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((9.97 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -848,10 +850,10 @@
             border-top: 1px solid transparent;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((3.30 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((17.53 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((16.60 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.64 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((4.83 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((24.64 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((9.97 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -861,10 +863,10 @@
             border-top: 1px solid black;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((6.77 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((20.57 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((17.87 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((6.67 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((26.54 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((2.92 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((10.61 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -874,10 +876,10 @@
             border-top: 1px solid black;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((5.08 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((25.06 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.67 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((6.60 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((2.92 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((17.28 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -887,10 +889,10 @@
             border-top: 1px solid black;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((5.08 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((5.33 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((25.06 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.67 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((6.60 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((9.52 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((17.28 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -900,10 +902,10 @@
             border-top: 1px solid black;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((5.08 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((10.41 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((25.06 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.67 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((6.60 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((16.12 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((17.28 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -913,10 +915,10 @@
             border-top: 1px solid black;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((0.85 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((5.33 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((15.49 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((25.06 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((0.67 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((6.73 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((22.72 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((17.28 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -926,10 +928,10 @@
             border-top: 1px solid black;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((3.07 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((12.95 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((0.25 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((26.33 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((2.94 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((19.05 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((2.92 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((17.95 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -939,10 +941,10 @@
             border-top: 1px solid black;
             border-right: 1px solid black;
             border-bottom: 1px solid black;
-            height: calc(((3.07 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
-            width: calc(((7.62 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            left: calc(((13.17 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
-            top: calc(((26.33 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            height: calc(((2.94 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
+            width: calc(((7.49 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            left: calc(((21.97 * var(--A4-width-in-px)) / var(--A4-width-in-cm)) * 1px);
+            top: calc(((17.95 * var(--A4-height-in-px)) / var(--A4-height-in-cm)) * 1px);
             position: absolute;
         }
 
@@ -954,6 +956,8 @@
         h3#calculo-issqn,
         h3#dados-adicionais {
             font-size: 28px;
+
+            display: none;
         }
 
         h3#destinatario {
@@ -1010,23 +1014,23 @@
 <body class="container">
     <section id="canhoto">
             <div class="descricao">
-                <p class="text-sm text-center">Recebemos de {{emitente.nome}} os produtos e/ou serviços constantes na NFe indicada ao lado.</p>
-                <p class="text-sm text-center">Emissão: {{nfe.dataHoraEmissao}} Dest/Reme: {{destinatario.nome}} Valor Total:
+                <p class="text-sm text-center" style="writing-mode: sideways-lr;">Recebemos de {{emitente.nome}} os produtos e/ou serviços constantes na NFe indicada ao lado.</p>
+                <p class="text-sm text-center" style="writing-mode: sideways-lr;">Emissão: {{nfe.dataHoraEmissao}} Dest/Reme: {{destinatario.nome}} Valor Total:
                     {{nfe.total}} </p>
             </div>
 
             <div class="data-recebimento">
-                <p class="text-sm label">DATA DO RECEBIMENTO</p>
+                <p class="text-sm label" style="writing-mode: sideways-lr;">DATA DO RECEBIMENTO</p>
             </div>
 
             <div class="identificacao-assinatura-recebedor">
-                <p class="text-sm label">IDENTIFICAÇÃO E ASSINATURA DO RECEBEDOR</p>
+                <p class="text-sm label" style="writing-mode: sideways-lr;">IDENTIFICAÇÃO E ASSINATURA DO RECEBEDOR</p>
             </div>
 
         <div class="nfe-numero-serie">
-            <p class="text-lg text-center font-bold">NF-e</p>
-            <p class="text-lg text-center font-bold" style="margin: 20px;">N° {{nfe.numero}}</p>
-            <p class="text-lg text-center font-bold">Série {{nfe.serie}}</p>
+            <p class="text-lg text-center font-bold" style="writing-mode: sideways-lr;">NF-e</p>
+            <p class="text-lg text-center font-bold" style="margin: 20px; writing-mode: sideways-lr;">N° {{nfe.numero}}</p>
+            <p class="text-lg text-center font-bold" style="writing-mode: sideways-lr;">Série {{nfe.serie}}</p>
         </div>
     </section>
 

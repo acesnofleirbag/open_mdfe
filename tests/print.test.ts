@@ -215,7 +215,7 @@ test("DANFE: portrait", () => {
 
     // expect: Check the file on the output directory
     // WARN: Output configured in Linux environment
-    writeFileSync("/tmp/DANFE.html", res);
+    writeFileSync("/tmp/DANFE.portrait.html", res);
 });
 
 test("DANFE: landscape", () => {
@@ -407,5 +407,5 @@ test("DANFE: landscape", () => {
 
     // expect: Check the file on the output directory
     // WARN: Output configured in Linux environment
-    writeFileSync("/tmp/DANFE.html", res);
+    writeFileSync("/tmp/DANFE.landscape.html", res);
 });

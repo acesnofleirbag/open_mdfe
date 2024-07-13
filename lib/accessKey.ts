@@ -21,7 +21,14 @@ export class AccessKey {
 
         return (
             payload.ide.cUF +
-            "@@@" +
+            new Date(payload.ide.dhEmi)
+                .toLocaleString("pt-BR", {
+                    month: "2-digit",
+                    year: "2-digit",
+                })
+                .split("/")
+                .reverse()
+                .join("") +
             // @ts-ignore
             payload.emit.CNPJ +
             payload.ide.mod +

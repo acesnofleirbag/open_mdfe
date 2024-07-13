@@ -216,10 +216,10 @@ export class SEFAZ implements SefazOperations {
         const environment = this.getEnvironment();
 
         const envelope = this.makeSoapEnvelope(payload, "NfeStatusServico4");
-        const signedEnvelope = this.signer.signXML_X509(envelope, "@@@");
+        const signedEnvelope = this.signer.signXML_X509(envelope, "consStatServ");
 
         const { data } = await this.httpClient.post(
-            this.getAuthorizerByUF(this.UF).authorization[environment],
+            this.getAuthorizerByUF(this.UF).serviceStatus[environment],
             signedEnvelope,
         );
 
@@ -229,7 +229,7 @@ export class SEFAZ implements SefazOperations {
     async fetchRegister(payload: FetchRegisterRequest): Promise<FetchRegisterResponse> {
         const environment = this.getEnvironment();
 
-        const envelope = this.makeSoapEnvelope(payload, "@@@");
+        const envelope = this.makeSoapEnvelope(payload, "NfeConsultaCadastro");
         const signedEnvelope = this.signer.signXML_X509(envelope, "@@@");
 
         const { data } = await this.httpClient.post(
@@ -244,7 +244,7 @@ export class SEFAZ implements SefazOperations {
         const environment = this.getEnvironment();
 
         const envelope = this.makeSoapEnvelope(payload, "NFeDistribuicaoDFe");
-        const signedEnvelope = this.signer.signXML_X509(envelope, "@@@");
+        const signedEnvelope = this.signer.signXML_X509(envelope, "distDFeInt");
 
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).authorization[environment],
@@ -257,11 +257,11 @@ export class SEFAZ implements SefazOperations {
     async registerEvent(payload: EventReceptionRequest): Promise<EventReceptionResponse> {
         const environment = this.getEnvironment();
 
-        const envelope = this.makeSoapEnvelope(payload, "@@@");
-        const signedEnvelope = this.signer.signXML_X509(envelope, "@@@");
+        const envelope = this.makeSoapEnvelope(payload, "NFeRecepcaoEvento");
+        const signedEnvelope = this.signer.signXML_X509(envelope, "infEvento");
 
         const { data } = await this.httpClient.post(
-            this.getAuthorizerByUF(this.UF).authorization[environment],
+            this.getAuthorizerByUF(this.UF).eventReception[environment],
             signedEnvelope,
         );
 
@@ -272,11 +272,11 @@ export class SEFAZ implements SefazOperations {
     async cancel(payload: CancelRequest): Promise<CancelResponse> {
         const environment = this.getEnvironment();
 
-        const envelope = this.makeSoapEnvelope(payload, "@@@");
-        const signedEnvelope = this.signer.signXML_X509(envelope, "@@@");
+        const envelope = this.makeSoapEnvelope(payload, "NFeRecepcaoEvento");
+        const signedEnvelope = this.signer.signXML_X509(envelope, "chNFeRef");
 
         const { data } = await this.httpClient.post(
-            this.getAuthorizerByUF(this.UF).authorization[environment],
+            this.getAuthorizerByUF(this.UF).eventReception[environment],
             signedEnvelope,
         );
 
@@ -286,11 +286,11 @@ export class SEFAZ implements SefazOperations {
     async sendFixLetter(payload: FixLetterRequest): Promise<FixLetterResponse> {
         const environment = this.getEnvironment();
 
-        const envelope = this.makeSoapEnvelope(payload, "@@@");
-        const signedEnvelope = this.signer.signXML_X509(envelope, "@@@");
+        const envelope = this.makeSoapEnvelope(payload, "NFeRecepcaoEvento");
+        const signedEnvelope = this.signer.signXML_X509(envelope, "xCondUso");
 
         const { data } = await this.httpClient.post(
-            this.getAuthorizerByUF(this.UF).authorization[environment],
+            this.getAuthorizerByUF(this.UF).eventReception[environment],
             signedEnvelope,
         );
 

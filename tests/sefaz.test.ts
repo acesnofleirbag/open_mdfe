@@ -205,9 +205,60 @@ test.todo("Fetch NF-e", async () => {
 
 test.todo("Check batch authorization", async () => {});
 
-test.todo("Make useless", async () => {});
+test.todo("Make useless", async () => {
+    // arrange
+    const cert = {
+        key: __dirname + "/cert/key.pem",
+        cert: __dirname + "/cert/cert.pem",
+    };
+    const sefaz = new SEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
 
-test.todo("Check service status", async () => {});
+    // act
+    const res = await sefaz.makeUseless({
+        inutNFe: {
+            $: { versao: "4.00" },
+            infInut: {
+                $: { Id: "" },
+                xServ: "INUTILIZAR",
+                tpAmb: EnvironmentIdentifier.HOMOLOGATION,
+                cUF: UFCodeIBGE.SP,
+                ano: "2024",
+                mod: "",
+                CNPJ: "",
+                serie: "",
+                xJust: "Open MDF-e Test",
+                nNFFin: "",
+                nNFIni: "",
+            },
+            Signature: "",
+        },
+    });
+
+    // assert
+    expect(res).toEqual(1);
+});
+
+test.only("Check service status", async () => {
+    // arrange
+    const cert = {
+        key: __dirname + "/cert/key.pem",
+        cert: __dirname + "/cert/cert.pem",
+    };
+    const sefaz = new SEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
+
+    // act
+    const res = await sefaz.checkServiceStatus({
+        consStatServ: {
+            $: { versao: "4.00" },
+            cUF: UFCodeIBGE.SP,
+            tpAmb: EnvironmentIdentifier.HOMOLOGATION,
+            xServ: "STATUS",
+        },
+    });
+
+    // assert
+    console.log(require("util").inspect(res, false, null, true));
+});
 
 test.todo("Fetch register", async () => {});
 
@@ -217,7 +268,7 @@ test.todo("Register event", async () => {});
 
 test.todo("Cancel NF-e", async () => {});
 
-test.todo("Send fix letter", () => {});
+test.todo("Send fix letter", async () => {});
 
 test.todo("Manifest recipient", () => {});
 
@@ -225,4 +276,4 @@ test.todo("Generate EPEC", () => {});
 
 test.todo("Request extension", () => {});
 
-test.todo("Assign transporter", () => {});
+test.todo("Assign transporter", async () => {});

@@ -9,9 +9,12 @@ export enum FixLetterText {
 
 // schema: TEnvCCe
 export type FixLetterRequest = {
-    versao: null;
+    versao: "1.00";
+    /** Descrição do Evento - "Carta de Correção" */
     descEvento: "Carta de Correção" | "Carta de Correcao";
+    /** Correção a ser considerada */
     xCorrecao: string;
+    /** Texto Fixo com as condições de uso da Carta de Correção */
     xCondUso: FixLetterText;
 };
 

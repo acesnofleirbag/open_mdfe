@@ -1,5 +1,5 @@
-import { EnvironmentIdentifier, UFCodeIBGE } from "./nfe";
-import { VERSION } from "./version";
+import { EnvironmentIdentifier, UFCodeIBGE } from "../general";
+import { VERSION } from "../version";
 
 // web service: NfeInutilizacao
 

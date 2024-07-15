@@ -1,5 +1,5 @@
-import { EnvironmentIdentifier } from "./nfe";
-import { VERSION } from "./version";
+import { EnvironmentIdentifier } from "../general";
+import { VERSION } from "../version";
 
 // web service: NfeDistribuicaoDFe
 

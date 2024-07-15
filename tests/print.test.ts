@@ -23,7 +23,7 @@ import {
     TaxRegimeCode,
     UFCodeIBGE,
     UFIssuer,
-} from "../lib/@types/layouts/nfe";
+} from "../lib/@types/layouts/nfe/nfe";
 import { writeFileSync } from "node:fs";
 
 test("DANFE: portrait", () => {

@@ -1,4 +1,4 @@
-import { UFCodeIBGE, UFIssuer } from "./nfe";
+import { UFCodeIBGE, UFIssuer } from "../general";
 
 type __QueryInformation = {
     /** Versão do Aplicativo que processou o pedido de consulta de cadastro */

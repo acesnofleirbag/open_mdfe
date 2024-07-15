@@ -1,10 +1,10 @@
-import { EnvironmentIdentifier, UFCodeIBGE } from "./nfe";
-import { VERSION } from "./version";
+import { EnvironmentIdentifier, UFCodeIBGE } from "../general";
+import { VERSION } from "../version";
 
 // web service: NfeStatusServico
 
 // schema: TConsStatServ
-export type ServiceStatusRequest = {
+export type NFeServiceStatusRequest = {
     /** Tipo Pedido de Consulta do Status do Serviço */
     consStatServ: {
         $: { versao: VERSION };
@@ -21,7 +21,7 @@ export type ServiceStatusRequest = {
 };
 
 // schema: TRetConsStatServ
-export type ServiceStatusResponse = {
+export type NFeServiceStatusResponse = {
     /** Tipo Resultado da Consulta do Status do Serviço */
     retConsStatServ: {
         $: { versao: VERSION };

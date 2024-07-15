@@ -1,7 +1,7 @@
 import { AccessKey } from "./accessKey";
 import { createHash } from "crypto";
 import { XMLClient } from "./adapters/xml";
-import { TechnicalResponsible } from "./@types/layouts/nfe";
+import { TechnicalResponsible } from "./@types/layouts/nfe/nfe";
 
 // CSRT (Código de Segurança do Responsável Técnico)
 export class CSRT {

@@ -1,5 +1,6 @@
-import { EnvironmentIdentifier, IBGEOrganCode } from "./nfe";
-import { VERSION } from "./version";
+import { EnvironmentIdentifier } from "../general";
+import { IBGEOrganCode } from "./nfe";
+import { VERSION } from "../version";
 
 type __EventInformation__Type1 = {
     $: { Id: string };

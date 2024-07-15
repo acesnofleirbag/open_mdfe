@@ -1,5 +1,6 @@
-import { EnvironmentIdentifier, SefazNFE, UFCodeIBGE, WebServiceMode } from "./nfe";
-import { VERSION } from "./version";
+import { EnvironmentIdentifier, UFCodeIBGE } from "../general";
+import { SefazNFE, WebServiceMode } from "./nfe";
+import { VERSION } from "../version";
 
 // web service: NfeAutorizacao
 

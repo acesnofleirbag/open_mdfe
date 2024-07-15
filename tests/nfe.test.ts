@@ -23,10 +23,10 @@ import {
     UFCodeIBGE,
     UFIssuer,
     WebServiceMode,
-} from "../lib/@types/layouts/nfe";
-import { AuthorizationRequest } from "../lib/@types/layouts/authorization";
-import { ProtocolFetchingRequest } from "../lib/@types/layouts/protocolFetching";
-import { SEFAZ } from "../lib/sefaz";
+} from "../lib/@types/layouts/nfe/nfe";
+import { AuthorizationRequest } from "../lib/@types/layouts/nfe/authorization";
+import { ProtocolFetchingRequest } from "../lib/@types/layouts/nfe/protocolFetching";
+import { NFeSEFAZ } from "../lib/sefaz";
 
 // NOTE: To generate a self signed certificate for envelope structure checking, execute:
 // $ openssl req -nodes -new -x509 -keyout key.pem -out cert.pem
@@ -39,7 +39,7 @@ test("Request authorization", async () => {
         key: __dirname + "/cert/key.pem",
         cert: __dirname + "/cert/cert.pem",
     };
-    const sefaz = new SEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
+    const sefaz = new NFeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
     const nfe = new NFE({
         infNFE: {
             $: {
@@ -185,7 +185,7 @@ test.todo("Fetch NF-e", async () => {
         key: __dirname + "/cert/key.pem",
         cert: __dirname + "/cert/cert.pem",
     };
-    const sefaz = new SEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
+    const sefaz = new NFeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
 
     const envelope: ProtocolFetchingRequest = {
         consSitNFe: {
@@ -211,7 +211,7 @@ test.todo("Make useless", async () => {
         key: __dirname + "/cert/key.pem",
         cert: __dirname + "/cert/cert.pem",
     };
-    const sefaz = new SEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
+    const sefaz = new NFeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
 
     // act
     const res = await sefaz.makeUseless({
@@ -244,7 +244,7 @@ test.only("Check service status", async () => {
         key: __dirname + "/cert/key.pem",
         cert: __dirname + "/cert/cert.pem",
     };
-    const sefaz = new SEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
+    const sefaz = new NFeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
 
     // act
     const res = await sefaz.checkServiceStatus({

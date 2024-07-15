@@ -5,13 +5,11 @@ import {
     CST__Type1,
     CST__Type2,
     CST__Type3,
-    CodeCityIBGE,
     ConcessionAct,
     DENATRANColorCode,
     DanfePrintFormat,
     DeterminationMethod__Type1,
     DeterminationMethod__Type2,
-    EnvironmentIdentifier,
     ExemptionReason__Type1,
     ExemptionReason__Type2,
     ExemptionReason__Type3,
@@ -47,13 +45,12 @@ import {
     TaxIncentiveIndicator,
     TaxRegimeCode,
     TransportRoute,
-    UFCodeIBGE,
-    UFIssuer,
     VehicleCondition,
     Vin,
-} from "../@types/layouts/nfe";
-import { RegexSEFAZ } from "./regex";
-import { ParserUtility } from "../utils/parser";
+} from "../../@types/layouts/nfe/nfe";
+import { RegexSEFAZ } from "../regex";
+import { ParserUtility } from "../../utils/parser";
+import { CodeCityIBGE, EnvironmentIdentifier, UFCodeIBGE, UFIssuer } from "../../@types/layouts/general";
 
 const Address = z.object({
     xLgr: z
@@ -2489,7 +2486,7 @@ const Transport__Type3 = __Transport.extend({
 
 const Transport = Transport__Type1.or(Transport__Type2).or(Transport__Type3);
 
-export const NFEValidator = z.object({
+export const NFeValidator = z.object({
     infNFE: z.object({
         $: z.object({
             versao: z.string().transform((str) => str && ParserUtility.scape(str)),

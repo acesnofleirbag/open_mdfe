@@ -1,13 +1,13 @@
-import { SefazNFE } from "./@types/layouts/nfe";
+import { SefazNFE } from "./@types/layouts/nfe/nfe";
 import { XMLClient } from "./adapters/xml";
-import { NFEValidator } from "./core/validator";
+import { NFeValidator } from "./core/validator/nfe";
 
 export class NFE {
     private payload: SefazNFE;
     private XML: XMLClient;
 
     constructor(payload: SefazNFE) {
-        this.payload = NFEValidator.parse(payload);
+        this.payload = NFeValidator.parse(payload);
         this.XML = new XMLClient();
     }
 

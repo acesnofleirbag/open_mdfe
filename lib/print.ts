@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import * as Handlebars from "handlebars";
-import { SefazNFE } from "./@types/layouts/nfe";
+import { SefazNFE } from "./@types/layouts/nfe/nfe";
 import { AccessKey } from "./accessKey";
 
 export class Print {
@@ -131,4 +131,6 @@ export class Print {
             naturezaOperacao: nfe.ide.natOp,
         });
     }
+
+    DACTE() {}
 }

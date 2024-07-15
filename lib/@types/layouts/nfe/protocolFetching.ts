@@ -1,5 +1,6 @@
-import { EnvironmentIdentifier, IBGEOrganCode, UFCodeIBGE } from "./nfe";
-import { VERSION } from "./version";
+import { EnvironmentIdentifier, UFCodeIBGE } from "../general";
+import { IBGEOrganCode } from "./nfe";
+import { VERSION } from "../version";
 
 type __Event = {
     $: { Id: string };
@@ -32,7 +33,7 @@ type __EventReturn = {
 // web service: NfeConsultaProtocolo
 
 // schema: TConsSitNFe
-export type ProtocolFetchingRequest = {
+export type NFeProtocolFetchingRequest = {
     consSitNFe: {
         $: { versao: VERSION };
         tpAmb: EnvironmentIdentifier;
@@ -42,7 +43,7 @@ export type ProtocolFetchingRequest = {
 };
 
 // schema: TRetConsSitNFe
-export type ProtocolFetchingResponse = {
+export type NFeProtocolFetchingResponse = {
     retConsSitNFe: {
         $: { versao: VERSION };
         tpAmb: EnvironmentIdentifier;

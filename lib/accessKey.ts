@@ -1,5 +1,5 @@
 import { AccessKeyLayout, AccessKeyVersion } from "./@types/accessKey";
-import { SefazNFE } from "./@types/layouts/nfe";
+import { SefazNFE } from "./@types/layouts/nfe/nfe";
 import { Env } from "./core/environments";
 import { InvalidAccessKeyError } from "./errors/invalidAccessKeyError";
 

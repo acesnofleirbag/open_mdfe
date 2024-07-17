@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import * as Handlebars from "handlebars";
 import { SefazNFE } from "./@types/layouts/nfe/nfe";
 import { AccessKey } from "./accessKey";
+import { SefazCTE } from "./@types/layouts/cte/cte";
 
 export class Print {
     DANFE(mode: "portrait" | "landscape", payload: SefazNFE) {
@@ -132,5 +133,7 @@ export class Print {
         });
     }
 
-    DACTE() {}
+    DACTE(_mode: "portrait" | "landscape", _payload: SefazCTE) {
+        // TODO: DACTE on HTML format
+    }
 }

@@ -3,10 +3,8 @@ import { expect, test } from "vitest";
 import { NFE } from "../lib/nfe";
 import {
     BuyerPresenceOnEstablishmentAtTransactionIndicator,
-    CodeCityIBGE,
     DanfePrintFormat,
     DeterminationMethod__Type1,
-    EnvironmentIdentifier,
     ExibilidadeISS,
     IssuanceMode,
     IssuingProcess,
@@ -20,13 +18,12 @@ import {
     TaxDocumentType,
     TaxIncentiveIndicator,
     TaxRegimeCode,
-    UFCodeIBGE,
-    UFIssuer,
     WebServiceMode,
 } from "../lib/@types/layouts/nfe/nfe";
 import { AuthorizationRequest } from "../lib/@types/layouts/nfe/authorization";
-import { ProtocolFetchingRequest } from "../lib/@types/layouts/nfe/protocolFetching";
+import { NFeProtocolFetchingRequest } from "../lib/@types/layouts/nfe/protocolFetching";
 import { NFeSEFAZ } from "../lib/sefaz";
+import { CodeCityIBGE, EnvironmentIdentifier, UFCodeIBGE, UFIssuer } from "../lib/@types/layouts/general";
 
 // NOTE: To generate a self signed certificate for envelope structure checking, execute:
 // $ openssl req -nodes -new -x509 -keyout key.pem -out cert.pem
@@ -187,7 +184,7 @@ test.todo("Fetch NF-e", async () => {
     };
     const sefaz = new NFeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
 
-    const envelope: ProtocolFetchingRequest = {
+    const envelope: NFeProtocolFetchingRequest = {
         consSitNFe: {
             $: { versao: "4.00" },
             tpAmb: EnvironmentIdentifier.HOMOLOGATION,
@@ -230,7 +227,6 @@ test.todo("Make useless", async () => {
                 nNFFin: "",
                 nNFIni: "",
             },
-            Signature: "",
         },
     });
 

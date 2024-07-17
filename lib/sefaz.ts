@@ -464,7 +464,7 @@ export class CTeSEFAZ implements CTeSefazOperations {
         const environment = this.getEnvironment();
 
         const envelope = this.makeSoapEnvelope(payload, "CTeRecepcaoGTVeV4");
-        const signedEnvelope = this.signer.signXML_X509(envelope, "@@@");
+        const signedEnvelope = this.signer.signXML_X509(envelope, "infCte");
 
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).GTVeReception[environment],
@@ -478,7 +478,7 @@ export class CTeSEFAZ implements CTeSefazOperations {
         const environment = this.getEnvironment();
 
         const envelope = this.makeSoapEnvelope(payload, "CTeConsultaV4");
-        const signedEnvelope = this.signer.signXML_X509(envelope, "@@@");
+        const signedEnvelope = this.signer.signXML_X509(envelope, "consSitCTe");
 
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).protocolFetching[environment],
@@ -492,7 +492,7 @@ export class CTeSEFAZ implements CTeSefazOperations {
         const environment = this.getEnvironment();
 
         const envelope = this.makeSoapEnvelope(payload, "CTeStatusServicoV4");
-        const signedEnvelope = this.signer.signXML_X509(envelope, "@@@");
+        const signedEnvelope = this.signer.signXML_X509(envelope, "consStatServCTe");
 
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).serviceStatus[environment],
@@ -511,7 +511,7 @@ export class CTeSEFAZ implements CTeSefazOperations {
         const environment = this.getEnvironment();
 
         const envelope = this.makeSoapEnvelope(payload, "CTeRecepcaoEventoV4");
-        const signedEnvelope = this.signer.signXML_X509(envelope, "@@@");
+        const signedEnvelope = this.signer.signXML_X509(envelope, "infEvento");
 
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).eventReception[environment],

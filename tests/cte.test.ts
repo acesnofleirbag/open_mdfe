@@ -1,10 +1,15 @@
+import { EnvironmentIdentifier, UFIssuer } from "../lib/@types/layouts/general";
 import { CTeSEFAZ } from "../lib/sefaz";
 import { version as __VERSION__ } from "../package.json";
 import { expect, test } from "vitest";
 
 test("Request transport authorization", async () => {
     // arrange
-    const sefaz = new CTeSEFAZ();
+    const cert = {
+        key: __dirname + "/cert/key.pem",
+        cert: __dirname + "/cert/cert.pem",
+    };
+    const sefaz = new CTeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
 
     // act
 
@@ -14,7 +19,11 @@ test("Request transport authorization", async () => {
 
 test("Request other services authorization", async () => {
     // arrange
-    const sefaz = new CTeSEFAZ();
+    const cert = {
+        key: __dirname + "/cert/key.pem",
+        cert: __dirname + "/cert/cert.pem",
+    };
+    const sefaz = new CTeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
 
     // act
 
@@ -24,7 +33,11 @@ test("Request other services authorization", async () => {
 
 test("Request GTVe authorization", async () => {
     // arrange
-    const sefaz = new CTeSEFAZ();
+    const cert = {
+        key: __dirname + "/cert/key.pem",
+        cert: __dirname + "/cert/cert.pem",
+    };
+    const sefaz = new CTeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
 
     // act
 
@@ -34,7 +47,11 @@ test("Request GTVe authorization", async () => {
 
 test("Fetch CTE", async () => {
     // arrange
-    const sefaz = new CTeSEFAZ();
+    const cert = {
+        key: __dirname + "/cert/key.pem",
+        cert: __dirname + "/cert/cert.pem",
+    };
+    const sefaz = new CTeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
 
     // act
 
@@ -44,7 +61,11 @@ test("Fetch CTE", async () => {
 
 test("Check service status", async () => {
     // arrange
-    const sefaz = new CTeSEFAZ();
+    const cert = {
+        key: __dirname + "/cert/key.pem",
+        cert: __dirname + "/cert/cert.pem",
+    };
+    const sefaz = new CTeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
 
     // act
 
@@ -54,7 +75,11 @@ test("Check service status", async () => {
 
 test("Query registration", async () => {
     // arrange
-    const sefaz = new CTeSEFAZ();
+    const cert = {
+        key: __dirname + "/cert/key.pem",
+        cert: __dirname + "/cert/cert.pem",
+    };
+    const sefaz = new CTeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
 
     // act
 
@@ -64,7 +89,11 @@ test("Query registration", async () => {
 
 test("Register event", async () => {
     // arrange
-    const sefaz = new CTeSEFAZ();
+    const cert = {
+        key: __dirname + "/cert/key.pem",
+        cert: __dirname + "/cert/cert.pem",
+    };
+    const sefaz = new CTeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
 
     // act
 

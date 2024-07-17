@@ -28,7 +28,7 @@ export type TransportAuthorizationResponse = {
         cStat: string;
         /** Descrição literal do status do do retorno da consulta */
         xMotivo: string;
-        /** Reposta ao processamento do CT-e */
+        /** Resposta ao processamento do CT-e */
         protCTe: {
             $: { versao: VERSION; Id: string };
             /** Dados do protocolo de status */

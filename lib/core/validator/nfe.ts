@@ -2487,104 +2487,126 @@ const Transport__Type3 = __Transport.extend({
 const Transport = Transport__Type1.or(Transport__Type2).or(Transport__Type3);
 
 export const NFeValidator = z.object({
-    infNFE: z.object({
-        $: z.object({
-            versao: z.string().transform((str) => str && ParserUtility.scape(str)),
-            Id: z.string().transform((str) => str && ParserUtility.scape(str)),
-        }),
-        ide: z.object({
-            cUF: z.nativeEnum(UFCodeIBGE),
-            cNF: z
-                .string()
-                .regex(new RegExp("[0-9]{8}"))
-                .transform((str) => str && ParserUtility.scape(str)),
-            natOp: z
-                .string()
-                .min(1)
-                .max(60)
-                .transform((str) => str && ParserUtility.scape(str)),
-            mod: z.nativeEnum(TaxDocumentModel),
-            serie: z
-                .string()
-                .regex(RegexSEFAZ.Serie)
-                .transform((str) => str && ParserUtility.scape(str)),
-            nNF: z
-                .string()
-                .regex(RegexSEFAZ.NFENumber)
-                .transform((str) => str && ParserUtility.scape(str)),
-            dhEmi: z
-                .string()
-                .regex(RegexSEFAZ.DateTimeUTC)
-                .transform((str) => str && ParserUtility.scape(str)),
-            dhSaiEnt: z
-                .string()
-                .regex(RegexSEFAZ.DateTimeUTC)
-                .transform((str) => str && ParserUtility.scape(str))
-                .optional(),
-            tpNF: z.nativeEnum(TaxDocumentType),
-            idDest: z.nativeEnum(OperationDestinationLocationIdentifier),
-            cMunFG: z.nativeEnum(CodeCityIBGE),
-            tpImp: z.nativeEnum(DanfePrintFormat),
-            tpEmis: z.nativeEnum(IssuanceMode),
-            cDV: z
-                .string()
-                .regex(new RegExp("[0-9]{1}"))
-                .transform((str) => str && ParserUtility.scape(str)),
-            tpAmb: z.nativeEnum(EnvironmentIdentifier),
-            finNFe: z.nativeEnum(NFEGoal),
-            indFinal: z.nativeEnum(OperationWithEndConsumer),
-            indPres: z.nativeEnum(BuyerPresenceOnEstablishmentAtTransactionIndicator),
-            indIntermed: z.nativeEnum(IntermediaryIndicator).optional(),
-            procEmi: z.nativeEnum(IssuingProcess),
-            verProc: z
-                .string()
-                .min(1)
-                .max(20)
-                .transform((str) => str && ParserUtility.scape(str)),
-            dhCont: z
-                .string()
-                .regex(RegexSEFAZ.DateTimeUTC)
-                .transform((str) => str && ParserUtility.scape(str))
-                .optional(),
-            xJust: z
-                .string()
-                .min(15)
-                .max(256)
-                .transform((str) => str && ParserUtility.scape(str))
-                .optional(),
-            NFref: z
-                .array(
-                    z
-                        .object({
-                            refNFe: z
+    $: z.object({
+        versao: z.string().transform((str) => str && ParserUtility.scape(str)),
+        Id: z.string().transform((str) => str && ParserUtility.scape(str)),
+    }),
+    ide: z.object({
+        cUF: z.nativeEnum(UFCodeIBGE),
+        cNF: z
+            .string()
+            .regex(new RegExp("[0-9]{8}"))
+            .transform((str) => str && ParserUtility.scape(str)),
+        natOp: z
+            .string()
+            .min(1)
+            .max(60)
+            .transform((str) => str && ParserUtility.scape(str)),
+        mod: z.nativeEnum(TaxDocumentModel),
+        serie: z
+            .string()
+            .regex(RegexSEFAZ.Serie)
+            .transform((str) => str && ParserUtility.scape(str)),
+        nNF: z
+            .string()
+            .regex(RegexSEFAZ.NFENumber)
+            .transform((str) => str && ParserUtility.scape(str)),
+        dhEmi: z
+            .string()
+            .regex(RegexSEFAZ.DateTimeUTC)
+            .transform((str) => str && ParserUtility.scape(str)),
+        dhSaiEnt: z
+            .string()
+            .regex(RegexSEFAZ.DateTimeUTC)
+            .transform((str) => str && ParserUtility.scape(str))
+            .optional(),
+        tpNF: z.nativeEnum(TaxDocumentType),
+        idDest: z.nativeEnum(OperationDestinationLocationIdentifier),
+        cMunFG: z.nativeEnum(CodeCityIBGE),
+        tpImp: z.nativeEnum(DanfePrintFormat),
+        tpEmis: z.nativeEnum(IssuanceMode),
+        cDV: z
+            .string()
+            .regex(new RegExp("[0-9]{1}"))
+            .transform((str) => str && ParserUtility.scape(str)),
+        tpAmb: z.nativeEnum(EnvironmentIdentifier),
+        finNFe: z.nativeEnum(NFEGoal),
+        indFinal: z.nativeEnum(OperationWithEndConsumer),
+        indPres: z.nativeEnum(BuyerPresenceOnEstablishmentAtTransactionIndicator),
+        indIntermed: z.nativeEnum(IntermediaryIndicator).optional(),
+        procEmi: z.nativeEnum(IssuingProcess),
+        verProc: z
+            .string()
+            .min(1)
+            .max(20)
+            .transform((str) => str && ParserUtility.scape(str)),
+        dhCont: z
+            .string()
+            .regex(RegexSEFAZ.DateTimeUTC)
+            .transform((str) => str && ParserUtility.scape(str))
+            .optional(),
+        xJust: z
+            .string()
+            .min(15)
+            .max(256)
+            .transform((str) => str && ParserUtility.scape(str))
+            .optional(),
+        NFref: z
+            .array(
+                z
+                    .object({
+                        refNFe: z
+                            .string()
+                            .regex(RegexSEFAZ.AccessKey)
+                            .max(44)
+                            .transform((str) => str && ParserUtility.scape(str)),
+                    })
+                    .or(
+                        z.object({
+                            refNFeSig: z
                                 .string()
                                 .regex(RegexSEFAZ.AccessKey)
                                 .max(44)
                                 .transform((str) => str && ParserUtility.scape(str)),
-                        })
-                        .or(
-                            z.object({
-                                refNFeSig: z
+                        }),
+                    )
+                    .or(
+                        z.object({
+                            refNF: z.object({
+                                cUF: z.nativeEnum(UFCodeIBGE),
+                                AAMM: z
                                     .string()
-                                    .regex(RegexSEFAZ.AccessKey)
-                                    .max(44)
+                                    .regex(new RegExp("[0-9]{2}[0]{1}[1-9]{1}|[0-9]{2}[1]{1}[0-2]{1}"))
+                                    .transform((str) => str && ParserUtility.scape(str)),
+                                CNPJ: z
+                                    .string()
+                                    .regex(RegexSEFAZ.CNPJ)
+                                    .max(14)
+                                    .transform((str) => str && ParserUtility.scape(str)),
+                                mod: z.nativeEnum(NFEModel),
+                                serie: z
+                                    .string()
+                                    .regex(RegexSEFAZ.Serie)
+                                    .transform((str) => str && ParserUtility.scape(str)),
+                                nNF: z
+                                    .string()
+                                    .regex(RegexSEFAZ.NFENumber)
                                     .transform((str) => str && ParserUtility.scape(str)),
                             }),
-                        )
-                        .or(
-                            z.object({
-                                refNF: z.object({
+                        }),
+                    )
+                    .or(
+                        z.object({
+                            refNFP: z
+                                .object({
                                     cUF: z.nativeEnum(UFCodeIBGE),
-                                    AAMM: z
+                                    AAMM: z.string().regex(new RegExp("[0-9]{2}[0]{1}[1-9]{1}|[0-9]{2}[1]{1}[0-2]{1}")),
+                                    IE: z
                                         .string()
-                                        .regex(new RegExp("[0-9]{2}[0]{1}[1-9]{1}|[0-9]{2}[1]{1}[0-2]{1}"))
-                                        .transform((str) => str && ParserUtility.scape(str)),
-                                    CNPJ: z
-                                        .string()
-                                        .regex(RegexSEFAZ.CNPJ)
+                                        .regex(RegexSEFAZ.IEWithoutISENTO)
                                         .max(14)
                                         .transform((str) => str && ParserUtility.scape(str)),
-                                    mod: z.nativeEnum(NFEModel),
+                                    mod: z.nativeEnum(ProducerReferencedNFMode),
                                     serie: z
                                         .string()
                                         .regex(RegexSEFAZ.Serie)
@@ -2593,13 +2615,14 @@ export const NFeValidator = z.object({
                                         .string()
                                         .regex(RegexSEFAZ.NFENumber)
                                         .transform((str) => str && ParserUtility.scape(str)),
-                                }),
-                            }),
-                        )
-                        .or(
-                            z.object({
-                                refNFP: z
-                                    .object({
+                                    CNPJ: z
+                                        .string()
+                                        .regex(RegexSEFAZ.CNPJ)
+                                        .max(14)
+                                        .transform((str) => str && ParserUtility.scape(str)),
+                                })
+                                .or(
+                                    z.object({
                                         cUF: z.nativeEnum(UFCodeIBGE),
                                         AAMM: z
                                             .string()
@@ -2618,263 +2641,222 @@ export const NFeValidator = z.object({
                                             .string()
                                             .regex(RegexSEFAZ.NFENumber)
                                             .transform((str) => str && ParserUtility.scape(str)),
-                                        CNPJ: z
+                                        CPF: z
                                             .string()
-                                            .regex(RegexSEFAZ.CNPJ)
-                                            .max(14)
+                                            .regex(RegexSEFAZ.CPF)
+                                            .max(11)
                                             .transform((str) => str && ParserUtility.scape(str)),
-                                    })
-                                    .or(
-                                        z.object({
-                                            cUF: z.nativeEnum(UFCodeIBGE),
-                                            AAMM: z
-                                                .string()
-                                                .regex(new RegExp("[0-9]{2}[0]{1}[1-9]{1}|[0-9]{2}[1]{1}[0-2]{1}")),
-                                            IE: z
-                                                .string()
-                                                .regex(RegexSEFAZ.IEWithoutISENTO)
-                                                .max(14)
-                                                .transform((str) => str && ParserUtility.scape(str)),
-                                            mod: z.nativeEnum(ProducerReferencedNFMode),
-                                            serie: z
-                                                .string()
-                                                .regex(RegexSEFAZ.Serie)
-                                                .transform((str) => str && ParserUtility.scape(str)),
-                                            nNF: z
-                                                .string()
-                                                .regex(RegexSEFAZ.NFENumber)
-                                                .transform((str) => str && ParserUtility.scape(str)),
-                                            CPF: z
-                                                .string()
-                                                .regex(RegexSEFAZ.CPF)
-                                                .max(11)
-                                                .transform((str) => str && ParserUtility.scape(str)),
-                                        }),
-                                    ),
+                                    }),
+                                ),
+                        }),
+                    )
+                    .or(
+                        z.object({
+                            refECF: z.object({
+                                mod: z.nativeEnum(TaxCouponGroup),
+                                nECF: z
+                                    .string()
+                                    .regex(new RegExp("[0-9]{1,3}"))
+                                    .transform((str) => str && ParserUtility.scape(str)),
+                                nCOO: z
+                                    .string()
+                                    .regex(new RegExp("[0-9]{1,6}"))
+                                    .transform((str) => str && ParserUtility.scape(str)),
                             }),
-                        )
-                        .or(
-                            z.object({
-                                refECF: z.object({
-                                    mod: z.nativeEnum(TaxCouponGroup),
-                                    nECF: z
-                                        .string()
-                                        .regex(new RegExp("[0-9]{1,3}"))
-                                        .transform((str) => str && ParserUtility.scape(str)),
-                                    nCOO: z
-                                        .string()
-                                        .regex(new RegExp("[0-9]{1,6}"))
-                                        .transform((str) => str && ParserUtility.scape(str)),
-                                }),
-                            }),
-                        ),
-                )
-                .max(999)
-                .optional(),
+                        }),
+                    ),
+            )
+            .max(999)
+            .optional(),
+    }),
+    emit: Issuer.extend({
+        CNPJ: z
+            .string()
+            .regex(RegexSEFAZ.CNPJ)
+            .max(14)
+            .transform((str) => str && ParserUtility.scape(str)),
+    }).or(
+        Issuer.extend({
+            CPF: z
+                .string()
+                .regex(RegexSEFAZ.CPF)
+                .max(11)
+                .transform((str) => str && ParserUtility.scape(str)),
         }),
-        emit: Issuer.extend({
+    ),
+    avulsa: z
+        .object({
             CNPJ: z
                 .string()
                 .regex(RegexSEFAZ.CNPJ)
                 .max(14)
                 .transform((str) => str && ParserUtility.scape(str)),
-        }).or(
-            Issuer.extend({
+            xOrgao: z
+                .string()
+                .min(1)
+                .max(60)
+                .transform((str) => str && ParserUtility.scape(str)),
+            matr: z
+                .string()
+                .min(1)
+                .max(60)
+                .transform((str) => str && ParserUtility.scape(str)),
+            xAgente: z
+                .string()
+                .min(1)
+                .max(60)
+                .transform((str) => str && ParserUtility.scape(str)),
+            fone: z
+                .string()
+                .regex(new RegExp("[0-9]{6,14}"))
+                .transform((str) => str && ParserUtility.scape(str))
+                .optional(),
+            UF: z.nativeEnum(UFIssuer),
+            nDAR: z
+                .string()
+                .min(1)
+                .max(60)
+                .transform((str) => str && ParserUtility.scape(str))
+                .optional(),
+            dEmi: z
+                .string()
+                .regex(RegexSEFAZ.Date)
+                .transform((str) => str && ParserUtility.scape(str))
+                .optional(),
+            vDAR: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str))
+                .optional(),
+            repEmi: z
+                .string()
+                .min(1)
+                .max(60)
+                .transform((str) => str && ParserUtility.scape(str)),
+            dPag: z
+                .string()
+                .regex(RegexSEFAZ.Date)
+                .transform((str) => str && ParserUtility.scape(str))
+                .optional(),
+        })
+        .optional(),
+    dest: Recipient.extend({
+        CNPJ: z
+            .string()
+            .regex(RegexSEFAZ.CNPJ)
+            .max(14)
+            .transform((str) => str && ParserUtility.scape(str)),
+    })
+        .or(
+            Recipient.extend({
                 CPF: z
                     .string()
                     .regex(RegexSEFAZ.CPF)
                     .max(11)
                     .transform((str) => str && ParserUtility.scape(str)),
             }),
-        ),
-        avulsa: z
-            .object({
-                CNPJ: z
+        )
+        .or(
+            Recipient.extend({
+                idEstrangeiro: z
                     .string()
-                    .regex(RegexSEFAZ.CNPJ)
-                    .max(14)
+                    .regex(new RegExp("([!-ÿ]{0}|[!-ÿ]{5,20})?"))
                     .transform((str) => str && ParserUtility.scape(str)),
-                xOrgao: z
+            }),
+        )
+        .optional(),
+    retirada: Local.extend({
+        CNPJ: z
+            .string()
+            .regex(RegexSEFAZ.CNPJ)
+            .max(14)
+            .transform((str) => str && ParserUtility.scape(str)),
+    })
+        .or(
+            Local.extend({
+                CPF: z
                     .string()
-                    .min(1)
-                    .max(60)
+                    .regex(RegexSEFAZ.CPF)
+                    .max(11)
                     .transform((str) => str && ParserUtility.scape(str)),
-                matr: z
+            }),
+        )
+        .optional(),
+    entrega: Local.extend({
+        CNPJ: z
+            .string()
+            .regex(RegexSEFAZ.CNPJ)
+            .max(14)
+            .transform((str) => str && ParserUtility.scape(str)),
+    })
+        .or(
+            Local.extend({
+                CPF: z
                     .string()
-                    .min(1)
-                    .max(60)
+                    .regex(RegexSEFAZ.CPF)
+                    .max(11)
                     .transform((str) => str && ParserUtility.scape(str)),
-                xAgente: z
-                    .string()
-                    .min(1)
-                    .max(60)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                fone: z
-                    .string()
-                    .regex(new RegExp("[0-9]{6,14}"))
-                    .transform((str) => str && ParserUtility.scape(str))
-                    .optional(),
-                UF: z.nativeEnum(UFIssuer),
-                nDAR: z
-                    .string()
-                    .min(1)
-                    .max(60)
-                    .transform((str) => str && ParserUtility.scape(str))
-                    .optional(),
-                dEmi: z
-                    .string()
-                    .regex(RegexSEFAZ.Date)
-                    .transform((str) => str && ParserUtility.scape(str))
-                    .optional(),
-                vDAR: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str))
-                    .optional(),
-                repEmi: z
-                    .string()
-                    .min(1)
-                    .max(60)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                dPag: z
-                    .string()
-                    .regex(RegexSEFAZ.Date)
-                    .transform((str) => str && ParserUtility.scape(str))
-                    .optional(),
-            })
-            .optional(),
-        dest: Recipient.extend({
-            CNPJ: z
-                .string()
-                .regex(RegexSEFAZ.CNPJ)
-                .max(14)
-                .transform((str) => str && ParserUtility.scape(str)),
-        })
-            .or(
-                Recipient.extend({
+            }),
+        )
+        .optional(),
+    autXML: z
+        .array(
+            z
+                .object({
                     CPF: z
                         .string()
                         .regex(RegexSEFAZ.CPF)
                         .max(11)
                         .transform((str) => str && ParserUtility.scape(str)),
-                }),
-            )
-            .or(
-                Recipient.extend({
-                    idEstrangeiro: z
-                        .string()
-                        .regex(new RegExp("([!-ÿ]{0}|[!-ÿ]{5,20})?"))
-                        .transform((str) => str && ParserUtility.scape(str)),
-                }),
-            )
-            .optional(),
-        retirada: Local.extend({
-            CNPJ: z
-                .string()
-                .regex(RegexSEFAZ.CNPJ)
-                .max(14)
-                .transform((str) => str && ParserUtility.scape(str)),
-        })
-            .or(
-                Local.extend({
-                    CPF: z
-                        .string()
-                        .regex(RegexSEFAZ.CPF)
-                        .max(11)
-                        .transform((str) => str && ParserUtility.scape(str)),
-                }),
-            )
-            .optional(),
-        entrega: Local.extend({
-            CNPJ: z
-                .string()
-                .regex(RegexSEFAZ.CNPJ)
-                .max(14)
-                .transform((str) => str && ParserUtility.scape(str)),
-        })
-            .or(
-                Local.extend({
-                    CPF: z
-                        .string()
-                        .regex(RegexSEFAZ.CPF)
-                        .max(11)
-                        .transform((str) => str && ParserUtility.scape(str)),
-                }),
-            )
-            .optional(),
-        autXML: z
-            .array(
-                z
-                    .object({
-                        CPF: z
+                })
+                .or(
+                    z.object({
+                        CNPJ: z
                             .string()
-                            .regex(RegexSEFAZ.CPF)
-                            .max(11)
+                            .regex(RegexSEFAZ.CNPJ)
+                            .max(14)
                             .transform((str) => str && ParserUtility.scape(str)),
-                    })
-                    .or(
-                        z.object({
-                            CNPJ: z
+                    }),
+                ),
+        )
+        .max(10)
+        .optional(),
+    det: z
+        .array(
+            z.object({
+                $: z.object({
+                    nItem: z
+                        .string()
+                        .regex(
+                            new RegExp("[1-9]{1}[0-9]{0,1}|[1-8]{1}[0-9]{2}|[9]{1}[0-8]{1}[0-9]{1}|[9]{1}[9]{1}[0]{1}"),
+                        ),
+                }),
+                prod: Product,
+                imposto: Tax,
+                impostoDevol: z
+                    .object({
+                        pDevol: z
+                            .string()
+                            .regex(RegexSEFAZ.Decimal03_02a04max100)
+                            .transform((str) => str && ParserUtility.scape(str)),
+                        IPI: z.object({
+                            vIPIDevol: z
                                 .string()
-                                .regex(RegexSEFAZ.CNPJ)
-                                .max(14)
+                                .regex(RegexSEFAZ.Decimal13_02)
                                 .transform((str) => str && ParserUtility.scape(str)),
                         }),
-                    ),
-            )
-            .max(10)
-            .optional(),
-        det: z
-            .array(
-                z.object({
-                    $: z.object({
-                        nItem: z
-                            .string()
-                            .regex(
-                                new RegExp(
-                                    "[1-9]{1}[0-9]{0,1}|[1-8]{1}[0-9]{2}|[9]{1}[0-8]{1}[0-9]{1}|[9]{1}[9]{1}[0]{1}",
-                                ),
-                            ),
-                    }),
-                    prod: Product,
-                    imposto: Tax,
-                    impostoDevol: z
-                        .object({
-                            pDevol: z
-                                .string()
-                                .regex(RegexSEFAZ.Decimal03_02a04max100)
-                                .transform((str) => str && ParserUtility.scape(str)),
-                            IPI: z.object({
-                                vIPIDevol: z
-                                    .string()
-                                    .regex(RegexSEFAZ.Decimal13_02)
-                                    .transform((str) => str && ParserUtility.scape(str)),
-                            }),
-                        })
-                        .optional(),
-                    infAdProd: z
-                        .string()
-                        .min(1)
-                        .max(500)
-                        .transform((str) => str && ParserUtility.scape(str))
-                        .optional(),
-                    obsItem: z
-                        .object({
-                            obsCont: z
-                                .object({
-                                    xTexto: z
-                                        .string()
-                                        .min(1)
-                                        .max(60)
-                                        .transform((str) => str && ParserUtility.scape(str)),
-                                    xCampo: z
-                                        .string()
-                                        .min(1)
-                                        .max(20)
-                                        .transform((str) => str && ParserUtility.scape(str)),
-                                })
-                                .optional(),
-                            obsFisco: z.object({
+                    })
+                    .optional(),
+                infAdProd: z
+                    .string()
+                    .min(1)
+                    .max(500)
+                    .transform((str) => str && ParserUtility.scape(str))
+                    .optional(),
+                obsItem: z
+                    .object({
+                        obsCont: z
+                            .object({
                                 xTexto: z
                                     .string()
                                     .min(1)
@@ -2885,597 +2867,609 @@ export const NFeValidator = z.object({
                                     .min(1)
                                     .max(20)
                                     .transform((str) => str && ParserUtility.scape(str)),
-                            }),
-                        })
-                        .optional(),
-                }),
-            )
-            .max(990),
-        total: z.object({
-            ICMSTot: z.object({
-                vBC: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                vICMS: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                vICMSDeson: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                vFCPUFDest: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str))
-                    .optional(),
-                vICMSUFDest: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str))
-                    .optional(),
-                vICMSUFRemet: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str))
-                    .optional(),
-                vFCP: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                vBCST: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                vST: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                vFCPST: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                vFCPSTRet: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                qBCMono: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str))
-                    .optional(),
-                vICMSMono: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str))
-                    .optional(),
-                qBCMonoReten: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str))
-                    .optional(),
-                vICMSMonoReten: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str))
-                    .optional(),
-                qBCMonoRet: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str))
-                    .optional(),
-                vICMSMonoRet: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str))
-                    .optional(),
-                vProd: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                vFrete: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                vSeg: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                vDesc: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                vII: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                vIPI: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                vIPIDevol: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                vPIS: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                vCOFINS: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                vOutro: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                vNF: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                vTotTrib: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str))
-                    .optional(),
-            }),
-            ISSQNtot: z
-                .object({
-                    vServ: z
-                        .string()
-                        .regex(RegexSEFAZ.Decimal13_02_Optional)
-                        .transform((str) => str && ParserUtility.scape(str))
-                        .optional(),
-                    vBC: z
-                        .string()
-                        .regex(RegexSEFAZ.Decimal13_02_Optional)
-                        .transform((str) => str && ParserUtility.scape(str))
-                        .optional(),
-                    vISS: z
-                        .string()
-                        .regex(RegexSEFAZ.Decimal13_02_Optional)
-                        .transform((str) => str && ParserUtility.scape(str))
-                        .optional(),
-                    vPIS: z
-                        .string()
-                        .regex(RegexSEFAZ.Decimal13_02_Optional)
-                        .transform((str) => str && ParserUtility.scape(str))
-                        .optional(),
-                    vCOFINS: z
-                        .string()
-                        .regex(RegexSEFAZ.Decimal13_02_Optional)
-                        .transform((str) => str && ParserUtility.scape(str))
-                        .optional(),
-                    dCompet: z
-                        .string()
-                        .regex(RegexSEFAZ.Date)
-                        .transform((str) => str && ParserUtility.scape(str)),
-                    vDeducao: z
-                        .string()
-                        .regex(RegexSEFAZ.Decimal13_02_Optional)
-                        .transform((str) => str && ParserUtility.scape(str))
-                        .optional(),
-                    vOutro: z
-                        .string()
-                        .regex(RegexSEFAZ.Decimal13_02_Optional)
-                        .transform((str) => str && ParserUtility.scape(str))
-                        .optional(),
-                    vDescIncond: z
-                        .string()
-                        .regex(RegexSEFAZ.Decimal13_02_Optional)
-                        .transform((str) => str && ParserUtility.scape(str))
-                        .optional(),
-                    vDescCond: z
-                        .string()
-                        .regex(RegexSEFAZ.Decimal13_02_Optional)
-                        .transform((str) => str && ParserUtility.scape(str))
-                        .optional(),
-                    vISSRet: z
-                        .string()
-                        .regex(RegexSEFAZ.Decimal13_02_Optional)
-                        .transform((str) => str && ParserUtility.scape(str))
-                        .optional(),
-                    cRegTrib: z.nativeEnum(SpecialTaxRegimeCode).optional(),
-                })
-                .optional(),
-            retTrib: z
-                .object({
-                    vRetPIS: z
-                        .string()
-                        .regex(RegexSEFAZ.Decimal13_02_Optional)
-                        .transform((str) => str && ParserUtility.scape(str))
-                        .optional(),
-                    vRetCOFINS: z
-                        .string()
-                        .regex(RegexSEFAZ.Decimal13_02_Optional)
-                        .transform((str) => str && ParserUtility.scape(str))
-                        .optional(),
-                    vRetCSLL: z
-                        .string()
-                        .regex(RegexSEFAZ.Decimal13_02_Optional)
-                        .transform((str) => str && ParserUtility.scape(str))
-                        .optional(),
-                    vBCIRRF: z
-                        .string()
-                        .regex(RegexSEFAZ.Decimal13_02_Optional)
-                        .transform((str) => str && ParserUtility.scape(str))
-                        .optional(),
-                    vIRRF: z
-                        .string()
-                        .regex(RegexSEFAZ.Decimal13_02_Optional)
-                        .transform((str) => str && ParserUtility.scape(str))
-                        .optional(),
-                    vBCRetPrev: z
-                        .string()
-                        .regex(RegexSEFAZ.Decimal13_02_Optional)
-                        .transform((str) => str && ParserUtility.scape(str))
-                        .optional(),
-                    vRetPrev: z
-                        .string()
-                        .regex(RegexSEFAZ.Decimal13_02_Optional)
-                        .transform((str) => str && ParserUtility.scape(str))
-                        .optional(),
-                })
-                .optional(),
-        }),
-        transp: Transport,
-        cobr: z
-            .object({
-                fat: z
-                    .object({
-                        nFat: z
-                            .string()
-                            .min(1)
-                            .max(60)
-                            .transform((str) => str && ParserUtility.scape(str))
+                            })
                             .optional(),
-                        vOrig: z
-                            .string()
-                            .regex(RegexSEFAZ.Decimal13_02)
-                            .transform((str) => str && ParserUtility.scape(str))
-                            .optional(),
-                        vDesc: z
-                            .string()
-                            .regex(RegexSEFAZ.Decimal13_02)
-                            .transform((str) => str && ParserUtility.scape(str))
-                            .optional(),
-                        vLiq: z
-                            .string()
-                            .regex(RegexSEFAZ.Decimal13_02)
-                            .transform((str) => str && ParserUtility.scape(str))
-                            .optional(),
-                    })
-                    .optional(),
-                dup: z
-                    .array(
-                        z.object({
-                            nDup: z
+                        obsFisco: z.object({
+                            xTexto: z
                                 .string()
                                 .min(1)
                                 .max(60)
-                                .transform((str) => str && ParserUtility.scape(str))
-                                .optional(),
-                            dVenc: z
+                                .transform((str) => str && ParserUtility.scape(str)),
+                            xCampo: z
                                 .string()
-                                .regex(RegexSEFAZ.Date)
-                                .transform((str) => str && ParserUtility.scape(str))
-                                .optional(),
-                            vDup: z
-                                .string()
-                                .regex(RegexSEFAZ.Decimal13_02_Optional)
+                                .min(1)
+                                .max(20)
                                 .transform((str) => str && ParserUtility.scape(str)),
                         }),
-                    )
-                    .max(120)
+                    })
                     .optional(),
-            })
-            .optional(),
-        pag: z.object({
-            detPag: z
-                .array(
-                    z.object({
-                        indPag: z.nativeEnum(PaymentMode).optional(),
-                        tPag: z
-                            .string()
-                            .regex(new RegExp("[0-9]{2}"))
-                            .transform((str) => str && ParserUtility.scape(str)),
-                        xPag: z
-                            .string()
-                            .min(2)
-                            .max(60)
-                            .transform((str) => str && ParserUtility.scape(str))
-                            .optional(),
-                        vPag: z
-                            .string()
-                            .regex(RegexSEFAZ.Decimal13_02)
-                            .transform((str) => str && ParserUtility.scape(str)),
-                        dPag: z
-                            .string()
-                            .regex(RegexSEFAZ.Date)
-                            .transform((str) => str && ParserUtility.scape(str))
-                            .optional(),
-                        CNPJPag: z
-                            .string()
-                            .regex(RegexSEFAZ.CNPJ)
-                            .max(14)
-                            .transform((str) => str && ParserUtility.scape(str))
-                            .optional(),
-                        UFPag: z.nativeEnum(UFIssuer).optional(),
-                        card: z
-                            .object({
-                                tpIntegra: z.nativeEnum(IntegrationTypeInPaymentProcess),
-                                CNPJ: z
-                                    .string()
-                                    .regex(RegexSEFAZ.CNPJ)
-                                    .max(14)
-                                    .transform((str) => str && ParserUtility.scape(str))
-                                    .optional(),
-                                tBand: z
-                                    .string()
-                                    .regex(new RegExp("[0-9]{2}"))
-                                    .transform((str) => str && ParserUtility.scape(str))
-                                    .optional(),
-                                cAut: z
-                                    .string()
-                                    .min(1)
-                                    .max(128)
-                                    .transform((str) => str && ParserUtility.scape(str))
-                                    .optional(),
-                                CNPJReceb: z
-                                    .string()
-                                    .regex(RegexSEFAZ.CNPJ)
-                                    .max(14)
-                                    .transform((str) => str && ParserUtility.scape(str))
-                                    .optional(),
-                                idTermPag: z
-                                    .string()
-                                    .min(1)
-                                    .max(40)
-                                    .transform((str) => str && ParserUtility.scape(str))
-                                    .optional(),
-                            })
-                            .optional(),
-                    }),
-                )
-                .max(100),
-            vTroco: z
+            }),
+        )
+        .max(990),
+    total: z.object({
+        ICMSTot: z.object({
+            vBC: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str)),
+            vICMS: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str)),
+            vICMSDeson: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str)),
+            vFCPUFDest: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str))
+                .optional(),
+            vICMSUFDest: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str))
+                .optional(),
+            vICMSUFRemet: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str))
+                .optional(),
+            vFCP: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str)),
+            vBCST: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str)),
+            vST: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str)),
+            vFCPST: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str)),
+            vFCPSTRet: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str)),
+            qBCMono: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str))
+                .optional(),
+            vICMSMono: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str))
+                .optional(),
+            qBCMonoReten: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str))
+                .optional(),
+            vICMSMonoReten: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str))
+                .optional(),
+            qBCMonoRet: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str))
+                .optional(),
+            vICMSMonoRet: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str))
+                .optional(),
+            vProd: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str)),
+            vFrete: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str)),
+            vSeg: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str)),
+            vDesc: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str)),
+            vII: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str)),
+            vIPI: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str)),
+            vIPIDevol: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str)),
+            vPIS: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str)),
+            vCOFINS: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str)),
+            vOutro: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str)),
+            vNF: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str)),
+            vTotTrib: z
                 .string()
                 .regex(RegexSEFAZ.Decimal13_02)
                 .transform((str) => str && ParserUtility.scape(str))
                 .optional(),
         }),
-        infIntermed: z
+        ISSQNtot: z
             .object({
-                CNPJ: z
+                vServ: z
                     .string()
-                    .regex(RegexSEFAZ.CNPJ)
-                    .max(14)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                idCadIntTran: z
+                    .regex(RegexSEFAZ.Decimal13_02_Optional)
+                    .transform((str) => str && ParserUtility.scape(str))
+                    .optional(),
+                vBC: z
                     .string()
-                    .min(2)
-                    .max(60)
+                    .regex(RegexSEFAZ.Decimal13_02_Optional)
+                    .transform((str) => str && ParserUtility.scape(str))
+                    .optional(),
+                vISS: z
+                    .string()
+                    .regex(RegexSEFAZ.Decimal13_02_Optional)
+                    .transform((str) => str && ParserUtility.scape(str))
+                    .optional(),
+                vPIS: z
+                    .string()
+                    .regex(RegexSEFAZ.Decimal13_02_Optional)
+                    .transform((str) => str && ParserUtility.scape(str))
+                    .optional(),
+                vCOFINS: z
+                    .string()
+                    .regex(RegexSEFAZ.Decimal13_02_Optional)
+                    .transform((str) => str && ParserUtility.scape(str))
+                    .optional(),
+                dCompet: z
+                    .string()
+                    .regex(RegexSEFAZ.Date)
                     .transform((str) => str && ParserUtility.scape(str)),
+                vDeducao: z
+                    .string()
+                    .regex(RegexSEFAZ.Decimal13_02_Optional)
+                    .transform((str) => str && ParserUtility.scape(str))
+                    .optional(),
+                vOutro: z
+                    .string()
+                    .regex(RegexSEFAZ.Decimal13_02_Optional)
+                    .transform((str) => str && ParserUtility.scape(str))
+                    .optional(),
+                vDescIncond: z
+                    .string()
+                    .regex(RegexSEFAZ.Decimal13_02_Optional)
+                    .transform((str) => str && ParserUtility.scape(str))
+                    .optional(),
+                vDescCond: z
+                    .string()
+                    .regex(RegexSEFAZ.Decimal13_02_Optional)
+                    .transform((str) => str && ParserUtility.scape(str))
+                    .optional(),
+                vISSRet: z
+                    .string()
+                    .regex(RegexSEFAZ.Decimal13_02_Optional)
+                    .transform((str) => str && ParserUtility.scape(str))
+                    .optional(),
+                cRegTrib: z.nativeEnum(SpecialTaxRegimeCode).optional(),
             })
             .optional(),
-        infAdic: z
+        retTrib: z
             .object({
-                infAdFisco: z
+                vRetPIS: z
                     .string()
-                    .min(1)
-                    .max(2000)
+                    .regex(RegexSEFAZ.Decimal13_02_Optional)
                     .transform((str) => str && ParserUtility.scape(str))
                     .optional(),
-                infCpl: z
+                vRetCOFINS: z
                     .string()
-                    .min(1)
-                    .max(5000)
+                    .regex(RegexSEFAZ.Decimal13_02_Optional)
                     .transform((str) => str && ParserUtility.scape(str))
                     .optional(),
-                obsCont: z
-                    .array(
-                        z.object({
-                            $: z.object({
-                                xCampo: z
-                                    .string()
-                                    .min(1)
-                                    .max(20)
-                                    .transform((str) => str && ParserUtility.scape(str)),
-                            }),
-                            xTexto: z
-                                .string()
-                                .min(1)
-                                .max(60)
-                                .transform((str) => str && ParserUtility.scape(str)),
-                        }),
-                    )
-                    .max(10)
-                    .optional(),
-                obsFisco: z
-                    .array(
-                        z.object({
-                            $: z.object({
-                                xCampo: z
-                                    .string()
-                                    .min(1)
-                                    .max(20)
-                                    .transform((str) => str && ParserUtility.scape(str)),
-                            }),
-                            xTexto: z
-                                .string()
-                                .min(1)
-                                .max(60)
-                                .transform((str) => str && ParserUtility.scape(str)),
-                        }),
-                    )
-                    .max(10)
-                    .optional(),
-                procRef: z
-                    .array(
-                        z.object({
-                            nProc: z
-                                .string()
-                                .min(1)
-                                .max(60)
-                                .transform((str) => str && ParserUtility.scape(str)),
-                            indProc: z.nativeEnum(ProcessOrigin),
-                            tpAto: z.nativeEnum(ConcessionAct).optional(),
-                        }),
-                    )
-                    .max(100)
-                    .optional(),
-            })
-            .optional(),
-        exporta: z
-            .object({
-                UFSaidaPais: z.nativeEnum(UFIssuer),
-                xLocExporta: z
+                vRetCSLL: z
                     .string()
-                    .min(1)
-                    .max(60)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                xLocDespacho: z
-                    .string()
-                    .min(1)
-                    .max(60)
+                    .regex(RegexSEFAZ.Decimal13_02_Optional)
                     .transform((str) => str && ParserUtility.scape(str))
                     .optional(),
-            })
-            .optional(),
-        compra: z
-            .object({
-                xNEmp: z
+                vBCIRRF: z
                     .string()
-                    .min(1)
-                    .max(22)
+                    .regex(RegexSEFAZ.Decimal13_02_Optional)
                     .transform((str) => str && ParserUtility.scape(str))
                     .optional(),
-                xPed: z
+                vIRRF: z
                     .string()
-                    .min(1)
-                    .max(60)
+                    .regex(RegexSEFAZ.Decimal13_02_Optional)
                     .transform((str) => str && ParserUtility.scape(str))
                     .optional(),
-                xCont: z
+                vBCRetPrev: z
                     .string()
-                    .min(1)
-                    .max(60)
+                    .regex(RegexSEFAZ.Decimal13_02_Optional)
                     .transform((str) => str && ParserUtility.scape(str))
                     .optional(),
-            })
-            .optional(),
-        cana: z
-            .object({
-                safra: z
+                vRetPrev: z
                     .string()
-                    .min(4)
-                    .max(9)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                ref: z
-                    .string()
-                    .regex(new RegExp("(0[1-9]|1[0-2])([/][2][0-9][0-9][0-9])"))
-                    .transform((str) => str && ParserUtility.scape(str)),
-                forDia: z
-                    .array(
-                        z.object({
-                            $: z.object({
-                                dia: z
-                                    .string()
-                                    .regex(new RegExp("[1-9]|[1][0-9]|[2][0-9]|[3][0-1]"))
-                                    .transform((str) => str && ParserUtility.scape(str)),
-                            }),
-                            qtde: z
-                                .string()
-                                .regex(RegexSEFAZ.Decimal11_01a10)
-                                .transform((str) => str && ParserUtility.scape(str)),
-                        }),
-                    )
-                    .max(31),
-                qTotMes: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal11_01a10)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                qTotAnt: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal11_01a10)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                qTotGer: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal11_01a10)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                deduc: z
-                    .array(
-                        z.object({
-                            xDed: z
-                                .string()
-                                .min(1)
-                                .max(60)
-                                .transform((str) => str && ParserUtility.scape(str)),
-                            vDed: z
-                                .string()
-                                .regex(RegexSEFAZ.Decimal13_02)
-                                .transform((str) => str && ParserUtility.scape(str)),
-                        }),
-                    )
-                    .max(10)
-                    .optional(),
-                vFor: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                vTotDed: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                vLiqFor: z
-                    .string()
-                    .regex(RegexSEFAZ.Decimal13_02)
-                    .transform((str) => str && ParserUtility.scape(str)),
-            })
-            .optional(),
-        infRespTec: z
-            .object({
-                CNPJ: z
-                    .string()
-                    .regex(RegexSEFAZ.CNPJ)
-                    .max(14)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                xContato: z
-                    .string()
-                    .min(2)
-                    .max(60)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                email: z
-                    .string()
-                    .min(6)
-                    .max(60)
-                    .transform((str) => str && ParserUtility.scape(str)),
-                fone: z
-                    .string()
-                    .regex(new RegExp("[0-9]{6,14}"))
-                    .transform((str) => str && ParserUtility.scape(str)),
-                idCSRT: z
-                    .string()
-                    .regex(new RegExp("[0-9]{2}"))
+                    .regex(RegexSEFAZ.Decimal13_02_Optional)
                     .transform((str) => str && ParserUtility.scape(str))
                     .optional(),
-                hashCSRT: z
-                    .string()
-                    .min(20)
-                    .max(20)
-                    .transform((str) => str && ParserUtility.scape(str))
-                    .optional(),
-            })
-            .optional(),
-        infSolicNFF: z
-            .object({
-                xSolic: z
-                    .string()
-                    .min(2)
-                    .max(5000)
-                    .transform((str) => str && ParserUtility.scape(str)),
             })
             .optional(),
     }),
+    transp: Transport,
+    cobr: z
+        .object({
+            fat: z
+                .object({
+                    nFat: z
+                        .string()
+                        .min(1)
+                        .max(60)
+                        .transform((str) => str && ParserUtility.scape(str))
+                        .optional(),
+                    vOrig: z
+                        .string()
+                        .regex(RegexSEFAZ.Decimal13_02)
+                        .transform((str) => str && ParserUtility.scape(str))
+                        .optional(),
+                    vDesc: z
+                        .string()
+                        .regex(RegexSEFAZ.Decimal13_02)
+                        .transform((str) => str && ParserUtility.scape(str))
+                        .optional(),
+                    vLiq: z
+                        .string()
+                        .regex(RegexSEFAZ.Decimal13_02)
+                        .transform((str) => str && ParserUtility.scape(str))
+                        .optional(),
+                })
+                .optional(),
+            dup: z
+                .array(
+                    z.object({
+                        nDup: z
+                            .string()
+                            .min(1)
+                            .max(60)
+                            .transform((str) => str && ParserUtility.scape(str))
+                            .optional(),
+                        dVenc: z
+                            .string()
+                            .regex(RegexSEFAZ.Date)
+                            .transform((str) => str && ParserUtility.scape(str))
+                            .optional(),
+                        vDup: z
+                            .string()
+                            .regex(RegexSEFAZ.Decimal13_02_Optional)
+                            .transform((str) => str && ParserUtility.scape(str)),
+                    }),
+                )
+                .max(120)
+                .optional(),
+        })
+        .optional(),
+    pag: z.object({
+        detPag: z
+            .array(
+                z.object({
+                    indPag: z.nativeEnum(PaymentMode).optional(),
+                    tPag: z
+                        .string()
+                        .regex(new RegExp("[0-9]{2}"))
+                        .transform((str) => str && ParserUtility.scape(str)),
+                    xPag: z
+                        .string()
+                        .min(2)
+                        .max(60)
+                        .transform((str) => str && ParserUtility.scape(str))
+                        .optional(),
+                    vPag: z
+                        .string()
+                        .regex(RegexSEFAZ.Decimal13_02)
+                        .transform((str) => str && ParserUtility.scape(str)),
+                    dPag: z
+                        .string()
+                        .regex(RegexSEFAZ.Date)
+                        .transform((str) => str && ParserUtility.scape(str))
+                        .optional(),
+                    CNPJPag: z
+                        .string()
+                        .regex(RegexSEFAZ.CNPJ)
+                        .max(14)
+                        .transform((str) => str && ParserUtility.scape(str))
+                        .optional(),
+                    UFPag: z.nativeEnum(UFIssuer).optional(),
+                    card: z
+                        .object({
+                            tpIntegra: z.nativeEnum(IntegrationTypeInPaymentProcess),
+                            CNPJ: z
+                                .string()
+                                .regex(RegexSEFAZ.CNPJ)
+                                .max(14)
+                                .transform((str) => str && ParserUtility.scape(str))
+                                .optional(),
+                            tBand: z
+                                .string()
+                                .regex(new RegExp("[0-9]{2}"))
+                                .transform((str) => str && ParserUtility.scape(str))
+                                .optional(),
+                            cAut: z
+                                .string()
+                                .min(1)
+                                .max(128)
+                                .transform((str) => str && ParserUtility.scape(str))
+                                .optional(),
+                            CNPJReceb: z
+                                .string()
+                                .regex(RegexSEFAZ.CNPJ)
+                                .max(14)
+                                .transform((str) => str && ParserUtility.scape(str))
+                                .optional(),
+                            idTermPag: z
+                                .string()
+                                .min(1)
+                                .max(40)
+                                .transform((str) => str && ParserUtility.scape(str))
+                                .optional(),
+                        })
+                        .optional(),
+                }),
+            )
+            .max(100),
+        vTroco: z
+            .string()
+            .regex(RegexSEFAZ.Decimal13_02)
+            .transform((str) => str && ParserUtility.scape(str))
+            .optional(),
+    }),
+    infIntermed: z
+        .object({
+            CNPJ: z
+                .string()
+                .regex(RegexSEFAZ.CNPJ)
+                .max(14)
+                .transform((str) => str && ParserUtility.scape(str)),
+            idCadIntTran: z
+                .string()
+                .min(2)
+                .max(60)
+                .transform((str) => str && ParserUtility.scape(str)),
+        })
+        .optional(),
+    infAdic: z
+        .object({
+            infAdFisco: z
+                .string()
+                .min(1)
+                .max(2000)
+                .transform((str) => str && ParserUtility.scape(str))
+                .optional(),
+            infCpl: z
+                .string()
+                .min(1)
+                .max(5000)
+                .transform((str) => str && ParserUtility.scape(str))
+                .optional(),
+            obsCont: z
+                .array(
+                    z.object({
+                        $: z.object({
+                            xCampo: z
+                                .string()
+                                .min(1)
+                                .max(20)
+                                .transform((str) => str && ParserUtility.scape(str)),
+                        }),
+                        xTexto: z
+                            .string()
+                            .min(1)
+                            .max(60)
+                            .transform((str) => str && ParserUtility.scape(str)),
+                    }),
+                )
+                .max(10)
+                .optional(),
+            obsFisco: z
+                .array(
+                    z.object({
+                        $: z.object({
+                            xCampo: z
+                                .string()
+                                .min(1)
+                                .max(20)
+                                .transform((str) => str && ParserUtility.scape(str)),
+                        }),
+                        xTexto: z
+                            .string()
+                            .min(1)
+                            .max(60)
+                            .transform((str) => str && ParserUtility.scape(str)),
+                    }),
+                )
+                .max(10)
+                .optional(),
+            procRef: z
+                .array(
+                    z.object({
+                        nProc: z
+                            .string()
+                            .min(1)
+                            .max(60)
+                            .transform((str) => str && ParserUtility.scape(str)),
+                        indProc: z.nativeEnum(ProcessOrigin),
+                        tpAto: z.nativeEnum(ConcessionAct).optional(),
+                    }),
+                )
+                .max(100)
+                .optional(),
+        })
+        .optional(),
+    exporta: z
+        .object({
+            UFSaidaPais: z.nativeEnum(UFIssuer),
+            xLocExporta: z
+                .string()
+                .min(1)
+                .max(60)
+                .transform((str) => str && ParserUtility.scape(str)),
+            xLocDespacho: z
+                .string()
+                .min(1)
+                .max(60)
+                .transform((str) => str && ParserUtility.scape(str))
+                .optional(),
+        })
+        .optional(),
+    compra: z
+        .object({
+            xNEmp: z
+                .string()
+                .min(1)
+                .max(22)
+                .transform((str) => str && ParserUtility.scape(str))
+                .optional(),
+            xPed: z
+                .string()
+                .min(1)
+                .max(60)
+                .transform((str) => str && ParserUtility.scape(str))
+                .optional(),
+            xCont: z
+                .string()
+                .min(1)
+                .max(60)
+                .transform((str) => str && ParserUtility.scape(str))
+                .optional(),
+        })
+        .optional(),
+    cana: z
+        .object({
+            safra: z
+                .string()
+                .min(4)
+                .max(9)
+                .transform((str) => str && ParserUtility.scape(str)),
+            ref: z
+                .string()
+                .regex(new RegExp("(0[1-9]|1[0-2])([/][2][0-9][0-9][0-9])"))
+                .transform((str) => str && ParserUtility.scape(str)),
+            forDia: z
+                .array(
+                    z.object({
+                        $: z.object({
+                            dia: z
+                                .string()
+                                .regex(new RegExp("[1-9]|[1][0-9]|[2][0-9]|[3][0-1]"))
+                                .transform((str) => str && ParserUtility.scape(str)),
+                        }),
+                        qtde: z
+                            .string()
+                            .regex(RegexSEFAZ.Decimal11_01a10)
+                            .transform((str) => str && ParserUtility.scape(str)),
+                    }),
+                )
+                .max(31),
+            qTotMes: z
+                .string()
+                .regex(RegexSEFAZ.Decimal11_01a10)
+                .transform((str) => str && ParserUtility.scape(str)),
+            qTotAnt: z
+                .string()
+                .regex(RegexSEFAZ.Decimal11_01a10)
+                .transform((str) => str && ParserUtility.scape(str)),
+            qTotGer: z
+                .string()
+                .regex(RegexSEFAZ.Decimal11_01a10)
+                .transform((str) => str && ParserUtility.scape(str)),
+            deduc: z
+                .array(
+                    z.object({
+                        xDed: z
+                            .string()
+                            .min(1)
+                            .max(60)
+                            .transform((str) => str && ParserUtility.scape(str)),
+                        vDed: z
+                            .string()
+                            .regex(RegexSEFAZ.Decimal13_02)
+                            .transform((str) => str && ParserUtility.scape(str)),
+                    }),
+                )
+                .max(10)
+                .optional(),
+            vFor: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str)),
+            vTotDed: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str)),
+            vLiqFor: z
+                .string()
+                .regex(RegexSEFAZ.Decimal13_02)
+                .transform((str) => str && ParserUtility.scape(str)),
+        })
+        .optional(),
+    infRespTec: z
+        .object({
+            CNPJ: z
+                .string()
+                .regex(RegexSEFAZ.CNPJ)
+                .max(14)
+                .transform((str) => str && ParserUtility.scape(str)),
+            xContato: z
+                .string()
+                .min(2)
+                .max(60)
+                .transform((str) => str && ParserUtility.scape(str)),
+            email: z
+                .string()
+                .min(6)
+                .max(60)
+                .transform((str) => str && ParserUtility.scape(str)),
+            fone: z
+                .string()
+                .regex(new RegExp("[0-9]{6,14}"))
+                .transform((str) => str && ParserUtility.scape(str)),
+            idCSRT: z
+                .string()
+                .regex(new RegExp("[0-9]{2}"))
+                .transform((str) => str && ParserUtility.scape(str))
+                .optional(),
+            hashCSRT: z
+                .string()
+                .min(20)
+                .max(20)
+                .transform((str) => str && ParserUtility.scape(str))
+                .optional(),
+        })
+        .optional(),
+    infSolicNFF: z
+        .object({
+            xSolic: z
+                .string()
+                .min(2)
+                .max(5000)
+                .transform((str) => str && ParserUtility.scape(str)),
+        })
+        .optional(),
 });

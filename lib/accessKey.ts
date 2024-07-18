@@ -17,11 +17,9 @@ export class AccessKey {
     }
 
     static fromNFe(NFe: SefazNFE) {
-        const payload = NFe.infNFE;
-
         return (
-            payload.ide.cUF +
-            new Date(payload.ide.dhEmi)
+            NFe.ide.cUF +
+            new Date(NFe.ide.dhEmi)
                 .toLocaleString("pt-BR", {
                     month: "2-digit",
                     year: "2-digit",
@@ -30,13 +28,13 @@ export class AccessKey {
                 .reverse()
                 .join("") +
             // @ts-ignore
-            payload.emit.CNPJ +
-            payload.ide.mod +
-            payload.ide.serie +
-            payload.ide.nNF +
-            payload.ide.tpEmis +
-            payload.ide.cNF +
-            payload.ide.cDV
+            NFe.emit.CNPJ +
+            NFe.ide.mod +
+            NFe.ide.serie +
+            NFe.ide.nNF +
+            NFe.ide.tpEmis +
+            NFe.ide.cNF +
+            NFe.ide.cDV
         );
     }
 

@@ -2365,494 +2365,489 @@ type Transport = Transport__Type1 | Transport__Type2 | Transport__Type3;
 
 // schema: TNFe
 export type SefazNFE = {
-    infNFE: {
+    $: {
+        /** Versão do leiaute (v4.00) */
+        versao: string;
+        /** PL_005d - 11/08/09 - validação do Id */
+        Id: string;
+    };
+    /** Identificação da nota fiscal */
+    ide: {
+        /** Código da UF do emitente do Documento Fiscal. Utilizar a Tabela do IBGE */
+        cUF: UFCodeIBGE;
+        /** Código numérico que compõe a Chave de Acesso. Número aleatório gerado pelo emitente para cada NF-e. */
+        cNF: string;
+        /** Descrição da Natureza da Operação */
+        natOp: string;
+        /** Código do modelo do Documento Fiscal:
+         * 55 | NF-e
+         * 65 | NFC-e
+         */
+        mod: TaxDocumentModel;
+        /** Série do Documento Fiscal:
+         * 0-889 | Série Normal
+         * 890-899 | Avulsa Fisco
+         * 900-999 | SCAN
+         */
+        serie: string;
+        /** Número do Documento Fiscal */
+        nNF: string;
+        /** Data e Hora de emissão do Documento Fiscal (AAAA-MM-DDThh:mm:ssTZD) ex.: 2012-09-01T13:00:00-03:00 */
+        dhEmi: string;
+        /** Data e Hora da saída ou de entrada da mercadoria / produto (AAAA-MM-DDTHH:mm:ssTZD) */
+        dhSaiEnt?: string;
+        /** Tipo do Documento Fiscal:
+         * 0 | entrada
+         * 1 | saída
+         */
+        tpNF: TaxDocumentType;
+        /** Identificador de Local de destino da operação:
+         * 1 | Interna
+         * 2 | Interestadual
+         * 3 | Exterior
+         */
+        idDest: OperationDestinationLocationIdentifier;
+        /** Código do Município de Ocorrência do Fato Gerador (utilizar a tabela do IBGE) */
+        cMunFG: CodeCityIBGE;
+        /** Formato de impressão do DANFE:
+         * 0 | sem DANFE
+         * 1 | DANFe Retrato
+         * 2 | DANFe Paisagem
+         * 3 | DANFe Simplificado
+         * 4 | DANFe NFC-e
+         * 5 | DANFe NFC-e em mensagem eletrônica
+         */
+        tpImp: DanfePrintFormat;
+        /** Forma de emissão da NF-e
+         * 1 | Normal
+         * 2 | Contingência FS
+         * 3 | Regime Especial NFF (NT 2021.002)
+         * 4 | Contingência DPEC
+         * 5 | Contingência FSDA
+         * 6 | Contingência SVC - AN
+         * 7 | Contingência SVC - RS
+         * 9 | Contingência off-line NFC-e
+         */
+        tpEmis: IssuanceMode;
+        /** Digito Verificador da Chave de Acesso da NF-e */
+        cDV: string;
+        /** Identificação do Ambiente:
+         * 1 | Produção
+         * 2 | Homologação
+         */
+        tpAmb: EnvironmentIdentifier;
+        /** Finalidade da emissão da NF-e:
+         * 1 | NFe normal
+         * 2 | NFe complementar
+         * 3 | NFe de ajuste
+         * 4 | Devolução/Retorno
+         */
+        finNFe: NFEGoal;
+        /** Indica operação com consumidor final:
+         * 0 | Não
+         * 1 | Consumidor Final
+         */
+        indFinal: OperationWithEndConsumer;
+        /** Indicador de presença do comprador no estabelecimento comercial no momento da operação:
+         * 0 | Não se aplica (ex.: Nota Fiscal complementar ou de ajuste)
+         * 1 | Operação presencial
+         * 2 | Não presencial, internet
+         * 3 | Não presencial, teleatendimento
+         * 4 | NFC-e entrega em domicílio
+         * 5 | Operação presencial, fora do estabelecimento
+         * 9 | Não presencial, outros
+         */
+        indPres: BuyerPresenceOnEstablishmentAtTransactionIndicator;
+        /** Indicador de intermediador/marketplace:
+         * 0 | Operação sem intermediador (em site ou plataforma própria)
+         * 1 | Operação em site ou plataforma de terceiros (intermediadores/marketplace)
+         */
+        indIntermed?: IntermediaryIndicator;
+        /** Processo de emissão utilizado com a seguinte codificação:
+         * 0 | emissão de NF-e com aplicativo do contribuinte
+         * 1 | emissão de NF-e avulsa pelo Fisco
+         * 2 | emissão de NF-e avulsa, pelo contribuinte com seu certificado digital, através do site do Fisco
+         * 3 | emissão de NF-e pelo contribuinte com aplicativo fornecido pelo Fisco
+         */
+        procEmi: IssuingProcess;
+        /** Versão do aplicativo utilizado no processo de emissão */
+        verProc: string;
+        /** Informar a data e hora de entrada em contingência. Contingência no formato (AAAA-MM-DDThh:mm:ssTZD)
+         * ex.: 2012-09-01T13:00:00-03:00.
+         */
+        dhCont?: string;
+        /** Informar a justificativa da entrada */
+        xJust?: string;
+        /** Grupo de informações da NF referenciada */
+        NFref?: ReferencedNFE[];
+    };
+    /** Identificação do emitente */
+    emit: (Issuer & { CNPJ: string }) | (Issuer & { CPF: string });
+    /** Emissão de avulsa, informar os dados do Fisco emitente */
+    avulsa?: {
+        /** CNPJ do Órgão emissor */
+        CNPJ: string;
+        /** Órgão emitente */
+        xOrgao: string;
+        /** Matrícula do agente */
+        matr: string;
+        /** Nome do agente */
+        xAgente: string;
+        /** Telefone */
+        fone?: string;
+        /** Sigla da Unidade da Federação */
+        UF: UFIssuer;
+        /** Número do Documento de Arrecadação de Receita */
+        nDAR?: string;
+        /** Data de emissão do DAR (AAAA-MM-DD) */
+        dEmi?: string;
+        /** Valor Total constante no DAR */
+        vDAR?: string;
+        /** Repartição Fiscal emitente */
+        repEmi: string;
+        /** Data de pagamento do DAR (AAAA-MM-DD) */
+        dPag?: string;
+    };
+    /** Identificação do Destinatário */
+    dest?: (Recipient & { CNPJ?: string }) | (Recipient & { CPF?: string }) | (Recipient & { idEstrangeiro?: string });
+    /** Identificação do Local de Retirada (informar apenas quando for diferente do endereço do remetente) */
+    retirada?: Local;
+    /** Identificação do Local de Entrega (informar apenas quando for diferente do endereço do destinatário) */
+    entrega?: Local;
+    /** Pessoas autorizadas para o download do XML da NF-e */
+    autXML?: ({ CPF: string } | { CNPJ: string })[];
+    /** Dados dos detalhes da NF-e */
+    det: {
         $: {
-            /** Versão do leiaute (v4.00) */
-            versao: string;
-            /** PL_005d - 11/08/09 - validação do Id */
-            Id: string;
+            /** Número do item do NF */
+            nItem: string;
         };
-        /** Identificação da nota fiscal */
-        ide: {
-            /** Código da UF do emitente do Documento Fiscal. Utilizar a Tabela do IBGE */
-            cUF: UFCodeIBGE;
-            /** Código numérico que compõe a Chave de Acesso. Número aleatório gerado pelo emitente para cada NF-e. */
-            cNF: string;
-            /** Descrição da Natureza da Operação */
-            natOp: string;
-            /** Código do modelo do Documento Fiscal:
-             * 55 | NF-e
-             * 65 | NFC-e
-             */
-            mod: TaxDocumentModel;
-            /** Série do Documento Fiscal:
-             * 0-889 | Série Normal
-             * 890-899 | Avulsa Fisco
-             * 900-999 | SCAN
-             */
-            serie: string;
-            /** Número do Documento Fiscal */
-            nNF: string;
-            /** Data e Hora de emissão do Documento Fiscal (AAAA-MM-DDThh:mm:ssTZD) ex.: 2012-09-01T13:00:00-03:00 */
-            dhEmi: string;
-            /** Data e Hora da saída ou de entrada da mercadoria / produto (AAAA-MM-DDTHH:mm:ssTZD) */
-            dhSaiEnt?: string;
-            /** Tipo do Documento Fiscal:
-             * 0 | entrada
-             * 1 | saída
-             */
-            tpNF: TaxDocumentType;
-            /** Identificador de Local de destino da operação:
-             * 1 | Interna
-             * 2 | Interestadual
-             * 3 | Exterior
-             */
-            idDest: OperationDestinationLocationIdentifier;
-            /** Código do Município de Ocorrência do Fato Gerador (utilizar a tabela do IBGE) */
-            cMunFG: CodeCityIBGE;
-            /** Formato de impressão do DANFE:
-             * 0 | sem DANFE
-             * 1 | DANFe Retrato
-             * 2 | DANFe Paisagem
-             * 3 | DANFe Simplificado
-             * 4 | DANFe NFC-e
-             * 5 | DANFe NFC-e em mensagem eletrônica
-             */
-            tpImp: DanfePrintFormat;
-            /** Forma de emissão da NF-e
-             * 1 | Normal
-             * 2 | Contingência FS
-             * 3 | Regime Especial NFF (NT 2021.002)
-             * 4 | Contingência DPEC
-             * 5 | Contingência FSDA
-             * 6 | Contingência SVC - AN
-             * 7 | Contingência SVC - RS
-             * 9 | Contingência off-line NFC-e
-             */
-            tpEmis: IssuanceMode;
-            /** Digito Verificador da Chave de Acesso da NF-e */
-            cDV: string;
-            /** Identificação do Ambiente:
-             * 1 | Produção
-             * 2 | Homologação
-             */
-            tpAmb: EnvironmentIdentifier;
-            /** Finalidade da emissão da NF-e:
-             * 1 | NFe normal
-             * 2 | NFe complementar
-             * 3 | NFe de ajuste
-             * 4 | Devolução/Retorno
-             */
-            finNFe: NFEGoal;
-            /** Indica operação com consumidor final:
-             * 0 | Não
-             * 1 | Consumidor Final
-             */
-            indFinal: OperationWithEndConsumer;
-            /** Indicador de presença do comprador no estabelecimento comercial no momento da operação:
-             * 0 | Não se aplica (ex.: Nota Fiscal complementar ou de ajuste)
-             * 1 | Operação presencial
-             * 2 | Não presencial, internet
-             * 3 | Não presencial, teleatendimento
-             * 4 | NFC-e entrega em domicílio
-             * 5 | Operação presencial, fora do estabelecimento
-             * 9 | Não presencial, outros
-             */
-            indPres: BuyerPresenceOnEstablishmentAtTransactionIndicator;
-            /** Indicador de intermediador/marketplace:
-             * 0 | Operação sem intermediador (em site ou plataforma própria)
-             * 1 | Operação em site ou plataforma de terceiros (intermediadores/marketplace)
-             */
-            indIntermed?: IntermediaryIndicator;
-            /** Processo de emissão utilizado com a seguinte codificação:
-             * 0 | emissão de NF-e com aplicativo do contribuinte
-             * 1 | emissão de NF-e avulsa pelo Fisco
-             * 2 | emissão de NF-e avulsa, pelo contribuinte com seu certificado digital, através do site do Fisco
-             * 3 | emissão de NF-e pelo contribuinte com aplicativo fornecido pelo Fisco
-             */
-            procEmi: IssuingProcess;
-            /** Versão do aplicativo utilizado no processo de emissão */
-            verProc: string;
-            /** Informar a data e hora de entrada em contingência. Contingência no formato (AAAA-MM-DDThh:mm:ssTZD)
-             * ex.: 2012-09-01T13:00:00-03:00.
-             */
-            dhCont?: string;
-            /** Informar a justificativa da entrada */
-            xJust?: string;
-            /** Grupo de informações da NF referenciada */
-            NFref?: ReferencedNFE[];
-        };
-        /** Identificação do emitente */
-        emit: (Issuer & { CNPJ: string }) | (Issuer & { CPF: string });
-        /** Emissão de avulsa, informar os dados do Fisco emitente */
-        avulsa?: {
-            /** CNPJ do Órgão emissor */
-            CNPJ: string;
-            /** Órgão emitente */
-            xOrgao: string;
-            /** Matrícula do agente */
-            matr: string;
-            /** Nome do agente */
-            xAgente: string;
-            /** Telefone */
-            fone?: string;
-            /** Sigla da Unidade da Federação */
-            UF: UFIssuer;
-            /** Número do Documento de Arrecadação de Receita */
-            nDAR?: string;
-            /** Data de emissão do DAR (AAAA-MM-DD) */
-            dEmi?: string;
-            /** Valor Total constante no DAR */
-            vDAR?: string;
-            /** Repartição Fiscal emitente */
-            repEmi: string;
-            /** Data de pagamento do DAR (AAAA-MM-DD) */
-            dPag?: string;
-        };
-        /** Identificação do Destinatário */
-        dest?:
-            | (Recipient & { CNPJ?: string })
-            | (Recipient & { CPF?: string })
-            | (Recipient & { idEstrangeiro?: string });
-        /** Identificação do Local de Retirada (informar apenas quando for diferente do endereço do remetente) */
-        retirada?: Local;
-        /** Identificação do Local de Entrega (informar apenas quando for diferente do endereço do destinatário) */
-        entrega?: Local;
-        /** Pessoas autorizadas para o download do XML da NF-e */
-        autXML?: ({ CPF: string } | { CNPJ: string })[];
-        /** Dados dos detalhes da NF-e */
-        det: {
-            $: {
-                /** Número do item do NF */
-                nItem: string;
+        /** Dados dos produtos e serviços da NF-e */
+        prod: Product;
+        /** Tributos incidentes nos produtos ou serviços da NF-e */
+        imposto: Tax;
+        impostoDevol?: {
+            /** Percentual de mercadoria devolvida */
+            pDevol: string;
+            /** Informação de IPI devolvido */
+            IPI: {
+                /** Valor do IPI devolvido */
+                vIPIDevol: string;
             };
-            /** Dados dos produtos e serviços da NF-e */
-            prod: Product;
-            /** Tributos incidentes nos produtos ou serviços da NF-e */
-            imposto: Tax;
-            impostoDevol?: {
-                /** Percentual de mercadoria devolvida */
-                pDevol: string;
-                /** Informação de IPI devolvido */
-                IPI: {
-                    /** Valor do IPI devolvido */
-                    vIPIDevol: string;
-                };
-            };
-            /** Informações adicionais do produto (norma referenciada, informações complementares, etc) */
-            infAdProd?: string;
+        };
+        /** Informações adicionais do produto (norma referenciada, informações complementares, etc) */
+        infAdProd?: string;
+        /** Grupo de observações de uso livre (para o item da NF-e) */
+        obsItem?: {
             /** Grupo de observações de uso livre (para o item da NF-e) */
-            obsItem?: {
-                /** Grupo de observações de uso livre (para o item da NF-e) */
-                obsCont?: {
-                    xTexto: string;
-                    xCampo: string;
-                };
-                /** Grupo de observações de uso livre (para o item da NF-e) */
-                obsFisco: {
-                    xTexto: string;
-                    xCampo: string;
-                };
+            obsCont?: {
+                xTexto: string;
+                xCampo: string;
+            };
+            /** Grupo de observações de uso livre (para o item da NF-e) */
+            obsFisco: {
+                xTexto: string;
+                xCampo: string;
+            };
+        };
+    }[];
+    /** Dados dos totais da NF-e */
+    total: {
+        /** Totais referentes ao ICMS */
+        ICMSTot: {
+            /** BC do ICMS */
+            vBC: string;
+            /** Valor Total do ICMS */
+            vICMS: string;
+            /** Valor Total do ICMS desonerado */
+            vICMSDeson: string;
+            /** Valor total do ICMS relativo ao Fundo de Combate à Pobreza (FCP) para a UF de destino */
+            vFCPUFDest?: string;
+            /** Valor total do ICMS de partilha para a UF do destinatário */
+            vICMSUFDest?: string;
+            /** Valor total do ICMS de partilha para a UF do remetente */
+            vICMSUFRemet?: string;
+            /** Valor Total do FCP (Fundo de Combate à Pobreza) */
+            vFCP: string;
+            /** BC do ICMS ST */
+            vBCST: string;
+            /** Valor Total do ICMS ST */
+            vST: string;
+            /** Valor Total do FCP (Fundo de Combate à Pobreza) retido por substituição tributária */
+            vFCPST: string;
+            /** Valor Total do FCP (Fundo de Combate à Pobreza) retido anteriormente por substituição tributária */
+            vFCPSTRet: string;
+            /** Valor total da quantidade tributada do ICMS monofásico próprio */
+            qBCMono?: string;
+            /** Valor total do ICMS monofásico próprio */
+            vICMSMono?: string;
+            /** Valor total da quantidade tributada do ICMS monofásico sujeito a retenção */
+            qBCMonoReten?: string;
+            /** Valor total do ICMS monofásico sujeito a retenção */
+            vICMSMonoReten?: string;
+            /** Valor total da quantidade tributada do ICMS monofásico retido anteriormente */
+            qBCMonoRet?: string;
+            /** Valor do ICMS monofásico retido anteriormente */
+            vICMSMonoRet?: string;
+            /** Valor Total dos produtos e serviços */
+            vProd: string;
+            /** Valor Total do Frete */
+            vFrete: string;
+            /** Valor Total do Seguro */
+            vSeg: string;
+            /** Valor Total do Desconto */
+            vDesc: string;
+            /** Valor Total do II */
+            vII: string;
+            /** Valor Total do IPI */
+            vIPI: string;
+            /** Valor Total do IPI devolvido. Deve ser informado quando preenchido o Grupo Tributos Devolvidos na
+             * emissão de nota finNFe=4 (devolução) nas operações com não contribuintes do IPI. Corresponde ao total
+             * da soma dos campos id: UA04
+             */
+            vIPIDevol: string;
+            /** Valor do PIS */
+            vPIS: string;
+            /** Valor do COFINS */
+            vCOFINS: string;
+            /** Outras Despesas acessórias */
+            vOutro: string;
+            /** Valor Total da NF-e */
+            vNF: string;
+            /** Valor estimado total de impostos federais, estaduais e municipais */
+            vTotTrib?: string;
+        };
+        /** Totais referentes ao ISSQN */
+        ISSQNtot?: {
+            /** Valor Total dos Serviços sob não-incidência ou não tributados pelo ICMS */
+            vServ?: string;
+            /** Base de Cálculo do ISS */
+            vBC?: string;
+            /** Valor Total do ISS */
+            vISS?: string;
+            /** Valor do PIS sobre serviços */
+            vPIS?: string;
+            /** Valor do COFINS sobre serviços */
+            vCOFINS?: string;
+            /** Data da prestação do serviço (AAAA-MM-DD) */
+            dCompet: string;
+            /** Valor dedução para redução da base de cálculo */
+            vDeducao?: string;
+            /** Valor outras retenções */
+            vOutro?: string;
+            /** Valor desconto incondicionado */
+            vDescIncond?: string;
+            /** Valor desconto condicionado */
+            vDescCond?: string;
+            /** Valor Total Retenção ISS */
+            vISSRet?: string;
+            /** Código do regime especial de tributação */
+            cRegTrib?: SpecialTaxRegimeCode;
+        };
+        /** Retenção de Tributos Federais */
+        retTrib?: {
+            /** Valor Retido de PIS */
+            vRetPIS?: string;
+            /** Valor Retido de COFINS */
+            vRetCOFINS?: string;
+            /** Valor Retido de CSLL */
+            vRetCSLL?: string;
+            /** Base de Cálculo do IRRF */
+            vBCIRRF?: string;
+            /** Valor Retido de IRRF */
+            vIRRF?: string;
+            /** Base de Cálculo da Retenção da Previdêncica Social */
+            vBCRetPrev?: string;
+            /** Valor da Retenção da Previdêncica Social */
+            vRetPrev?: string;
+        };
+    };
+    /** Dados dos transportes da NF-e */
+    transp: Transport;
+    /** Dados da cobrança da NF-e */
+    cobr?: {
+        /** Dados da fatura */
+        fat?: {
+            /** Número da fatura */
+            nFat?: string;
+            /** Valor original da fatura */
+            vOrig?: string;
+            /** Valor do desconto da fatura */
+            vDesc?: string;
+            /** Valor líquido da fatura */
+            vLiq?: string;
+        };
+        /** Dados das duplicatas NT 2011/004 */
+        dup?: {
+            /** Número da duplicata */
+            nDup?: string;
+            /** Data de vencimento da duplicata (AAAA-MM-DD) */
+            dVenc?: string;
+            /** Valor da duplicata */
+            vDup: string;
+        }[];
+    };
+    /** Dados de Pagamento. Obrigatório apenas para (NFC-e) NT 2012/004 */
+    pag: {
+        /** Grupo de detalhamento da forma de pagamento */
+        detPag: {
+            /** Indicador da Forma de Pagamento:
+             * 0 | Pagamento à Vista
+             * 1 | Pagamento à Prazo
+             */
+            indPag?: PaymentMode;
+            /** Forma de Pagamento */
+            tPag: string;
+            /** Descrição do Meio de Pagamento */
+            xPag?: string;
+            /** Valor do Pagamento. Esta tag poderá ser omitida quando a tag tPag=90 (Sem Pagamento), caso contrário
+             * deverá ser preenchida
+             */
+            vPag: string;
+            /** Data do Pagamento */
+            dPag?: string;
+            /** CNPJ transacional do pagamento - Preencher informando o CNPJ do estabelecimento onde o pagamento foi
+             * processado/transacionado/recebido quando a emissão do documento fiscal ocorrer em estabelecimento
+             * distinto
+             */
+            CNPJPag?: string;
+            /** UF do CNPJ do estabelecimento onde o pagamento foi processado/transacionado/recebido */
+            UFPag?: UFIssuer;
+            /** Grupo de Cartões, PIX, Boletos e outros Pagamentos Eletrônicos */
+            card?: {
+                /** Tipo de Integração do processo de pagamento com o sistema de automação da empresa:
+                 * 1 - Pagamento integrado com o sistema de automação da empresa (Ex.: equipamento TEF, Comércio
+                 * Eletrônico, POS Integrado)
+                 * 2 - Pagamento não integrado com o sistema de automação da empresa (Ex.: equipamento POS Simples)
+                 */
+                tpIntegra: IntegrationTypeInPaymentProcess;
+                /** CNPJ da instituição de pagamento */
+                CNPJ?: string;
+                /** Bandeira da operadora de cartão */
+                tBand?: string;
+                /** Número de autorização da operação com cartões, PIX, boletos e outros pagamentos eletrônicos */
+                cAut?: string;
+                /** CNPJ do beneficiário do pagamento */
+                CNPJReceb?: string;
+                /** Identificador do terminal de pagamento */
+                idTermPag?: string;
             };
         }[];
-        /** Dados dos totais da NF-e */
-        total: {
-            /** Totais referentes ao ICMS */
-            ICMSTot: {
-                /** BC do ICMS */
-                vBC: string;
-                /** Valor Total do ICMS */
-                vICMS: string;
-                /** Valor Total do ICMS desonerado */
-                vICMSDeson: string;
-                /** Valor total do ICMS relativo ao Fundo de Combate à Pobreza (FCP) para a UF de destino */
-                vFCPUFDest?: string;
-                /** Valor total do ICMS de partilha para a UF do destinatário */
-                vICMSUFDest?: string;
-                /** Valor total do ICMS de partilha para a UF do remetente */
-                vICMSUFRemet?: string;
-                /** Valor Total do FCP (Fundo de Combate à Pobreza) */
-                vFCP: string;
-                /** BC do ICMS ST */
-                vBCST: string;
-                /** Valor Total do ICMS ST */
-                vST: string;
-                /** Valor Total do FCP (Fundo de Combate à Pobreza) retido por substituição tributária */
-                vFCPST: string;
-                /** Valor Total do FCP (Fundo de Combate à Pobreza) retido anteriormente por substituição tributária */
-                vFCPSTRet: string;
-                /** Valor total da quantidade tributada do ICMS monofásico próprio */
-                qBCMono?: string;
-                /** Valor total do ICMS monofásico próprio */
-                vICMSMono?: string;
-                /** Valor total da quantidade tributada do ICMS monofásico sujeito a retenção */
-                qBCMonoReten?: string;
-                /** Valor total do ICMS monofásico sujeito a retenção */
-                vICMSMonoReten?: string;
-                /** Valor total da quantidade tributada do ICMS monofásico retido anteriormente */
-                qBCMonoRet?: string;
-                /** Valor do ICMS monofásico retido anteriormente */
-                vICMSMonoRet?: string;
-                /** Valor Total dos produtos e serviços */
-                vProd: string;
-                /** Valor Total do Frete */
-                vFrete: string;
-                /** Valor Total do Seguro */
-                vSeg: string;
-                /** Valor Total do Desconto */
-                vDesc: string;
-                /** Valor Total do II */
-                vII: string;
-                /** Valor Total do IPI */
-                vIPI: string;
-                /** Valor Total do IPI devolvido. Deve ser informado quando preenchido o Grupo Tributos Devolvidos na
-                 * emissão de nota finNFe=4 (devolução) nas operações com não contribuintes do IPI. Corresponde ao total
-                 * da soma dos campos id: UA04
-                 */
-                vIPIDevol: string;
-                /** Valor do PIS */
-                vPIS: string;
-                /** Valor do COFINS */
-                vCOFINS: string;
-                /** Outras Despesas acessórias */
-                vOutro: string;
-                /** Valor Total da NF-e */
-                vNF: string;
-                /** Valor estimado total de impostos federais, estaduais e municipais */
-                vTotTrib?: string;
-            };
-            /** Totais referentes ao ISSQN */
-            ISSQNtot?: {
-                /** Valor Total dos Serviços sob não-incidência ou não tributados pelo ICMS */
-                vServ?: string;
-                /** Base de Cálculo do ISS */
-                vBC?: string;
-                /** Valor Total do ISS */
-                vISS?: string;
-                /** Valor do PIS sobre serviços */
-                vPIS?: string;
-                /** Valor do COFINS sobre serviços */
-                vCOFINS?: string;
-                /** Data da prestação do serviço (AAAA-MM-DD) */
-                dCompet: string;
-                /** Valor dedução para redução da base de cálculo */
-                vDeducao?: string;
-                /** Valor outras retenções */
-                vOutro?: string;
-                /** Valor desconto incondicionado */
-                vDescIncond?: string;
-                /** Valor desconto condicionado */
-                vDescCond?: string;
-                /** Valor Total Retenção ISS */
-                vISSRet?: string;
-                /** Código do regime especial de tributação */
-                cRegTrib?: SpecialTaxRegimeCode;
-            };
-            /** Retenção de Tributos Federais */
-            retTrib?: {
-                /** Valor Retido de PIS */
-                vRetPIS?: string;
-                /** Valor Retido de COFINS */
-                vRetCOFINS?: string;
-                /** Valor Retido de CSLL */
-                vRetCSLL?: string;
-                /** Base de Cálculo do IRRF */
-                vBCIRRF?: string;
-                /** Valor Retido de IRRF */
-                vIRRF?: string;
-                /** Base de Cálculo da Retenção da Previdêncica Social */
-                vBCRetPrev?: string;
-                /** Valor da Retenção da Previdêncica Social */
-                vRetPrev?: string;
-            };
-        };
-        /** Dados dos transportes da NF-e */
-        transp: Transport;
-        /** Dados da cobrança da NF-e */
-        cobr?: {
-            /** Dados da fatura */
-            fat?: {
-                /** Número da fatura */
-                nFat?: string;
-                /** Valor original da fatura */
-                vOrig?: string;
-                /** Valor do desconto da fatura */
-                vDesc?: string;
-                /** Valor líquido da fatura */
-                vLiq?: string;
-            };
-            /** Dados das duplicatas NT 2011/004 */
-            dup?: {
-                /** Número da duplicata */
-                nDup?: string;
-                /** Data de vencimento da duplicata (AAAA-MM-DD) */
-                dVenc?: string;
-                /** Valor da duplicata */
-                vDup: string;
-            }[];
-        };
-        /** Dados de Pagamento. Obrigatório apenas para (NFC-e) NT 2012/004 */
-        pag: {
-            /** Grupo de detalhamento da forma de pagamento */
-            detPag: {
-                /** Indicador da Forma de Pagamento:
-                 * 0 | Pagamento à Vista
-                 * 1 | Pagamento à Prazo
-                 */
-                indPag?: PaymentMode;
-                /** Forma de Pagamento */
-                tPag: string;
-                /** Descrição do Meio de Pagamento */
-                xPag?: string;
-                /** Valor do Pagamento. Esta tag poderá ser omitida quando a tag tPag=90 (Sem Pagamento), caso contrário
-                 * deverá ser preenchida
-                 */
-                vPag: string;
-                /** Data do Pagamento */
-                dPag?: string;
-                /** CNPJ transacional do pagamento - Preencher informando o CNPJ do estabelecimento onde o pagamento foi
-                 * processado/transacionado/recebido quando a emissão do documento fiscal ocorrer em estabelecimento
-                 * distinto
-                 */
-                CNPJPag?: string;
-                /** UF do CNPJ do estabelecimento onde o pagamento foi processado/transacionado/recebido */
-                UFPag?: UFIssuer;
-                /** Grupo de Cartões, PIX, Boletos e outros Pagamentos Eletrônicos */
-                card?: {
-                    /** Tipo de Integração do processo de pagamento com o sistema de automação da empresa:
-                     * 1 - Pagamento integrado com o sistema de automação da empresa (Ex.: equipamento TEF, Comércio
-                     * Eletrônico, POS Integrado)
-                     * 2 - Pagamento não integrado com o sistema de automação da empresa (Ex.: equipamento POS Simples)
-                     */
-                    tpIntegra: IntegrationTypeInPaymentProcess;
-                    /** CNPJ da instituição de pagamento */
-                    CNPJ?: string;
-                    /** Bandeira da operadora de cartão */
-                    tBand?: string;
-                    /** Número de autorização da operação com cartões, PIX, boletos e outros pagamentos eletrônicos */
-                    cAut?: string;
-                    /** CNPJ do beneficiário do pagamento */
-                    CNPJReceb?: string;
-                    /** Identificador do terminal de pagamento */
-                    idTermPag?: string;
-                };
-            }[];
-            /** Valor do Troco */
-            vTroco?: string;
-        };
-        /** Grupo de Informações do Intermediador da Transação */
-        infIntermed?: {
-            /** CNPJ do Intermediador da Transação (agenciador, plataforma de delivery, marketplace e similar) de
-             * serviços e de negócios
+        /** Valor do Troco */
+        vTroco?: string;
+    };
+    /** Grupo de Informações do Intermediador da Transação */
+    infIntermed?: {
+        /** CNPJ do Intermediador da Transação (agenciador, plataforma de delivery, marketplace e similar) de
+         * serviços e de negócios
+         */
+        CNPJ: string;
+        /** Identificador cadastrado no intermediador */
+        idCadIntTran: string;
+    };
+    /** Informações adicionais da NF-e */
+    infAdic?: {
+        /** Informações adicionais de interesse do Fisco (v2.0) */
+        infAdFisco?: string;
+        /** Informações complementares de interesse do Contribuinte */
+        infCpl?: string;
+        /** Campo de uso livre do contribuinte informar o nome do campo no atributo xCampo e o conteúdo do campo no
+         * xTexto
+         */
+        obsCont?: {
+            $: { xCampo: string };
+            xTexto: string;
+        }[];
+        /** Campo de uso exclusivo do Fisco informar o nome do campo no atributo xCampo e o conteúdo do campo no
+         * xTexto
+         */
+        obsFisco?: {
+            $: { xCampo: string };
+            xTexto: string;
+        }[];
+        /** Grupo de informações do processo referenciado */
+        procRef?: {
+            /** Indentificador do processo ou ato concessório */
+            nProc: string;
+            /** Origem do processo, informar com:
+             * 0 | SEFAZ
+             * 1 | Justiça Federal
+             * 2 | Justiça Estadual
+             * 3 | Secex/RFB
+             * 4 | CONFAZ
+             * 9 | Outros
              */
-            CNPJ: string;
-            /** Identificador cadastrado no intermediador */
-            idCadIntTran: string;
-        };
-        /** Informações adicionais da NF-e */
-        infAdic?: {
-            /** Informações adicionais de interesse do Fisco (v2.0) */
-            infAdFisco?: string;
-            /** Informações complementares de interesse do Contribuinte */
-            infCpl?: string;
-            /** Campo de uso livre do contribuinte informar o nome do campo no atributo xCampo e o conteúdo do campo no
-             * xTexto
+            indProc: ProcessOrigin;
+            /** Tipo do ato concessório Para origem do Processo na SEFAZ (indProc=0), informar o tipo de ato
+             * concessório:
+             * 08 | Termo de Acordo
+             * 10 | Regime Especial
+             * 12 | Autorização específica
+             * 14 | Ajuste SINIEF
+             * 15 | Convênio ICMS
              */
-            obsCont?: {
-                $: { xCampo: string };
-                xTexto: string;
-            }[];
-            /** Campo de uso exclusivo do Fisco informar o nome do campo no atributo xCampo e o conteúdo do campo no
-             * xTexto
-             */
-            obsFisco?: {
-                $: { xCampo: string };
-                xTexto: string;
-            }[];
-            /** Grupo de informações do processo referenciado */
-            procRef?: {
-                /** Indentificador do processo ou ato concessório */
-                nProc: string;
-                /** Origem do processo, informar com:
-                 * 0 | SEFAZ
-                 * 1 | Justiça Federal
-                 * 2 | Justiça Estadual
-                 * 3 | Secex/RFB
-                 * 4 | CONFAZ
-                 * 9 | Outros
-                 */
-                indProc: ProcessOrigin;
-                /** Tipo do ato concessório Para origem do Processo na SEFAZ (indProc=0), informar o tipo de ato
-                 * concessório:
-                 * 08 | Termo de Acordo
-                 * 10 | Regime Especial
-                 * 12 | Autorização específica
-                 * 14 | Ajuste SINIEF
-                 * 15 | Convênio ICMS
-                 */
-                tpAto?: ConcessionAct;
-            }[];
-        };
-        /** Informações de exportação */
-        exporta?: {
-            /** Sigla da UF de Embarque ou de transposição de fronteira */
-            UFSaidaPais: UFIssuer;
-            /** Local de Embarque ou de transposição de fronteira */
-            xLocExporta: string;
-            /** Descrição do local de despacho */
-            xLocDespacho?: string;
-        };
-        /** Informações de compras (Nota de Empenho, Pedido e Contrato) */
-        compra?: {
-            /** Informação da Nota de Empenho de compras públicas (NT2011/004) */
-            xNEmp?: string;
-            /** Informação do pedido */
-            xPed?: string;
-            /** Informação do contrato */
-            xCont?: string;
-        };
-        /** Informações de registro aquisições de cana */
-        cana?: {
-            /** Identificação da safra */
-            safra: string;
-            /** Mês e Ano de Referência, formato: MM/AAAA */
-            ref: string;
-            /** Fornecimentos diários */
-            forDia: {
-                $: {
-                    /** Número do dia */
-                    dia: string;
-                };
-                /** Quantidade em quilogramas - peso líquido */
-                qtde: string;
-            }[];
-            /** Total do mês */
-            qTotMes: string;
-            /** Total Anterior */
-            qTotAnt: string;
-            /** Total Geral */
-            qTotGer: string;
-            /** Deduções - Taxas e Contribuições */
-            deduc?: {
-                /** Descrição da Dedução */
-                xDed: string;
-                /** valor da dedução */
-                vDed: string;
-            }[];
-            /** Valor dos fornecimentos */
-            vFor: string;
-            /** Valor Total das Deduções */
-            vTotDed: string;
-            /** Valor Líquido dos fornecimentos */
-            vLiqFor: string;
-        };
-        /** Informações do Responsável Técnico pela emissão do DF-e */
-        infRespTec?: TechnicalResponsible;
-        /** Grupo para informações da solicitação da NFF */
-        infSolicNFF?: {
-            /** Solicitação do pedido de emissão da NFF */
-            xSolic: string;
-        };
+            tpAto?: ConcessionAct;
+        }[];
+    };
+    /** Informações de exportação */
+    exporta?: {
+        /** Sigla da UF de Embarque ou de transposição de fronteira */
+        UFSaidaPais: UFIssuer;
+        /** Local de Embarque ou de transposição de fronteira */
+        xLocExporta: string;
+        /** Descrição do local de despacho */
+        xLocDespacho?: string;
+    };
+    /** Informações de compras (Nota de Empenho, Pedido e Contrato) */
+    compra?: {
+        /** Informação da Nota de Empenho de compras públicas (NT2011/004) */
+        xNEmp?: string;
+        /** Informação do pedido */
+        xPed?: string;
+        /** Informação do contrato */
+        xCont?: string;
+    };
+    /** Informações de registro aquisições de cana */
+    cana?: {
+        /** Identificação da safra */
+        safra: string;
+        /** Mês e Ano de Referência, formato: MM/AAAA */
+        ref: string;
+        /** Fornecimentos diários */
+        forDia: {
+            $: {
+                /** Número do dia */
+                dia: string;
+            };
+            /** Quantidade em quilogramas - peso líquido */
+            qtde: string;
+        }[];
+        /** Total do mês */
+        qTotMes: string;
+        /** Total Anterior */
+        qTotAnt: string;
+        /** Total Geral */
+        qTotGer: string;
+        /** Deduções - Taxas e Contribuições */
+        deduc?: {
+            /** Descrição da Dedução */
+            xDed: string;
+            /** valor da dedução */
+            vDed: string;
+        }[];
+        /** Valor dos fornecimentos */
+        vFor: string;
+        /** Valor Total das Deduções */
+        vTotDed: string;
+        /** Valor Líquido dos fornecimentos */
+        vLiqFor: string;
+    };
+    /** Informações do Responsável Técnico pela emissão do DF-e */
+    infRespTec?: TechnicalResponsible;
+    /** Grupo para informações da solicitação da NFF */
+    infSolicNFF?: {
+        /** Solicitação do pedido de emissão da NFF */
+        xSolic: string;
     };
 };
 

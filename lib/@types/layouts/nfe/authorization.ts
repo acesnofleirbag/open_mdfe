@@ -15,7 +15,9 @@ export type AuthorizationRequest = {
          * 1 | SIM (Síncrono)
          */
         indSinc: WebServiceMode;
-        NFe: SefazNFE[];
+        NFe: {
+            infNFE: SefazNFE;
+        }[];
     };
 };
 

@@ -5,9 +5,7 @@ import { AccessKey } from "./accessKey";
 import { SefazCTE } from "./@types/layouts/cte/cte";
 
 export class Print {
-    DANFE(mode: "portrait" | "landscape", payload: SefazNFE) {
-        const nfe = payload.infNFE;
-
+    DANFE(mode: "portrait" | "landscape", nfe: SefazNFE) {
         const layout =
             mode === "portrait"
                 ? readFileSync(__dirname + "/core/static/danfe.portrait.hbs")
@@ -23,7 +21,7 @@ export class Print {
                 serie: nfe.ide.serie,
                 numero: nfe.ide.nNF,
                 naturezaOperacao: nfe.ide.natOp,
-                key: AccessKey.fromNFe(payload),
+                key: AccessKey.fromNFe(nfe),
                 type: nfe.ide.tpNF,
                 total: nfe.total.ICMSTot.vNF,
                 protocolo: "",

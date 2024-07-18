@@ -3,10 +3,8 @@ import { Print } from "../lib/print";
 import { version as __VERSION__ } from "../package.json";
 import {
     BuyerPresenceOnEstablishmentAtTransactionIndicator,
-    CodeCityIBGE,
     DanfePrintFormat,
     DeterminationMethod__Type1,
-    EnvironmentIdentifier,
     ExibilidadeISS,
     IssuanceMode,
     IssuingProcess,
@@ -21,10 +19,9 @@ import {
     TaxDocumentType,
     TaxIncentiveIndicator,
     TaxRegimeCode,
-    UFCodeIBGE,
-    UFIssuer,
 } from "../lib/@types/layouts/nfe/nfe";
 import { writeFileSync } from "node:fs";
+import { CodeCityIBGE, EnvironmentIdentifier, UFCodeIBGE, UFIssuer } from "../lib/@types/layouts/general";
 
 test("DANFE: portrait", () => {
     // arrange

@@ -27,15 +27,17 @@ import { CodeCityIBGE, EnvironmentIdentifier, UFCodeIBGE, UFIssuer } from "../li
 
 // NOTE: To generate a self signed certificate for envelope structure checking, execute:
 // $ openssl req -nodes -new -x509 -keyout key.pem -out cert.pem
+// $ openssl pkcs12 -export -in cert.pem -inkey key.pem -out cert.pfx
 
 // WARN: all tests make real requests for the SEFAZ homologation environments
 
-test("Request authorization", async () => {
+test.only("Request authorization", async () => {
     // arrange
     const cert = {
-        key: __dirname + "/cert/key.pem",
-        cert: __dirname + "/cert/cert.pem",
+        cert: __dirname + "/cert/cert.pfx",
+        pass: process.env.CERT_PASS ?? "",
     };
+
     const sefaz = new NFeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
     const nfe = new NFE({
         $: {
@@ -177,8 +179,8 @@ test("Request authorization", async () => {
 test.todo("Fetch NF-e", async () => {
     // arrange
     const cert = {
-        key: __dirname + "/cert/key.pem",
-        cert: __dirname + "/cert/cert.pem",
+        cert: __dirname + "/cert/cert.pfx",
+        pass: process.env.CERT_PASS ?? "",
     };
     const sefaz = new NFeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
 
@@ -203,8 +205,8 @@ test.todo("Check batch authorization", async () => {});
 test.todo("Make useless", async () => {
     // arrange
     const cert = {
-        key: __dirname + "/cert/key.pem",
-        cert: __dirname + "/cert/cert.pem",
+        cert: __dirname + "/cert/cert.pfx",
+        pass: process.env.CERT_PASS ?? "",
     };
     const sefaz = new NFeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
 
@@ -232,11 +234,11 @@ test.todo("Make useless", async () => {
     expect(res).toEqual(1);
 });
 
-test.only("Check service status", async () => {
+test.todo("Check service status", async () => {
     // arrange
     const cert = {
-        key: __dirname + "/cert/key.pem",
-        cert: __dirname + "/cert/cert.pem",
+        cert: __dirname + "/cert/cert.pfx",
+        pass: process.env.CERT_PASS ?? "",
     };
     const sefaz = new NFeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
 

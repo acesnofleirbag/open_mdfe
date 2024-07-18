@@ -174,7 +174,7 @@ export class NFeSEFAZ implements NFeSefazOperations {
         const environment = this.getEnvironment();
 
         const envelope = this.makeSoapEnvelope(payload, "NFeAutorizacao4");
-        const signedEnvelope = this.signer.signXML_X509(envelope, "infNFE");
+        const signedEnvelope = await this.signer.signXML_X509(envelope, "infNFE");
 
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).authorization[environment],
@@ -188,7 +188,7 @@ export class NFeSEFAZ implements NFeSefazOperations {
         const environment = this.getEnvironment();
 
         const envelope = this.makeSoapEnvelope(payload, "@@@");
-        const signedEnvelope = this.signer.signXML_X509(envelope, "@@@");
+        const signedEnvelope = await this.signer.signXML_X509(envelope, "@@@");
 
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).authorization[environment],
@@ -202,7 +202,7 @@ export class NFeSEFAZ implements NFeSefazOperations {
         const environment = this.getEnvironment();
 
         const envelope = this.makeSoapEnvelope(payload, "@@@");
-        const signedEnvelope = this.signer.signXML_X509(envelope, "@@@");
+        const signedEnvelope = await this.signer.signXML_X509(envelope, "@@@");
 
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).authorization[environment],
@@ -216,7 +216,7 @@ export class NFeSEFAZ implements NFeSefazOperations {
         const environment = this.getEnvironment();
 
         const envelope = this.makeSoapEnvelope(payload, "NfeInutilizacao4");
-        const signedEnvelope = this.signer.signXML_X509(envelope, "@@@");
+        const signedEnvelope = await this.signer.signXML_X509(envelope, "@@@");
 
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).authorization[environment],
@@ -230,7 +230,7 @@ export class NFeSEFAZ implements NFeSefazOperations {
         const environment = this.getEnvironment();
 
         const envelope = this.makeSoapEnvelope(payload, "NfeStatusServico4");
-        const signedEnvelope = this.signer.signXML_X509(envelope, "consStatServ");
+        const signedEnvelope = await this.signer.signXML_X509(envelope, "consStatServ");
 
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).serviceStatus[environment],
@@ -244,7 +244,7 @@ export class NFeSEFAZ implements NFeSefazOperations {
         const environment = this.getEnvironment();
 
         const envelope = this.makeSoapEnvelope(payload, "NfeConsultaCadastro");
-        const signedEnvelope = this.signer.signXML_X509(envelope, "@@@");
+        const signedEnvelope = await this.signer.signXML_X509(envelope, "@@@");
 
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).authorization[environment],
@@ -258,7 +258,7 @@ export class NFeSEFAZ implements NFeSefazOperations {
         const environment = this.getEnvironment();
 
         const envelope = this.makeSoapEnvelope(payload, "NFeDistribuicaoDFe");
-        const signedEnvelope = this.signer.signXML_X509(envelope, "distDFeInt");
+        const signedEnvelope = await this.signer.signXML_X509(envelope, "distDFeInt");
 
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).authorization[environment],
@@ -272,7 +272,7 @@ export class NFeSEFAZ implements NFeSefazOperations {
         const environment = this.getEnvironment();
 
         const envelope = this.makeSoapEnvelope(payload, "NFeRecepcaoEvento");
-        const signedEnvelope = this.signer.signXML_X509(envelope, "infEvento");
+        const signedEnvelope = await this.signer.signXML_X509(envelope, "infEvento");
 
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).eventReception[environment],
@@ -287,7 +287,7 @@ export class NFeSEFAZ implements NFeSefazOperations {
         const environment = this.getEnvironment();
 
         const envelope = this.makeSoapEnvelope(payload, "NFeRecepcaoEvento");
-        const signedEnvelope = this.signer.signXML_X509(envelope, "chNFeRef");
+        const signedEnvelope = await this.signer.signXML_X509(envelope, "chNFeRef");
 
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).eventReception[environment],
@@ -301,7 +301,7 @@ export class NFeSEFAZ implements NFeSefazOperations {
         const environment = this.getEnvironment();
 
         const envelope = this.makeSoapEnvelope(payload, "NFeRecepcaoEvento");
-        const signedEnvelope = this.signer.signXML_X509(envelope, "xCondUso");
+        const signedEnvelope = await this.signer.signXML_X509(envelope, "xCondUso");
 
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).eventReception[environment],
@@ -318,7 +318,7 @@ export class NFeSEFAZ implements NFeSefazOperations {
         const environment = this.getEnvironment();
 
         const envelope = this.makeSoapEnvelope(payload, "@@@");
-        const signedEnvelope = this.signer.signXML_X509(envelope, "@@@");
+        const signedEnvelope = await this.signer.signXML_X509(envelope, "@@@");
 
         const { data } = await this.httpClient.post(
             this.getContingencyAuthorizerByUF(this.UF).authorization[environment],
@@ -434,7 +434,7 @@ export class CTeSEFAZ implements CTeSefazOperations {
         const environment = this.getEnvironment();
 
         const envelope = this.makeSoapEnvelope(payload, "CTeRecepcaoSincV4");
-        const signedEnvelope = this.signer.signXML_X509(envelope, "infCte");
+        const signedEnvelope = await this.signer.signXML_X509(envelope, "infCte");
 
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).SincReception[environment],
@@ -450,7 +450,7 @@ export class CTeSEFAZ implements CTeSefazOperations {
         const environment = this.getEnvironment();
 
         const envelope = this.makeSoapEnvelope(payload, "CTeRecepcaoOSV4");
-        const signedEnvelope = this.signer.signXML_X509(envelope, "@@@");
+        const signedEnvelope = await this.signer.signXML_X509(envelope, "@@@");
 
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).OSReception[environment],
@@ -464,7 +464,7 @@ export class CTeSEFAZ implements CTeSefazOperations {
         const environment = this.getEnvironment();
 
         const envelope = this.makeSoapEnvelope(payload, "CTeRecepcaoGTVeV4");
-        const signedEnvelope = this.signer.signXML_X509(envelope, "infCte");
+        const signedEnvelope = await this.signer.signXML_X509(envelope, "infCte");
 
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).GTVeReception[environment],
@@ -478,7 +478,7 @@ export class CTeSEFAZ implements CTeSefazOperations {
         const environment = this.getEnvironment();
 
         const envelope = this.makeSoapEnvelope(payload, "CTeConsultaV4");
-        const signedEnvelope = this.signer.signXML_X509(envelope, "consSitCTe");
+        const signedEnvelope = await this.signer.signXML_X509(envelope, "consSitCTe");
 
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).protocolFetching[environment],
@@ -492,7 +492,7 @@ export class CTeSEFAZ implements CTeSefazOperations {
         const environment = this.getEnvironment();
 
         const envelope = this.makeSoapEnvelope(payload, "CTeStatusServicoV4");
-        const signedEnvelope = this.signer.signXML_X509(envelope, "consStatServCTe");
+        const signedEnvelope = await this.signer.signXML_X509(envelope, "consStatServCTe");
 
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).serviceStatus[environment],
@@ -511,7 +511,7 @@ export class CTeSEFAZ implements CTeSefazOperations {
         const environment = this.getEnvironment();
 
         const envelope = this.makeSoapEnvelope(payload, "CTeRecepcaoEventoV4");
-        const signedEnvelope = this.signer.signXML_X509(envelope, "infEvento");
+        const signedEnvelope = await this.signer.signXML_X509(envelope, "infEvento");
 
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).eventReception[environment],

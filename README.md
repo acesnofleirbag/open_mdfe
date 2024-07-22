@@ -1,4 +1,4 @@
-# OPEN SEFAZ
+# OPEN MDF-e
 
 NodeJS package para MDF-e (NF-e, NFC-e, CT-e, consulta de dados, etc..)
 

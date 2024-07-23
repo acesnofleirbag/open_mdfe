@@ -7,7 +7,7 @@ import { VERSION } from "../version";
 export type NFeServiceStatusRequest = {
     /** Tipo Pedido de Consulta do Status do Serviço */
     consStatServ: {
-        $: { versao: VERSION };
+        $: { versao: VERSION; xmlns: "http://www.portalfiscal.inf.br/nfe" };
         /** Identificação do Ambiente:
          * 1 | Produção
          * 2 | Homologação
@@ -23,8 +23,9 @@ export type NFeServiceStatusRequest = {
 // schema: TRetConsStatServ
 export type NFeServiceStatusResponse = {
     /** Tipo Resultado da Consulta do Status do Serviço */
+    $: { xmlns: string };
     retConsStatServ: {
-        $: { versao: VERSION };
+        $: { versao: VERSION; xmlns: string };
         /** Identificação do Ambiente:
          * 1 | Produção
          * 2 | Homologação

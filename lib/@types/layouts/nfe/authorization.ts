@@ -8,7 +8,7 @@ import { VERSION } from "../version";
 export type AuthorizationRequest = {
     /** Schema XML de validação do Pedido de Concessão de Autorização da Nota Fiscal Eletrônica */
     enviNFe: {
-        $: { versao: VERSION; xmlns: "https://www.portalfiscal.inf.br/nfe" };
+        $: { versao: VERSION; xmlns: "http://www.portalfiscal.inf.br/nfe" };
         idLote: string;
         /** Indicador de processamento síncrono:
          * 0 | NÃO

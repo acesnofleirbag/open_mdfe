@@ -3,7 +3,6 @@ import { UndefinedEnvironmentError } from "../errors/undefinedEnvironmentError";
 export class Env {
     static readonly _envs: Record<any, any> = {
         ACCESS_KEY_LENGTH: 44,
-        __DEV__: true,
     };
 
     static get(key: string) {

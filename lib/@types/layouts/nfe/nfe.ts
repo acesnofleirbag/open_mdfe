@@ -606,7 +606,7 @@ type Product__Type4 = __Product & {
          */
         qTemp?: string;
         /** Sigla da UF de Consumo */
-        UFCons: UFIssuer & "EX";
+        UFCons: UFIssuer | "EX";
         /** CIDE Combustíveis */
         CIDE?: {
             /** BC do CIDE (Quantidade comercializada) */
@@ -2340,7 +2340,7 @@ type __Transport = {
 // schema: TVeiculo
 type Vehicle = {
     placa: string;
-    UF?: UFIssuer & "EX";
+    UF?: UFIssuer | "EX";
     RNTC?: string;
 };
 

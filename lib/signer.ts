@@ -12,7 +12,7 @@ export class Signer implements ISigner {
     }
 
     async signXML(envelope: string, tagRef: string): Promise<string> {
-        const pfx = readFileSync(this.cert.cert);
+        const pfx = readFileSync(this.cert.pfx);
         const __cert = await PEM.readPkcs12(pfx, { p12Password: this.cert.pass });
 
         const sig = new SignedXml({
@@ -39,7 +39,7 @@ export class Signer implements ISigner {
     }
 
     async signXML_X509(envelope: string, tagRef: string): Promise<string> {
-        const pfx = readFileSync(this.cert.cert);
+        const pfx = readFileSync(this.cert.pfx);
         const __cert = await PEM.readPkcs12(pfx, { p12Password: this.cert.pass });
 
         const sig = new SignedXml({

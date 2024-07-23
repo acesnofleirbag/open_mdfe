@@ -711,7 +711,7 @@ const Product__Type4 = z
                     .regex(RegexSEFAZ.Decimal12_01a04_Temperature)
                     .transform((str) => str && ParserUtility.scape(str))
                     .optional(),
-                UFCons: z.nativeEnum(UFIssuer).and(z.literal("EX")),
+                UFCons: z.nativeEnum(UFIssuer).or(z.literal("EX")),
                 CIDE: z
                     .object({
                         qBCProd: z

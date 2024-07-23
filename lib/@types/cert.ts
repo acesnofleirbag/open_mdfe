@@ -1,4 +1,4 @@
 export type Cert = {
-    cert: string;
+    pfx: string;
     pass: string;
 };

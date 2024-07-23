@@ -145,7 +145,7 @@ type __CTeIdentication = {
      */
     xMunEnv: string;
     /** Sigla da UF de envio do CT-e (de onde o documento foi transmitido). Informar 'EX' para operações com o exterior */
-    UFEnv: UFIssuer & "EX";
+    UFEnv: UFIssuer | "EX";
     /** Modal:
      * 01 | Rodoviário
      * 02 | Aéreo
@@ -170,7 +170,7 @@ type __CTeIdentication = {
     /** Nome do Município do início da prestação. Informar 'EXTERIOR' para operações com o exterior */
     xMunIni: "EXTERIOR" | string;
     /** UF do início da prestação. Informar 'EX' para operações com o exterior */
-    UFIni: UFIssuer & "EX";
+    UFIni: UFIssuer | "EX";
     /** Código do Município de término da prestação. Utilizar a tabela do IBGE. Informar 9999999 para operações com
      * o exterior
      */
@@ -178,7 +178,7 @@ type __CTeIdentication = {
     /** Nome do Município do término da prestação. Informar 'EXTERIOR' para operações com o exterior */
     xMunFim: "EXTERIOR" | string;
     /** UF do término da prestação. Informar 'EX' para operações com o exterior */
-    UFFim: UFIssuer & "EX";
+    UFFim: UFIssuer | "EX";
     /** Indicador se o Recebedor retira no Aeroporto, Filial, Porto ou Estação de Destino */
     retira: TakeOnDestination;
     /** Detalhes do retira */
@@ -540,7 +540,7 @@ type PreviousDocumentIssuer = {
     /** Inscrição Estadual */
     IE?: string;
     /** Sigla da UF. Informar EX para operações com o exterior */
-    UF?: UFIssuer & "EX";
+    UF?: UFIssuer | "EX";
     /** Razão Social ou Nome do expedidor */
     xNome: string;
     /** Informações de identificação dos documentos de Transporte Anterior */

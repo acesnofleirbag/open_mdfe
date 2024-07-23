@@ -1,24 +1,24 @@
 import { Axios, AxiosRequestConfig } from "axios";
 import { HTTPClient } from "../core/ports/httpClient";
 import { Agent } from "https";
-import { Env } from "../core/environments";
 import { NotImplementedError } from "../errors/notImplementedError";
+import { Cert } from "../@types/cert";
+import { readFileSync } from "fs";
 
 export class AxiosHttpClient implements HTTPClient<AxiosRequestConfig> {
     private client: Axios;
 
-    constructor() {
+    constructor(cert: Cert) {
         this.client = new Axios({
             headers: {
-                "Content-Type": "text/xml",
+                "Content-Type": "text/xml;chartset=utf-8",
             },
-        });
-
-        if (Env.get("__DEV__")) {
-            this.client.defaults.httpsAgent = new Agent({
+            httpsAgent: new Agent({
                 rejectUnauthorized: false,
-            });
-        }
+                pfx: readFileSync(cert.pfx),
+                passphrase: cert.pass,
+            }),
+        });
     }
 
     async get(_URL: string, _params: AxiosRequestConfig): Promise<any> {

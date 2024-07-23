@@ -34,7 +34,7 @@ import { CodeCityIBGE, EnvironmentIdentifier, UFCodeIBGE, UFIssuer } from "../li
 test.only("Request authorization", async () => {
     // arrange
     const cert = {
-        cert: __dirname + "/cert/cert.pfx",
+        pfx: __dirname + "/cert/cert.pfx",
         pass: process.env.CERT_PASS ?? "",
     };
 
@@ -162,7 +162,7 @@ test.only("Request authorization", async () => {
     const payload = nfe.toObject();
     const envelope: AuthorizationRequest = {
         enviNFe: {
-            $: { versao: "4.00", xmlns: "https://www.portalfiscal.inf.br/nfe" },
+            $: { versao: "4.00", xmlns: "http://www.portalfiscal.inf.br/nfe" },
             idLote: "01234567",
             indSinc: WebServiceMode.ASYNC,
             NFe: [{ infNFE: payload }],
@@ -179,7 +179,7 @@ test.only("Request authorization", async () => {
 test.todo("Fetch NF-e", async () => {
     // arrange
     const cert = {
-        cert: __dirname + "/cert/cert.pfx",
+        pfx: __dirname + "/cert/cert.pfx",
         pass: process.env.CERT_PASS ?? "",
     };
     const sefaz = new NFeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
@@ -205,7 +205,7 @@ test.todo("Check batch authorization", async () => {});
 test.todo("Make useless", async () => {
     // arrange
     const cert = {
-        cert: __dirname + "/cert/cert.pfx",
+        pfx: __dirname + "/cert/cert.pfx",
         pass: process.env.CERT_PASS ?? "",
     };
     const sefaz = new NFeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
@@ -234,10 +234,10 @@ test.todo("Make useless", async () => {
     expect(res).toEqual(1);
 });
 
-test.todo("Check service status", async () => {
+test("Check service status", async () => {
     // arrange
     const cert = {
-        cert: __dirname + "/cert/cert.pfx",
+        pfx: __dirname + "/cert/cert.pfx",
         pass: process.env.CERT_PASS ?? "",
     };
     const sefaz = new NFeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
@@ -245,15 +245,27 @@ test.todo("Check service status", async () => {
     // act
     const res = await sefaz.checkServiceStatus({
         consStatServ: {
-            $: { versao: "4.00" },
-            cUF: UFCodeIBGE.SP,
+            $: { versao: "4.00", xmlns: "http://www.portalfiscal.inf.br/nfe" },
             tpAmb: EnvironmentIdentifier.HOMOLOGATION,
+            cUF: UFCodeIBGE.SP,
             xServ: "STATUS",
         },
     });
 
     // assert
-    console.log(require("util").inspect(res, false, null, true));
+    expect(res).toEqual({
+        $: { xmlns: expect.any(String) },
+        retConsStatServ: {
+            $: { versao: "4.00", xmlns: "http://www.portalfiscal.inf.br/nfe" },
+            tpAmb: "2",
+            verAplic: expect.any(String),
+            cStat: "107",
+            xMotivo: "Serviço em Operação",
+            cUF: "35",
+            dhRecbto: expect.any(String),
+            tMed: expect.any(String),
+        },
+    });
 });
 
 test.todo("Fetch register", async () => {});

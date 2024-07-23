@@ -24,7 +24,7 @@ type __QueryInformation = {
         /** Sigla da UF de localização do contribuinte. Em algumas situações, a UF de localização pode ser diferente da
          * UF consultada. Ex. IE de Substituto Tributário
          */
-        UF: UFIssuer & "EX";
+        UF: UFIssuer | "EX";
         /** Situação cadastral do contribuinte:
          * 0 | não habilitado
          * 1 | habilitado

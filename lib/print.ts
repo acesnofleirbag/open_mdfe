@@ -50,7 +50,6 @@ export class Print {
                 fone: nfe.emit.enderEmit.fone,
                 email: "",
                 ieSubstituicao: nfe.emit.IEST,
-                // FIXME(@@@)
                 // @ts-ignore
                 cnpj: nfe.emit?.CNPJ,
                 endereco: {
@@ -63,7 +62,6 @@ export class Print {
             },
             destinatario: {
                 nome: nfe.dest?.xNome,
-                // FIXME(@@@)
                 // @ts-ignore
                 documento: nfe.dest?.CNPJ ?? nfe.dest?.CPF,
                 ie: nfe.dest?.IE,
@@ -100,13 +98,10 @@ export class Print {
                 ipi: nfe.total.ICMSTot.vIPI,
             },
             transportador: {
-                // FIXME(@@@)
                 // @ts-ignore
                 placa: nfe.transp.veicTransp?.placa,
-                // FIXME(@@@)
                 // @ts-ignore
                 uf: nfe.transp.veicTransp?.UF,
-                // FIXME(@@@)
                 // @ts-ignore
                 documento: nfe.transp.transporta?.CNPJ ?? nfe.transp.transporta?.CPF,
                 produtos: {

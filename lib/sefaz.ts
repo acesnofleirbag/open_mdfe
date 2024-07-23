@@ -2,7 +2,7 @@ import { AxiosRequestConfig } from "axios";
 import { CTeSefazOperations, NFeSefazOperations } from "./@types/operations";
 import { HTTPClient } from "./core/ports/httpClient";
 import { AxiosHttpClient } from "./adapters/httpClient";
-import { UFIssuer } from "./@types/layouts/general";
+import { UFCodeIBGE, UFIssuer } from "./@types/layouts/general";
 import { AuthorizationResultRequest, AuthorizationResultResponse } from "./@types/layouts/nfe/authorizationResult";
 import { AuthorizationRequest, AuthorizationResponse } from "./@types/layouts/nfe/authorization";
 import { UselessRequest, UselessResponse } from "./@types/layouts/nfe/useless";
@@ -33,6 +33,7 @@ import { CTeProtocolFetchingRequest, CTeProtocolFetchingResponse } from "./@type
 import { CTeServiceStatusRequest, CTeServiceStatusResponse } from "./@types/layouts/cte/serviceStatus";
 import { CTeEventReceptionRequest, CTeEventReceptionResponse } from "./@types/layouts/cte/eventReception";
 import { EnvironmentIdentifier } from "./@types/layouts/general";
+import { WebServiceActions } from "./core/static/actions";
 
 export class NFeSEFAZ implements NFeSefazOperations {
     private httpClient: HTTPClient<AxiosRequestConfig>;
@@ -44,7 +45,7 @@ export class NFeSEFAZ implements NFeSefazOperations {
         private readonly UF: UFIssuer,
         readonly cert: Cert,
     ) {
-        this.httpClient = new AxiosHttpClient();
+        this.httpClient = new AxiosHttpClient(cert);
         this.XML = new XMLClient();
         this.signer = new Signer(cert);
     }
@@ -151,12 +152,12 @@ export class NFeSEFAZ implements NFeSefazOperations {
                             xmlns: `http://www.portalfiscal.inf.br/nfe/wsdl/${webServiceName}`,
                         },
                         versaoDados: "4.00",
-                        cUF: this.UF,
+                        cUF: UFCodeIBGE[this.UF],
                     },
                 },
                 "soap12:Body": {
                     nfeDadosMsg: {
-                        $: { xmlns: `http://portalfiscal.inf.br/nfe/wsdl/${webServiceName}` },
+                        $: { xmlns: `http://www.portalfiscal.inf.br/nfe/wsdl/${webServiceName}` },
                         ...payload,
                     },
                 },
@@ -171,17 +172,20 @@ export class NFeSEFAZ implements NFeSefazOperations {
             throw new EnvironmentConflictError();
         }
 
+        const wsName = "NFeAutorizacao4";
         const environment = this.getEnvironment();
 
-        const envelope = this.makeSoapEnvelope(payload, "NFeAutorizacao4");
+        const envelope = this.makeSoapEnvelope(payload, wsName);
         const signedEnvelope = await this.signer.signXML_X509(envelope, "infNFE");
+        const webService = this.getAuthorizerByUF(this.UF).authorization[environment];
 
-        const { data } = await this.httpClient.post(
-            this.getAuthorizerByUF(this.UF).authorization[environment],
-            signedEnvelope,
-        );
+        const { data } = await this.httpClient.post(webService, signedEnvelope, {
+            headers: { SOAPAction: `http://www.portalfiscal.inf.br/nfe/wsdl/${wsName}/${WebServiceActions.serviceStatus}` },
+        });
 
-        return this.XML.xml2obj(data);
+        const res = await this.XML.xml2obj<any>(data);
+
+        return res["soap:Envelope"]["soap:Body"].nfeResultMsg;
     }
 
     async checkBatchAuthorization(payload: AuthorizationResultRequest): Promise<AuthorizationResultResponse> {
@@ -229,15 +233,22 @@ export class NFeSEFAZ implements NFeSefazOperations {
     async checkServiceStatus(payload: NFeServiceStatusRequest): Promise<NFeServiceStatusResponse> {
         const environment = this.getEnvironment();
 
-        const envelope = this.makeSoapEnvelope(payload, "NfeStatusServico4");
-        const signedEnvelope = await this.signer.signXML_X509(envelope, "consStatServ");
+        const wsName = "NFeStatusServico4";
+        const envelope = this.makeSoapEnvelope(payload, wsName);
 
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).serviceStatus[environment],
-            signedEnvelope,
+            envelope,
+            {
+                headers: {
+                    SOAPAction: `http://www.portalfiscal.inf.br/nfe/wsdl/${wsName}/${WebServiceActions.serviceStatus}`,
+                },
+            },
         );
 
-        return this.XML.xml2obj(data);
+        const res = await this.XML.xml2obj<any>(data);
+
+        return res["soap:Envelope"]["soap:Body"].nfeResultMsg;
     }
 
     async fetchRegister(payload: FetchRegisterRequest): Promise<FetchRegisterResponse> {
@@ -343,7 +354,7 @@ export class CTeSEFAZ implements CTeSefazOperations {
         private readonly UF: UFIssuer,
         readonly cert: Cert,
     ) {
-        this.httpClient = new AxiosHttpClient();
+        this.httpClient = new AxiosHttpClient(cert);
         this.XML = new XMLClient();
         this.signer = new Signer(cert);
     }
@@ -418,7 +429,7 @@ export class CTeSEFAZ implements CTeSefazOperations {
                 },
                 "soap12:Body": {
                     cteDadosMsg: {
-                        $: { xmlns: `http://portalfiscal.inf.br/cte/wsdl/${webServiceName}` },
+                        $: { xmlns: `http://www.portalfiscal.inf.br/cte/wsdl/${webServiceName}` },
                         ...payload,
                     },
                 },

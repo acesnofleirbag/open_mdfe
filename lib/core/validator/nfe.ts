@@ -31,6 +31,7 @@ import {
     OperationDestinationLocationIdentifier,
     OperationType,
     OperationWithEndConsumer,
+    PaymentIndicator,
     PaymentMode,
     ProcessOrigin,
     ProducerReferencedNFMode,
@@ -3170,11 +3171,8 @@ export const NFeValidator = z.object({
         detPag: z
             .array(
                 z.object({
-                    indPag: z.nativeEnum(PaymentMode).optional(),
-                    tPag: z
-                        .string()
-                        .regex(new RegExp("[0-9]{2}"))
-                        .transform((str) => str && ParserUtility.scape(str)),
+                    indPag: z.nativeEnum(PaymentIndicator).optional(),
+                    tPag: z.nativeEnum(PaymentMode),
                     xPag: z
                         .string()
                         .min(2)

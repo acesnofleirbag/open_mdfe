@@ -7,7 +7,7 @@ import { VERSION } from "../version";
 export type AuthorizationResultRequest = {
     /** Tipo Pedido de Consulta do Recido do Lote de Notas Fiscais Eletrônicas */
     consReciNFe: {
-        $: { versao: VERSION };
+        $: { versao: VERSION; xmlns: "http://www.portalfiscal.inf.br/nfe" };
         /** Identificação do Ambiente:
          * 1 | Produção
          * 2 | Homologação

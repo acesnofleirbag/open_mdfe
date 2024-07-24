@@ -10,6 +10,7 @@ export class AxiosHttpClient implements HTTPClient<AxiosRequestConfig> {
 
     constructor(cert: Cert) {
         this.client = new Axios({
+            timeout: 10000,
             headers: {
                 "Content-Type": "text/xml;chartset=utf-8",
             },

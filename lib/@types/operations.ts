@@ -21,7 +21,7 @@ import { UselessRequest, UselessResponse } from "./layouts/nfe/useless";
 export interface NFeSefazOperations {
     requestAuthorization(payload: AuthorizationRequest): Promise<AuthorizationResponse>;
 
-    checkBatchAuthorization(payload: AuthorizationResultRequest): Promise<AuthorizationResultResponse>;
+    checkAuthorization(payload: AuthorizationResultRequest): Promise<AuthorizationResultResponse>;
 
     fetchNFE(payload: NFeProtocolFetchingRequest): Promise<NFeProtocolFetchingResponse>;
 

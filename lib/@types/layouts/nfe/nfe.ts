@@ -647,7 +647,7 @@ type Product__Type4 = __Product & {
 };
 type Product__Type5 = __Product & {
     /** Número do RECOPI */
-    nRECOPI: string;
+    nRECOPI?: string;
 };
 
 type Product = Product__Type1 | Product__Type2 | Product__Type3 | Product__Type4 | Product__Type5;
@@ -1032,9 +1032,29 @@ type Transporter = {
     UF?: UFIssuer;
 };
 
+export enum PaymentIndicator {
+    CASH = "0",
+    IN_PARTS = "1",
+}
+
 export enum PaymentMode {
-    CASH = 0,
-    IN_PARTS = 1,
+    MONEY = "01",
+    CHECK = "02",
+    CREDIT_CARD = "03",
+    DEBIT_CARD = "04",
+    STORE_CREDIT = "05",
+    FOOD_VOUCHER = "10",
+    MEAL_VOUCHER = "11",
+    GIFT_VOUCHER = "12",
+    FUEL_VOUCHER = "13",
+    COMMERCIAL_DUPLICATE = "14",
+    BANK_SLIP = "15",
+    BANK_DEPOSIT = "16",
+    INSTANT_PAYMENT_PIX = "17",
+    BANK_TRANSFER_DIGITAL_WALLET = "18",
+    LOYALTY_PROGRAM_CASHBACK_VIRTUAL_CREDIT = "19",
+    NO_PAYMENT = "90",
+    OTHERS = "99",
 }
 
 export enum IntegrationTypeInPaymentProcess {
@@ -2248,7 +2268,7 @@ type Tax__Type1 = __Tax & {
 };
 
 type Tax__Type2 = __Tax & {
-    IPI: IPI;
+    IPI?: IPI;
     ISSQN: {
         /** Valor da BC do ISSQN */
         vBC: string;
@@ -2695,9 +2715,9 @@ export type SefazNFE = {
              * 0 | Pagamento à Vista
              * 1 | Pagamento à Prazo
              */
-            indPag?: PaymentMode;
+            indPag?: PaymentIndicator;
             /** Forma de Pagamento */
-            tPag: string;
+            tPag: PaymentMode;
             /** Descrição do Meio de Pagamento */
             xPag?: string;
             /** Valor do Pagamento. Esta tag poderá ser omitida quando a tag tPag=90 (Sem Pagamento), caso contrário

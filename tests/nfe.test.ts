@@ -5,23 +5,20 @@ import {
     BuyerPresenceOnEstablishmentAtTransactionIndicator,
     DanfePrintFormat,
     DeterminationMethod__Type1,
-    ExibilidadeISS,
     IssuanceMode,
     IssuingProcess,
     MerchandiseOrigin,
     NFEGoal,
     OperationDestinationLocationIdentifier,
     OperationWithEndConsumer,
+    PaymentMode,
     ProductComposeTotal,
     ShippingMethod,
     TaxDocumentModel,
     TaxDocumentType,
-    TaxIncentiveIndicator,
     TaxRegimeCode,
     WebServiceMode,
 } from "../lib/@types/layouts/nfe/nfe";
-import { AuthorizationRequest } from "../lib/@types/layouts/nfe/authorization";
-import { NFeProtocolFetchingRequest } from "../lib/@types/layouts/nfe/protocolFetching";
 import { NFeSEFAZ } from "../lib/sefaz";
 import { CodeCityIBGE, EnvironmentIdentifier, UFCodeIBGE, UFIssuer } from "../lib/@types/layouts/general";
 
@@ -30,209 +27,6 @@ import { CodeCityIBGE, EnvironmentIdentifier, UFCodeIBGE, UFIssuer } from "../li
 // $ openssl pkcs12 -export -in cert.pem -inkey key.pem -out cert.pfx
 
 // WARN: all tests make real requests for the SEFAZ homologation environments
-
-test.only("Request authorization", async () => {
-    // arrange
-    const cert = {
-        pfx: __dirname + "/cert/cert.pfx",
-        pass: process.env.CERT_PASS ?? "",
-    };
-
-    const sefaz = new NFeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
-    const nfe = new NFE({
-        $: {
-            Id: "NFe31060243816719000108550000000010011234567900",
-            versao: "4.00",
-        },
-        det: [
-            {
-                $: { nItem: "1" },
-                prod: {
-                    vProd: "100.00",
-                    NCM: "00",
-                    cEAN: "0123456789101",
-                    CFOP: "1234",
-                    qCom: "1.00",
-                    uCom: "UN",
-                    cProd: "012345678",
-                    qTrib: "1.00",
-                    uTrib: "UN",
-                    xProd: "Test Product",
-                    indTot: ProductComposeTotal.PRODUCT_EQUAL_TOTAL_VALUE,
-                    vUnCom: "100.00",
-                    nRECOPI: "20240101120000000000",
-                    vUnTrib: "100.00",
-                    cEANTrib: "0123456789101",
-                },
-                imposto: {
-                    ICMS: {
-                        ICMS00: {
-                            vBC: "10.00",
-                            vICMS: "10.00",
-                            CST: "00",
-                            orig: MerchandiseOrigin.NATIONAL_BASIC_PRODUCTION_PROCESSES,
-                            modBC: DeterminationMethod__Type1.TRANSACTION_VALUE,
-                            pICMS: "10",
-                        },
-                    },
-                    ISSQN: {
-                        vBC: "10.00",
-                        cMunFG: CodeCityIBGE.SAO_PAULO,
-                        vAliq: "10",
-                        indISS: ExibilidadeISS.REQUIRABLE,
-                        vISSQN: "10.00",
-                        cListServ: "01.02",
-                        indIncentivo: TaxIncentiveIndicator.YES,
-                    },
-                },
-            },
-        ],
-        ide: {
-            cDV: "0",
-            cNF: "12345678",
-            cUF: UFCodeIBGE.SP,
-            mod: TaxDocumentModel.NFE,
-            nNF: "123456789",
-            tpNF: TaxDocumentType.INPUT,
-            dhEmi: "2024-01-01T12:00:00-03:00",
-            natOp: "Venda de produto",
-            serie: "999",
-            tpAmb: EnvironmentIdentifier.HOMOLOGATION,
-            tpImp: DanfePrintFormat.NO_DANFE,
-            cMunFG: CodeCityIBGE.SAO_PAULO,
-            finNFe: NFEGoal.NFE_NORMAL,
-            idDest: OperationDestinationLocationIdentifier.INTERNAL,
-            tpEmis: IssuanceMode.NORMAL,
-            indPres: BuyerPresenceOnEstablishmentAtTransactionIndicator.INTERNET,
-            procEmi: IssuingProcess.OWNED_APP,
-            verProc: __VERSION__,
-            indFinal: OperationWithEndConsumer.YES,
-        },
-        pag: {
-            detPag: [
-                {
-                    tPag: "100.00",
-                    vPag: "100.00",
-                },
-            ],
-        },
-        emit: {
-            IE: "539125379482",
-            CNPJ: "46022825000108",
-            CRT: TaxRegimeCode.SIMPLES_NACIONAL,
-            xNome: "Open MDF-e by @acesnofleirbag",
-            enderEmit: {
-                UF: UFIssuer.SP,
-                CEP: "09421500",
-                nro: "123",
-                cMun: CodeCityIBGE.SAO_PAULO,
-                xLgr: "Rua das Flores",
-                xMun: "Ribeirão Pires",
-                xBairro: "Suíssa",
-            },
-        },
-        total: {
-            ICMSTot: {
-                vBC: "01.00",
-                vII: "02.00",
-                vNF: "03.00",
-                vST: "04.00",
-                vFCP: "05.00",
-                vIPI: "06.00",
-                vPIS: "07.00",
-                vSeg: "08.00",
-                vBCST: "09.00",
-                vDesc: "10.00",
-                vICMS: "11.00",
-                vProd: "12.00",
-                vFCPST: "13.00",
-                vFrete: "14.00",
-                vOutro: "15.00",
-                vCOFINS: "16.00",
-                vFCPSTRet: "17.00",
-                vIPIDevol: "18.00",
-                vICMSDeson: "19.00",
-            },
-        },
-        transp: {
-            modFrete: ShippingMethod.NO_TRANSPORT_OCCURRENCE,
-        },
-    });
-
-    const payload = nfe.toObject();
-    const envelope: AuthorizationRequest = {
-        enviNFe: {
-            $: { versao: "4.00", xmlns: "http://www.portalfiscal.inf.br/nfe" },
-            idLote: "01234567",
-            indSinc: WebServiceMode.ASYNC,
-            NFe: [{ infNFE: payload }],
-        },
-    };
-
-    // act
-    const res = await sefaz.requestAuthorization(envelope);
-
-    // assert
-    expect(res).toEqual(1);
-});
-
-test.todo("Fetch NF-e", async () => {
-    // arrange
-    const cert = {
-        pfx: __dirname + "/cert/cert.pfx",
-        pass: process.env.CERT_PASS ?? "",
-    };
-    const sefaz = new NFeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
-
-    const envelope: NFeProtocolFetchingRequest = {
-        consSitNFe: {
-            $: { versao: "4.00" },
-            tpAmb: EnvironmentIdentifier.HOMOLOGATION,
-            chNFe: "",
-            xServ: "CONSULTAR",
-        },
-    };
-
-    // act
-    const res = await sefaz.fetchNFE(envelope);
-
-    // assert
-    expect(res).toEqual(1);
-});
-
-test.todo("Check batch authorization", async () => {});
-
-test.todo("Make useless", async () => {
-    // arrange
-    const cert = {
-        pfx: __dirname + "/cert/cert.pfx",
-        pass: process.env.CERT_PASS ?? "",
-    };
-    const sefaz = new NFeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
-
-    // act
-    const res = await sefaz.makeUseless({
-        inutNFe: {
-            $: { versao: "4.00" },
-            infInut: {
-                $: { Id: "" },
-                xServ: "INUTILIZAR",
-                tpAmb: EnvironmentIdentifier.HOMOLOGATION,
-                cUF: UFCodeIBGE.SP,
-                ano: "2024",
-                mod: "",
-                CNPJ: "",
-                serie: "",
-                xJust: "Open MDF-e Test",
-                nNFFin: "",
-                nNFIni: "",
-            },
-        },
-    });
-
-    // assert
-    expect(res).toEqual(1);
-});
 
 test("Check service status", async () => {
     // arrange
@@ -266,6 +60,251 @@ test("Check service status", async () => {
             tMed: expect.any(String),
         },
     });
+});
+
+test.only("Request authorization", async () => {
+    // arrange
+    const cert = {
+        pfx: __dirname + "/cert/cert.pfx",
+        pass: process.env.CERT_PASS ?? "",
+    };
+    const sefaz = new NFeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
+    const nfe = new NFE({
+        $: {
+            versao: "4.00",
+            Id: "NFe31060243816719000108550000000010011234567900",
+        },
+        ide: {
+            cUF: UFCodeIBGE.SP,
+            cNF: "12345678",
+            natOp: "Venda de produto",
+            mod: TaxDocumentModel.NFE,
+            serie: "999",
+            nNF: "123456789",
+            dhEmi: "2024-01-01T12:00:00-03:00",
+            tpNF: TaxDocumentType.INPUT,
+            idDest: OperationDestinationLocationIdentifier.INTERNAL,
+            cMunFG: CodeCityIBGE.SAO_PAULO,
+            tpImp: DanfePrintFormat.NO_DANFE,
+            tpEmis: IssuanceMode.NORMAL,
+            cDV: "0",
+            tpAmb: EnvironmentIdentifier.HOMOLOGATION,
+            finNFe: NFEGoal.NFE_NORMAL,
+            indFinal: OperationWithEndConsumer.YES,
+            indPres: BuyerPresenceOnEstablishmentAtTransactionIndicator.INTERNET,
+            procEmi: IssuingProcess.OWNED_APP,
+            verProc: __VERSION__,
+        },
+        emit: {
+            CNPJ: "46022825000108",
+            xNome: "Open MDF-e by @acesnofleirbag",
+            enderEmit: {
+                UF: UFIssuer.SP,
+                CEP: "09421500",
+                nro: "123",
+                cMun: CodeCityIBGE.SAO_PAULO,
+                xLgr: "Rua das Flores",
+                xMun: "Ribeirão Pires",
+                xBairro: "Suíssa",
+            },
+            IE: "539125379482",
+            CRT: TaxRegimeCode.SIMPLES_NACIONAL,
+        },
+        det: [
+            {
+                $: { nItem: "1" },
+                prod: {
+                    cProd: "012345678",
+                    cEAN: "0123456789101",
+                    xProd: "Test Product",
+                    NCM: "00",
+                    CFOP: "1234",
+                    uCom: "UN",
+                    qCom: "1.00",
+                    vUnCom: "100.00",
+                    vProd: "100.00",
+                    cEANTrib: "0123456789101",
+                    uTrib: "UN",
+                    qTrib: "1.00",
+                    vUnTrib: "100.00",
+                    indTot: ProductComposeTotal.PRODUCT_EQUAL_TOTAL_VALUE,
+                },
+                imposto: {
+                    ICMS: {
+                        ICMS00: {
+                            orig: MerchandiseOrigin.NATIONAL_BASIC_PRODUCTION_PROCESSES,
+                            CST: "00",
+                            modBC: DeterminationMethod__Type1.TRANSACTION_VALUE,
+                            vBC: "10.00",
+                            pICMS: "10",
+                            vICMS: "10.00",
+                        },
+                    },
+                },
+            },
+        ],
+        total: {
+            ICMSTot: {
+                vBC: "1.00",
+                vICMS: "11.00",
+                vICMSDeson: "19.00",
+                vFCP: "5.00",
+                vBCST: "9.00",
+                vST: "4.00",
+                vFCPST: "13.00",
+                vFCPSTRet: "17.00",
+                vProd: "12.00",
+                vFrete: "14.00",
+                vSeg: "8.00",
+                vDesc: "10.00",
+                vII: "2.00",
+                vIPI: "6.00",
+                vIPIDevol: "18.00",
+                vPIS: "7.00",
+                vCOFINS: "16.00",
+                vOutro: "15.00",
+                vNF: "100.00",
+            },
+        },
+        transp: {
+            modFrete: ShippingMethod.NO_TRANSPORT_OCCURRENCE,
+        },
+        pag: {
+            detPag: [
+                {
+                    tPag: PaymentMode.MONEY,
+                    vPag: "100.00",
+                },
+            ],
+        },
+    });
+
+    // act
+    const res = await sefaz.requestAuthorization({
+        enviNFe: {
+            $: { versao: "4.00", xmlns: "http://www.portalfiscal.inf.br/nfe" },
+            idLote: "01234567",
+            indSinc: WebServiceMode.SYNC,
+            NFe: [{ infNFe: nfe.toObject() }],
+        },
+    });
+
+    // assert
+    expect(res).toEqual({
+        $: {
+            xmlns: expect.any(String),
+        },
+        retEnviNFe: {
+            $: {
+                versao: "4.00",
+                xmlns: "http://www.portalfiscal.inf.br/nfe",
+            },
+            cStat: "103",
+            cUF: "35",
+            dhRecbto: expect.any(String),
+            infRec: {
+                nRec: expect.any(String),
+                tMed: expect.any(String),
+            },
+            tpAmb: "2",
+            verAplic: expect.any(String),
+            xMotivo: "Lote recebido com sucesso",
+            protNFe: {
+                $: { versao: "4.00" },
+                infProt: {
+                    $: { Id: expect.any(String) },
+                    tpAmb: "2",
+                    verAplic: expect.any(String),
+                    chNFe: expect.any(String),
+                    dhRecbto: expect.any(String),
+                    // nProt?: string;
+                    // digVal?: string;
+                    cStat: "",
+                    xMotivo: "",
+                    // cMsg?: string;
+                    // xMsg?: string;
+                },
+            },
+        },
+    });
+
+    console.log("NF-e KEY: ", res.retEnviNFe.protNFe?.infProt.chNFe);
+});
+
+test.skip("Check authorization", async () => {
+    // arrange
+    const cert = {
+        pfx: __dirname + "/cert/cert.pfx",
+        pass: process.env.CERT_PASS ?? "",
+    };
+    const sefaz = new NFeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
+
+    // act
+    const res = await sefaz.checkAuthorization({
+        consReciNFe: {
+            $: { versao: "4.00", xmlns: "http://www.portalfiscal.inf.br/nfe" },
+            tpAmb: EnvironmentIdentifier.HOMOLOGATION,
+            // NOTE: Get the receipt number on the previous test case: "Request authorization"
+            nRec: "351000188499166",
+        },
+    });
+
+    // assert
+    expect(res).toEqual({});
+});
+
+test.todo("Fetch NF-e", async () => {
+    // arrange
+    const cert = {
+        pfx: __dirname + "/cert/cert.pfx",
+        pass: process.env.CERT_PASS ?? "",
+    };
+    const sefaz = new NFeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
+
+    // act
+    const res = await sefaz.fetchNFE({
+        consSitNFe: {
+            $: { versao: "4.00", xmlns: "http://www.portalfiscal.inf.br/nfe" },
+            tpAmb: EnvironmentIdentifier.HOMOLOGATION,
+            xServ: "CONSULTAR",
+            chNFe: "",
+        },
+    });
+
+    // assert
+    expect(res).toEqual(1);
+});
+
+test.todo("Make useless", async () => {
+    // arrange
+    const cert = {
+        pfx: __dirname + "/cert/cert.pfx",
+        pass: process.env.CERT_PASS ?? "",
+    };
+    const sefaz = new NFeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
+
+    // act
+    const res = await sefaz.makeUseless({
+        inutNFe: {
+            $: { versao: "4.00" },
+            infInut: {
+                $: { Id: "" },
+                xServ: "INUTILIZAR",
+                tpAmb: EnvironmentIdentifier.HOMOLOGATION,
+                cUF: UFCodeIBGE.SP,
+                ano: "2024",
+                mod: "",
+                CNPJ: "",
+                serie: "",
+                xJust: "Open MDF-e Test",
+                nNFFin: "",
+                nNFIni: "",
+            },
+        },
+    });
+
+    // assert
+    expect(res).toEqual(1);
 });
 
 test.todo("Fetch register", async () => {});

@@ -16,7 +16,7 @@ export type AuthorizationRequest = {
          */
         indSinc: WebServiceMode;
         NFe: {
-            infNFE: SefazNFE;
+            infNFe: SefazNFE;
         }[];
     };
 };

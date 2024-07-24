@@ -35,7 +35,7 @@ type __EventReturn = {
 // schema: TConsSitNFe
 export type NFeProtocolFetchingRequest = {
     consSitNFe: {
-        $: { versao: VERSION };
+        $: { versao: VERSION; xmlns: "http://www.portalfiscal.inf.br/nfe" };
         tpAmb: EnvironmentIdentifier;
         xServ: "CONSULTAR";
         chNFe: string;

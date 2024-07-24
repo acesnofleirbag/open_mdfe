@@ -19,7 +19,6 @@ import { ContingencyAuthorizerNotFoundError } from "./errors/contingencyAuthoriz
 import { AuthorizerNotFoundError } from "./errors/authorizerNotFoundError";
 import { Signer } from "./signer";
 import { Cert } from "./@types/cert";
-import { EnvironmentConflictError } from "./errors/environmentConflict";
 import {
     TransportAuthorizationRequest,
     TransportAuthorizationResponse,
@@ -168,38 +167,47 @@ export class NFeSEFAZ implements NFeSefazOperations {
     }
 
     async requestAuthorization(payload: AuthorizationRequest): Promise<AuthorizationResponse> {
-        if (payload.enviNFe.NFe.some((nfe) => nfe.infNFE.ide.tpAmb !== this.environment)) {
-            throw new EnvironmentConflictError();
-        }
-
         const wsName = "NFeAutorizacao4";
         const environment = this.getEnvironment();
 
         const envelope = this.makeSoapEnvelope(payload, wsName);
-        const signedEnvelope = await this.signer.signXML_X509(envelope, "infNFE");
-        const webService = this.getAuthorizerByUF(this.UF).authorization[environment];
+        const signedEnvelope = await this.signer.signXML_X509(envelope, "infNFe");
 
-        const { data } = await this.httpClient.post(webService, signedEnvelope, {
-            headers: { SOAPAction: `http://www.portalfiscal.inf.br/nfe/wsdl/${wsName}/${WebServiceActions.serviceStatus}` },
-        });
+        const { data } = await this.httpClient.post(
+            this.getAuthorizerByUF(this.UF).authorization[environment],
+            signedEnvelope,
+            {
+                headers: {
+                    SOAPAction: `http://www.portalfiscal.inf.br/nfe/wsdl/${wsName}/${WebServiceActions.authorization}`,
+                },
+            },
+        );
 
         const res = await this.XML.xml2obj<any>(data);
 
         return res["soap:Envelope"]["soap:Body"].nfeResultMsg;
     }
 
-    async checkBatchAuthorization(payload: AuthorizationResultRequest): Promise<AuthorizationResultResponse> {
+    async checkAuthorization(payload: AuthorizationResultRequest): Promise<AuthorizationResultResponse> {
         const environment = this.getEnvironment();
 
-        const envelope = this.makeSoapEnvelope(payload, "@@@");
-        const signedEnvelope = await this.signer.signXML_X509(envelope, "@@@");
+        const wsName = "NFeRetAutorizacao4";
+        const envelope = this.makeSoapEnvelope(payload, wsName);
+        const signedEnvelope = await this.signer.signXML_X509(envelope, "consReciNFe");
 
         const { data } = await this.httpClient.post(
-            this.getAuthorizerByUF(this.UF).authorization[environment],
+            this.getAuthorizerByUF(this.UF).authorizationResult[environment],
             signedEnvelope,
+            {
+                headers: {
+                    SOAPAction: `http://www.portalfiscal.inf.br/nfe/wsdl/${wsName}/${WebServiceActions.authorizationResult}`,
+                },
+            },
         );
 
-        return this.XML.xml2obj(data);
+        const res = await this.XML.xml2obj<any>(data);
+
+        return res["soap:Envelope"]["soap:Body"].nfeResultMsg;
     }
 
     async fetchNFE(payload: NFeProtocolFetchingRequest): Promise<NFeProtocolFetchingResponse> {

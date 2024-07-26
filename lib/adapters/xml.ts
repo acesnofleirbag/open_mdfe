@@ -6,7 +6,6 @@ export class XMLClient implements XML {
 
     constructor() {
         this.client = new Builder({
-            cdata: true,
             headless: true,
             renderOpts: { pretty: false },
             xmldec: { version: "1.0", encoding: "UTF-8" },
@@ -14,7 +13,11 @@ export class XMLClient implements XML {
     }
 
     async xml2obj<T>(payload: string): Promise<T> {
-        return parseStringPromise(payload, { normalize: false, includeWhiteChars: true, explicitArray: false });
+        return parseStringPromise(payload, {
+            trim: true,
+            normalize: false,
+            explicitArray: false,
+        });
     }
 
     obj2xml(payload: Record<any, any>): string {

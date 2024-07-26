@@ -43,24 +43,11 @@ export class Signer implements ISigner {
         const __cert = await PEM.readPkcs12(pfx, { p12Password: this.cert.pass });
 
         const sig = new SignedXml({
+            publicCert: __cert.cert,
+            getCertFromKeyInfo: () => null,
             privateKey: __cert.key,
             canonicalizationAlgorithm: "http://www.w3.org/TR/2001/REC-xml-c14n-20010315",
             signatureAlgorithm: "http://www.w3.org/2000/09/xmldsig#rsa-sha1",
-            getKeyInfoContent: () => {
-                const isCertLimit = new RegExp(/(-----BEGIN CERTIFICATE-----|-----END CERTIFICATE-----)/);
-
-                return (
-                    "<X509Data>" +
-                    "<X509Certificate>" +
-                    __cert.cert
-                        .toString()
-                        .split("\n")
-                        .filter((line) => !isCertLimit.test(line))
-                        .join("") +
-                    "</X509Certificate>" +
-                    "</X509Data>"
-                );
-            },
         });
 
         sig.addReference({

@@ -21,8 +21,7 @@ A especificação implementada encontra-se na pasta `/specs`
 
 Para exemplos de uso veja os casos de testes na pasta `/tests`
 
-> IMPORTANTE: A ordem como as tags são informadas afeta o sistema da SEFAZ. 
-> Utilize <https://www.sefaz.rs.gov.br/nfe/nfe-val.aspx> para realizar a validação do schema 
+> Utilize <https://www.sefaz.rs.gov.br/nfe/nfe-val.aspx> para realizar validações de schema 
 
 ### Para obter o certificado digital (e-CNPJ A1)
 

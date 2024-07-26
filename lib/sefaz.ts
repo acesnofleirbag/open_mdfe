@@ -33,6 +33,7 @@ import { CTeServiceStatusRequest, CTeServiceStatusResponse } from "./@types/layo
 import { CTeEventReceptionRequest, CTeEventReceptionResponse } from "./@types/layouts/cte/eventReception";
 import { EnvironmentIdentifier } from "./@types/layouts/general";
 import { WebServiceActions } from "./core/static/actions";
+import { DebugUtility } from "./utils/debug";
 
 export class NFeSEFAZ implements NFeSefazOperations {
     private httpClient: HTTPClient<AxiosRequestConfig>;
@@ -172,6 +173,12 @@ export class NFeSEFAZ implements NFeSefazOperations {
 
         const envelope = this.makeSoapEnvelope(payload, wsName);
         const signedEnvelope = await this.signer.signXML_X509(envelope, "infNFe");
+
+        // 297 - [Simulacao] Rejeicao: Assinatura difere do calculado
+        // 245 - [Simulacao] Rejeicao: CNPJ Emitente nao cadastrado
+
+        DebugUtility.write("/tmp/open-mdfe/schema.xml", signedEnvelope);
+        return 1 as any;
 
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).authorization[environment],

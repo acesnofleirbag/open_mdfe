@@ -7,6 +7,8 @@ export class CTE {
     private XML: XMLClient;
 
     constructor(payload: SefazCTE) {
+        // FIXME(@@@)
+        // @ts-ignore
         this.payload = CTeValidator.parse(payload);
         this.XML = new XMLClient();
     }

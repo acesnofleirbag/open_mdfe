@@ -6,12 +6,14 @@ import {
     DanfePrintFormat,
     DeterminationMethod__Type1,
     ExibilidadeISS,
+    ICMSCST,
     IssuanceMode,
     IssuingProcess,
     MerchandiseOrigin,
     NFEGoal,
     OperationDestinationLocationIdentifier,
     OperationWithEndConsumer,
+    PaymentMode,
     ProductComposeTotal,
     RecipientStateSubscriptionIndicator,
     ShippingMethod,
@@ -58,7 +60,7 @@ test("DANFE: portrait", () => {
                         ICMS00: {
                             vBC: "10.00",
                             vICMS: "10.00",
-                            CST: "00",
+                            CST: ICMSCST.FULLY_TAXED,
                             orig: MerchandiseOrigin.NATIONAL_BASIC_PRODUCTION_PROCESSES,
                             modBC: DeterminationMethod__Type1.TRANSACTION_VALUE,
                             pICMS: "10",
@@ -101,7 +103,7 @@ test("DANFE: portrait", () => {
         pag: {
             detPag: [
                 {
-                    tPag: "100.00",
+                    tPag: PaymentMode.MONEY,
                     vPag: "100.00",
                 },
             ],
@@ -246,7 +248,7 @@ test("DANFE: landscape", () => {
                         ICMS00: {
                             vBC: "10.00",
                             vICMS: "10.00",
-                            CST: "00",
+                            CST: ICMSCST.FULLY_TAXED,
                             orig: MerchandiseOrigin.NATIONAL_BASIC_PRODUCTION_PROCESSES,
                             modBC: DeterminationMethod__Type1.TRANSACTION_VALUE,
                             pICMS: "10",
@@ -289,7 +291,7 @@ test("DANFE: landscape", () => {
         pag: {
             detPag: [
                 {
-                    tPag: "100.00",
+                    tPag: PaymentMode.MONEY,
                     vPag: "100.00",
                 },
             ],

@@ -17,6 +17,15 @@ export type AuthorizationRequest = {
         indSinc: WebServiceMode;
         NFe: {
             infNFe: SefazNFE;
+            /** Informações suplementares Nota Fiscal */
+            infNFeSupl?: {
+                /** Texto com o QR-Code impresso no DANFE NFC-e */
+                qrCode: string;
+                /** Informar a URL da "Consulta por chave de acesso da NFC-e". A mesma URL que deve estar informada no
+                 * DANFE NFC-e para consulta por chave de acesso
+                 */
+                urlChave: string;
+            };
         }[];
     };
 };

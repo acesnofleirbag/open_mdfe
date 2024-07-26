@@ -1,4 +1,5 @@
 import { CodeCityIBGE, EnvironmentIdentifier, UFCodeIBGE, UFIssuer } from "../general";
+import { VERSION } from "../version";
 
 // schema: TCOrgaoIBGE
 export enum IBGEOrganCode {
@@ -111,7 +112,7 @@ export enum NFEModel {
     MODEL_2 = "02",
 }
 
-export enum ProducerReferencedNFMode {
+export enum NF_ProducerRefMode {
     SINGLE = "01",
     PRODUCER = "04",
 }
@@ -122,122 +123,17 @@ export enum TaxCouponGroup {
     ECF_TAX_COUPON = "2D",
 }
 
-type ProducerReferencedNF = {
-    cUF: UFCodeIBGE;
-    AAMM: string;
-    IE: "ISENTO" | string;
-    mod: ProducerReferencedNFMode;
-    serie: string;
-    nNF: string;
-};
-
-type ReferencedNFE__Type1 = { refNFe: string };
-type ReferencedNFE__Type2 = { refNFeSig: string };
-type ReferencedNFE__Type3 = {
-    refNF: {
-        cUF: UFCodeIBGE;
-        AAMM: string;
-        CNPJ: string;
-        mod: NFEModel;
-        serie: string;
-        nNF: string;
-    };
-};
-type ReferencedNFE__Type4 = {
-    refNFP: (ProducerReferencedNF & { CNPJ: string }) | (ProducerReferencedNF & { CPF: string });
-};
-type ReferencedNFE__Type5 = { refCTe: string };
-type ReferencedNFE__Type6 = {
-    refECF: {
-        mod: TaxCouponGroup;
-        nECF: string;
-        nCOO: string;
-    };
-};
-
-type ReferencedNFE =
-    | ReferencedNFE__Type1
-    | ReferencedNFE__Type2
-    | ReferencedNFE__Type3
-    | ReferencedNFE__Type4
-    | ReferencedNFE__Type5
-    | ReferencedNFE__Type6;
-
-// schema: TEndereco
-type Address = {
-    xLgr: string;
-    nro: string;
-    xCpl?: string;
-    xBairro: string;
-    cMun: CodeCityIBGE;
-    xMun: string;
-    UF: UFIssuer;
-    CEP: string;
-    cPais?: "1058";
-    xPais?: "Brasil" | "BRASIL";
-    fone?: string;
-};
-
 export enum TaxRegimeCode {
     SIMPLES_NACIONAL = 1,
     SIMPLES_NACIONAL_EXCESS_SUBLIMIT_RAW_INCOME = 2,
     REGIME_NORMAL = 3,
 }
 
-type Issuer = {
-    /** Razão Social ou Nome do emitente */
-    xNome: string;
-    /** Nome fantasia */
-    xFant?: string;
-    /** Endereço do emitente */
-    enderEmit: Address;
-    /** Inscrição Estadual do Emitente */
-    IE: "ISENTO" | string;
-    /** Inscricao Estadual do Substituto Tributário */
-    IEST?: string;
-    /** Inscrição Municipal */
-    IM?: string;
-    /** CNAE Fiscal */
-    CNAE?: string;
-    /** Código de Regime Tributário.
-     * Este campo será obrigatoriamente preenchido com:
-     * 1 | Simples Nacional
-     * 2 | Simples Nacional – excesso de sublimite de receita bruta
-     * 3 | Regime Normal
-     */
-    CRT: TaxRegimeCode;
-};
-
 export enum RecipientStateSubscriptionIndicator {
     TAXPAYER_ICMS_CASH_PAYMENT = 1,
     TAXPAYER_EXEMPT_SUBSCRIPTION = 2,
     NON_CONTRIBUTOR = 9,
 }
-
-type Recipient = {
-    /** Razão Social ou nome do destinatário */
-    xNome?: string;
-    /** Dados do endereço */
-    enderDest?: Address;
-    /** Indicador da IE do destinatário:
-     * 1 – Contribuinte ICMS, pagamento à vista
-     * 2 – Contribuinte isento de inscrição
-     * 9 – Não Contribuinte
-     */
-    indIEDest: RecipientStateSubscriptionIndicator;
-    /** Inscrição Estadual (obrigatório nas operações com contribuintes do ICMS) */
-    IE?: string;
-    /** Inscrição na SUFRAMA (Obrigatório nas operações com as áreas com benefícios de incentivos fiscais sob controle
-     * da SUFRAMA) PL_005d - 11/08/09 - alterado para aceitar 8 ou 9 dígitos
-     */
-    ISUF?: string;
-    /** Inscrição Municipal do tomador do serviço */
-    IM?: string;
-    /** Informar o e-mail do destinatário. O campo pode ser utilizado para informar o e-mail de recepção da NF-e
-     * indicada pelo destinatário
-     */
-    email?: string;
-};
 
 export enum ProductComposeTotal {
     PRODUCT_NOT_EQUAL_TOTAL_VALUE = 0,
@@ -266,9 +162,541 @@ export enum ImportMethod {
     ORDER = 3,
 }
 
-type __Local = Address & { email?: string; IE?: string };
-type Local__Type1 = __Local & { CNPJ: string };
-type Local__Type2 = __Local & { CPF: string };
+export enum OperationType {
+    OTHERS = 0,
+    DEALERSHIP_SALE = 1,
+    DIRECT_BILLING = 2,
+    DIRECT_SALE = 3,
+}
+
+export enum FuelType {
+    ALCOHOL = "01",
+    GASOLINE = "02",
+    DIESEL = "03",
+    ALCOHOL_GAS = "16",
+    GAS_ALCOHOL_GNV = "17",
+    GASOLINE_ELECTRIC = "18",
+}
+
+export enum Vin {
+    REMARKED = "R",
+    NORMAL = "N",
+}
+
+export enum VehicleCondition {
+    FINISHED = 1,
+    UNFINISHED = 2,
+    SEMI_FINISHED = 3,
+}
+
+export enum DENATRANColorCode {
+    YELLOW = "01",
+    BLUE = "02",
+    BEIGE = "03",
+    WHITE = "04",
+    GRAY = "05",
+    GOLDEN = "06",
+    GRENA = "07",
+    ORANGE = "08",
+    BROWN = "09",
+    SILVER = "10",
+    BLACK = "11",
+    PINK = "12",
+    PURPLE = "13",
+    GREEN = "14",
+    RED = "15",
+    FANTASY = "16",
+}
+
+export enum Restriction {
+    NONE = 0,
+    FIDUCIARY_ALIENATION = 1,
+    COMMERCIAL_LEASING = 2,
+    DOMAIN_RESERVATION = 3,
+    VEHICLE_PLEDGE = 4,
+    OTHERS = 9,
+}
+
+export enum FireGunType {
+    PERMITTED = 0,
+    RESTRICTED = 1,
+}
+
+export enum ImportIndicator {
+    NATIONAL = 0,
+    IMPORTED = 1,
+}
+
+// CST (Código de Situação Tributária)
+export enum CST__Type1 {
+    CUMULATIVE_NON_CUMULATIVE = "01",
+    DIFFERENTIATED_RATE = "02",
+}
+
+// CST (Código de Situação Tributária)
+export enum CST__Type2 {
+    TAXABLE_OPERATION_SINGLE_PHASE_TAXATION_ZERO_RATE = "04",
+    TAXABLE_OPERATION_ST = "05",
+    TAXABLE_OPERATION_ZERO_RATE = "06",
+    OPERATION_EXEMPT_CONTRIBUTION = "07",
+    OPERATION_WITHOUT_INCIDENCE_OF_CONTRIBUTION = "08",
+    OPERATION_WITH_SUSPENSION_OF_CONTRIBUTION = "09",
+}
+
+// CST (Código de Situação Tributária)
+export enum CST__Type3 {
+    OTHER_OUTBOUND_OPERATIONS = "49",
+    OPERATION_WITH_RIGHT_TO_CREDIT_LINKED_EXCLUSIVELY_TO_REVENUE_TAXED_IN_THE_DOMESTIC_MARKET = "50",
+    OPERATION_WITH_RIGHT_TO_CREDIT_LINKED_EXCLUSIVELY_TO_NON_TAXED_REVENUE_IN_THE_DOMESTIC_MARKET = "51",
+    OPERATION_WITH_RIGHT_TO_CREDIT_LINKED_EXCLUSIVELY_TO_EXPORT_REVENUE = "52",
+    OPERATION_WITH_RIGHT_TO_CREDIT_LINKED_TO_TAXED_AND_NON_TAXED_REVENUE_IN_THE_DOMESTIC_MARKET = "53",
+    OPERATION_WITH_RIGHT_TO_CREDIT_LINKED_TO_REVENUE_TAXED_IN_THE_DOMESTIC_AND_EXPORT_MARKET = "54",
+    OPERATION_WITH_RIGHT_TO_CREDIT_LINKED_TO_NON_TAXED_REVENUE_IN_THE_DOMESTIC_AND_EXPORT_MARKET = "55",
+    OPERATION_WITH_RIGHT_TO_CREDIT_LINKED_TO_TAXED_AND_NON_TAXED_REVENUES_IN_THE_DOMESTIC_MARKET_AND_EXPORTS = "56",
+    PRESUMED_CREDIT_ACQUISITION_TRANSACTION_LINKED_EXCLUSIVELY_TO_REVENUE_TAXED_IN_THE_DOMESTIC_MARKET = "60",
+    PRESUMED_CREDIT_ACQUISITION_TRANSACTION_LINKED_EXCLUSIVELY_TO_NON_TAXED_REVENUE_IN_THE_DOMESTIC_MARKET = "61",
+    PRESUMED_CREDIT_ACQUISITION_OPERATION_LINKED_EXCLUSIVELY_TO_EXPORT_REVENUE = "62",
+    PRESUMED_CREDIT_ACQUISITION_TRANSACTION_LINKED_TO_TAXED_AND_NON_TAXED_REVENUE_IN_THE_DOMESTIC_MARKET = "63",
+    PRESUMED_CREDIT_ACQUISITION_OPERATION_LINKED_TO_TAXED_REVENUES_IN_THE_DOMESTIC_AND_EXPORT_MARKET = "64",
+    PRESUMED_CREDIT_ACQUISITION_OPERATION_LINKED_TO_NON_TAXED_REVENUE_IN_THE_DOMESTIC_AND_EXPORT_MARKET = "65",
+    PRESUMED_CREDIT_ACQUISITION_OPERATION_LINKED_TO_TAXED_AND_NON_TAXED_REVENUE_IN_THE_DOMESTIC_MARKET_AND_EXPORT = "66",
+    PRESUMED_CREDIT_OTHER_OPERATIONS = "67",
+    ACQUISITION_OPERATION_WITHOUT_THE_RIGHT_TO_CREDIT = "70",
+    ACQUISITION_OPERATION_WITH_EXEMPTION = "71",
+    ACQUISITION_OPERATION_WITH_SUSPENSION = "72",
+    ZERO_RATE_ACQUISITION_OPERATION = "73",
+    ACQUISITION_OPERATION_WITHOUT_INCIDENCE_OF_CONTRIBUTION = "74",
+    ACQUISITION_OPERATION_BY_TAX_REPLACEMENT = "75",
+    OTHER_ENTRY_OPERATIONS = "98",
+    OTHER_OPERATIONS = "99",
+}
+
+export enum ICMSInterstateTaxRate {
+    FOUR_PERCENT = "4.00",
+    SEVEN_PERCENT = "7.00",
+    TWELVE_PERCENT = "12.00",
+}
+
+export enum SpecialTaxRegimeCode {
+    I1 = 1,
+    I2 = 2,
+    I3 = 3,
+    I4 = 4,
+    I5 = 5,
+    I6 = 6,
+}
+
+export enum ShippingMethod {
+    FREIGHT_CONTRACTING_ON_BEHALF_OF_THE_SENDER_CIF = 0,
+    FREIGHT_CONTRACTING_ON_BEHALF_OF_THE_RECIPIENT_SENDER_FOB = 1,
+    HIRING_FREIGHT_ON_BEHALF_OF_THIRD_PARTIES = 2,
+    OWN_TRANSPORT_EXPENSE_OF_THE_SENDER = 3,
+    OWN_TRANSPORT_EXPENSE_OF_THE_RECIPIENT = 4,
+    NO_TRANSPORT_OCCURRENCE = 9,
+}
+
+export enum PaymentIndicator {
+    CASH = 0,
+    IN_PARTS = 1,
+}
+
+export enum PaymentMode {
+    MONEY = "01",
+    CHECK = "02",
+    CREDIT_CARD = "03",
+    DEBIT_CARD = "04",
+    STORE_CREDIT = "05",
+    FOOD_VOUCHER = "10",
+    MEAL_VOUCHER = "11",
+    GIFT_VOUCHER = "12",
+    FUEL_VOUCHER = "13",
+    COMMERCIAL_DUPLICATE = "14",
+    BANK_SLIP = "15",
+    BANK_DEPOSIT = "16",
+    INSTANT_PAYMENT_PIX = "17",
+    BANK_TRANSFER_DIGITAL_WALLET = "18",
+    LOYALTY_PROGRAM_CASHBACK_VIRTUAL_CREDIT = "19",
+    NO_PAYMENT = "90",
+    OTHERS = "99",
+}
+
+export enum IntegrationTypeInPaymentProcess {
+    INTEGRATED = 1,
+    NOT_INTEGRATED = 2,
+}
+
+export enum ProcessOrigin {
+    SEFAZ = 0,
+    FEDERAL_JUSTICE = 1,
+    STATE_JUSTICE = 2,
+    SECEX_RFB = 3,
+    CONFAZ = 4,
+    OTHERS = 9,
+}
+
+export enum ConcessionAct {
+    AGREEMENT_TERM = "08",
+    SPECIAL_REGIME = "10",
+    SPECIFIC_AUTHORIZATION = "12",
+    SINIEF_ADJUSTMENT = "14",
+    ICMS_AGREEMENT = "15",
+}
+
+export enum MerchandiseOrigin {
+    NATIONAL_EXCEPT_THOSE_INDICATED_IN_CODES_3_4_5_8 = 0,
+    FOREIGN_DIRECT_IMPORT = 1,
+    FOREIGN_ACQUIRED_ON_THE_DOMESTIC_MARKET = 2,
+    NATIONAL_CONTENT_GREATER_THAN_40_PERCENT_AND_LESS_THAN_OR_EQUAL_TO_70_PERCENT = 3,
+    NATIONAL_BASIC_PRODUCTION_PROCESSES = 4,
+    NATIONAL_CONTENT_LOWER_THAN_40_PERCENT = 5,
+    FOREIGN_DIRECT_IMPORT_WITH_NATIONAL_SIMILAR_CAMEX_LIST = 6,
+    FOREIGN_DOMESTIC_MARKET_WITHOUT_SIMULATING_CAMEX_LIST = 7,
+    NATIONAL_IMPORT_CONTENT_GREATER_THAN_70_PERCENT = 8,
+}
+
+export enum DeterminationMethod__Type1 {
+    ADDED_VALUE_MARGIN_PERCENT = 0,
+    TARIFF_VALUE = 1,
+    MAXIMUM_LISTED_PRICE_VALUE = 2,
+    TRANSACTION_VALUE = 3,
+}
+
+export enum DeterminationMethod__Type2 {
+    LISTED_PRICE_OR_MAXIMUM_SUGGESTED_PRICE = 0,
+    NEGATIVE_LIST_VALUE = 1,
+    POSITIVE_LIST_VALUE = 2,
+    NEUTRAL_LIST_VALUE = 3,
+    ADDED_VALUE_MARGIN_PERCENT = 4,
+    TARIFF_VALUE = 5,
+    OPERATION_VALUE = 6,
+}
+
+export enum ExemptionReason__Type1 {
+    USE_IN_AGRICULTURE = 3,
+    OTHERS = 9,
+    AGRICULTURAL_PROMOTION = 12,
+}
+
+export enum ExemptionReason__Type2 {
+    MOTORCYCLE_UTILITIES_IN_FREE_AREA = 6,
+    SUFRAMA = 7,
+    OTHERS = 9,
+}
+
+export enum ExemptionReason__Type3 {
+    TAXI = "1",
+    AGRICULTURAL_PRODUCER = "3",
+    FLEET_OWNER_LESSOR = "4",
+    DIPLOMATIC_CONSULAR = "5",
+    UTILITIES_AND_MOTORCYCLES_IN_THE_WESTERN_AMAZON_AND_FREE_TRADE_AREAS = "6",
+    SUFRAMA = "7",
+    SALE_TO_A_PUBLIC_BODY = "8",
+    OTHERS = "9",
+    DISABLED_DRIVER = "10",
+    NON_DRIVER_DISABLED = "11",
+    RIO_2016_OLYMPICS = "16",
+    TAX_AUTHORITIES_REQUESTED = "90",
+}
+
+export enum ItemValueDeduction {
+    NO = 0,
+    YES = 1,
+}
+
+export enum ICMSCST {
+    FULLY_TAXED = "00",
+    OWN_SINGLE_PHASE_TAXATION_ON_FUELS = "02",
+    TAXED_AND_CHARGED_WITH_ICMS_FOR_TAX_SUBSTITUTION = "10",
+    OWN_SINGLE_PHASE_TAXATION_AND_RESPONSIBILITY_FOR_WITHHOLDING_ON_FUELS = "15",
+    WITH_REDUCTION_IN_CALCULATION_BASE = "20",
+    EXEMPT_OR_NOT_TAXED_AND_CHARGED_WITH_ICMS_FOR_TAX_SUBSTITUTION = "30",
+    EXEMPT = "40",
+    NOT_TAXED = "41",
+    SUSPENSION = "50",
+    DEFERRAL = "51",
+    SINGLE_PHASE_TAXATION_ON_FUELS_WITH_DEFERRED_COLLECTION = "53",
+    ICMS_PREVIOUSLY_CHARGED_BY_TAX_SUBSTITUTION = "60",
+    SINGLE_PHASE_TAXATION_ON_FUELS_PREVIOUSLY_CHARGED = "61",
+    WITH_REDUCTION_IN_THE_CALCULATION_BASE_AND_COLLECTION_OF_ICMS_FOR_TAX_SUBSTITUTION = "70",
+    OTHERS = "90",
+}
+
+export enum CSOSN {
+    TAXED_BY_SIMPLES_NACIONAL_WITH_CREDIT_PERMISSION = "101",
+    TAXED_BY_SIMPLES_NACIONAL_WITHOUT_CREDIT_PERMISSION = "102",
+    ICMS_EXEMPTION_IN_SIMPLES_NACIONAL_FOR_GROSS_REVENUE_RANGE = "103",
+    TAXED_BY_SIMPLES_NACIONAL_WITH_CREDIT_PERMISSION_AND_ICMS_CHARGED_BY_TAX_REPLACEMENT = "201",
+    TAXED_BY_SIMPLES_NACIONAL_WITHOUT_CREDIT_PERMISSION_AND_WITH_ICMS_CHARGED_FOR_TAX_REPLACEMENT = "202",
+    EXEMPTION_FROM_ICMS_IN_SIMPLES_NACIONAL_FOR_GROSS_REVENUE_RANGE_AND_WITH_ICMS_COLLECTION_FOR_TAX_REPLACEMENT = "203",
+    IMMUNE = "300",
+    NOT_TAXED_BY_SIMPLES_NACIONAL = "400",
+    ICMS_PREVIOUSLY_CHARGED_BY_TAX_SUBSTITUTION_REPLACED_OR_BY_ADVANCE_TAXATION_BY_ICMS = "500",
+    OTHERS = "900",
+}
+
+export enum IPITaxStatusCode {
+    ENTRY_WITH_CREDIT_RECOVERY = "00",
+    INPUT_TAXED_AT_ZERO_RATE = "01",
+    EXEMPT_ENTRY = "02",
+    NON_TAXED_ENTRY = "03",
+    IMMUNE_ENTRY = "04",
+    ENTRY_WITH_SUSPENSION = "05",
+    OTHER_ENTRIES = "49",
+    TAXED_EXIT = "50",
+    OUTPUT_TAXED_AT_ZERO_RATE = "51",
+    EXEMPT_EXIT = "52",
+    UNTAXED_EXIT = "53",
+    IMMUNE_EXIT = "54",
+    EXIT_WITH_SUSPENSION = "55",
+    OTHER_OUTPUTS = "99",
+}
+
+export enum ExibilidadeISS {
+    REQUIRABLE = 1,
+    NO_INCIDENT = 2,
+    EXEMPTION = 3,
+    EXPORT = 4,
+    IMMUNITY = 5,
+    REQUIREMENT_SUSP_JUDICIAL = 6,
+    REQUIREMENT_SUSP_ADM = 7,
+}
+
+export enum TaxIncentiveIndicator {
+    YES = 1,
+    NO = 2,
+}
+
+export enum AdremReductionReason {
+    PUBLIC_PASSENGER_TRANSPORT = 1,
+    OTHERS = 9,
+}
+
+export enum WebServiceMode {
+    ASYNC = 0,
+    SYNC = 1,
+}
+
+type NF_Ref__Type1 = {
+    /** Chave de acesso das NF-e referenciadas. Chave de acesso compostas por Código da UF (tabela do IBGE) + AAMM da
+     * emissão + CNPJ do Emitente + modelo, série e número da NF-e Referenciada + Código Numérico + DV */
+    refNFe: string;
+};
+
+type NF_Ref__Type2 = {
+    /** Referencia uma NF-e (modelo 55) emitida anteriormente pela sua Chave de Acesso com código numérico zerado,
+     * permitindo manter o sigilo da NF-e referenciada */
+    refNFeSig: string;
+};
+
+type NF_Ref__Type3 = {
+    /** Dados da NF modelo 1/1A referenciada ou NF modelo 2 referenciada */
+    refNF: {
+        /** Código da UF do emitente do Documento Fiscal. Utilizar a Tabela do IBGE */
+        cUF: UFCodeIBGE;
+        /** AAMM da emissão */
+        AAMM: string;
+        /** CNPJ do emitente do documento fiscal referenciado */
+        CNPJ: string;
+        /** Código do modelo do Documento Fiscal. Utilizar 01 para NF modelo 1/1A e 02 para NF modelo 02 */
+        mod: NFEModel;
+        /** Série do Documento Fiscal, informar zero se inexistente */
+        serie: string;
+        /** Número do Documento Fiscal */
+        nNF: string;
+    };
+};
+
+type NF_ProducerRef__Type1 = {
+    /** Código da UF do emitente do Documento FiscalUtilizar a Tabela do IBGE (Anexo IV - Tabela de UF, Município e
+     * País)
+     */
+    cUF: UFCodeIBGE;
+    /** AAMM da emissão da NF de produtor */
+    AAMM: string;
+    /** CNPJ do emitente da NF de produtor */
+    CNPJ: string;
+    /** IE do emitente da NF de Produtor */
+    IE: "ISENTO" | string;
+    /** Código do modelo do Documento Fiscal - utilizar 04 para NF de produtor ou 01 para NF Avulsa */
+    mod: NF_ProducerRefMode;
+    /** Série do Documento Fiscal, informar zero se inexistentesérie */
+    serie: string;
+    /** Número do Documento Fiscal - 1 – 999999999 */
+    nNF: string;
+};
+
+type NF_ProducerRef__Type2 = {
+    /** Código da UF do emitente do Documento FiscalUtilizar a Tabela do IBGE (Anexo IV - Tabela de UF, Município e
+     * País)
+     */
+    cUF: UFCodeIBGE;
+    /** AAMM da emissão da NF de produtor */
+    AAMM: string;
+    /** CPF do emitente da NF de produtor */
+    CPF: string;
+    /** IE do emitente da NF de Produtor */
+    IE: "ISENTO" | string;
+    /** Código do modelo do Documento Fiscal - utilizar 04 para NF de produtor ou 01 para NF Avulsa */
+    mod: NF_ProducerRefMode;
+    /** Série do Documento Fiscal, informar zero se inexistentesérie */
+    serie: string;
+    /** Número do Documento Fiscal - 1 – 999999999 */
+    nNF: string;
+};
+
+type NF_Ref__Type4 = {
+    /** Grupo com as informações NF de produtor referenciada */
+    refNFP: NF_ProducerRef__Type1 | NF_ProducerRef__Type2;
+};
+
+type NF_Ref__Type5 = {
+    /** Utilizar esta TAG para referenciar um CT-e emitido anteriormente, vinculada a NF-e atual */
+    refCTe: string;
+};
+
+type NF_Ref__Type6 = {
+    /** Grupo do Cupom Fiscal vinculado à NF-e */
+    refECF: {
+        /** Código do modelo do Documento Fiscal Preencher com "2B", quando se tratar de Cupom Fiscal emitido por
+         * máquina registradora (não ECF), com "2C", quando se tratar de Cupom Fiscal PDV, ou "2D", quando se tratar de
+         * Cupom Fiscal (emitido por ECF)
+         */
+        mod: TaxCouponGroup;
+        /** Informar o número de ordem seqüencial do ECF que emitiu o Cupom Fiscal vinculado à NF-e */
+        nECF: string;
+        /** Informar o Número do Contador de Ordem de Operação - COO vinculado à NF-e */
+        nCOO: string;
+    };
+};
+
+type NF_Ref = NF_Ref__Type1 | NF_Ref__Type2 | NF_Ref__Type3 | NF_Ref__Type4 | NF_Ref__Type5 | NF_Ref__Type6;
+
+// schema: TEndereco
+type Address = {
+    /** Logradouro */
+    xLgr: string;
+    /** Número */
+    nro: string;
+    /** Complemento */
+    xCpl?: string;
+    /** Bairro */
+    xBairro: string;
+    /** Código do município */
+    cMun: CodeCityIBGE;
+    /** Nome do município */
+    xMun: string;
+    /** Sigla da UF */
+    UF: UFIssuer;
+    /** CEP - NT 2011/004 */
+    CEP: string;
+    /** Código do país */
+    cPais?: "1058";
+    /** Nome do país */
+    xPais?: "Brasil" | "BRASIL";
+    /** Preencher com Código DDD + número do telefone (v.2.0) */
+    fone?: string;
+};
+
+type __Issuer = {
+    /** Razão Social ou Nome do emitente */
+    xNome: string;
+    /** Nome fantasia */
+    xFant?: string;
+    /** Endereço do emitente */
+    enderEmit: Address;
+    /** Inscrição Estadual do Emitente */
+    IE: "ISENTO" | string;
+    /** Inscricao Estadual do Substituto Tributário */
+    IEST?: string;
+    /** Inscrição Municipal */
+    IM?: string;
+    /** CNAE Fiscal */
+    CNAE?: string;
+    /** Código de Regime Tributário.
+     * Este campo será obrigatoriamente preenchido com:
+     * 1 | Simples Nacional
+     * 2 | Simples Nacional – excesso de sublimite de receita bruta
+     * 3 | Regime Normal
+     */
+    CRT: TaxRegimeCode;
+};
+
+type Issuer__Type1 = {
+    /** Número do CNPJ do emitente */
+    CNPJ: string;
+} & __Issuer;
+
+type Issuer__Type2 = {
+    /** Número do CPF do emitente */
+    CPF: string;
+} & __Issuer;
+
+type Issuer = Issuer__Type1 | Issuer__Type2;
+
+type __Recipient = {
+    /** Razão Social ou nome do destinatário */
+    xNome?: string;
+    /** Dados do endereço */
+    enderDest?: Address;
+    /** Indicador da IE do destinatário:
+     * 1 – Contribuinte ICMS, pagamento à vista
+     * 2 – Contribuinte isento de inscrição
+     * 9 – Não Contribuinte
+     */
+    indIEDest: RecipientStateSubscriptionIndicator;
+    /** Inscrição Estadual (obrigatório nas operações com contribuintes do ICMS) */
+    IE?: string;
+    /** Inscrição na SUFRAMA (Obrigatório nas operações com as áreas com benefícios de incentivos fiscais sob controle
+     * da SUFRAMA) PL_005d - 11/08/09 - alterado para aceitar 8 ou 9 dígitos
+     */
+    ISUF?: string;
+    /** Inscrição Municipal do tomador do serviço */
+    IM?: string;
+    /** Informar o e-mail do destinatário. O campo pode ser utilizado para informar o e-mail de recepção da NF-e
+     * indicada pelo destinatário
+     */
+    email?: string;
+};
+
+type Recipient__Type1 = {
+    /** Número do CNPJ */
+    CNPJ: string;
+} & __Recipient;
+
+type Recipient__Type2 = {
+    /** Número do CPF */
+    CPF: string;
+} & __Recipient;
+
+type Recipient__Type3 = {
+    /** Identificador do destinatário, em caso de comprador estrangeiro */
+    idEstrangeiro: string;
+} & __Recipient;
+
+type Recipient = Recipient__Type1 | Recipient__Type2 | Recipient__Type3;
+
+type __Local = Address & {
+    /** Informar o e-mail do expedidor/Recebedor. O campo pode ser utilizado para informar o e-mail de recepção da NF-e
+     * indicada pelo expedidor
+     */
+    email?: string;
+    /** Inscrição Estadual (v2.0) */
+    IE?: string;
+};
+
+type Local__Type1 = {
+    /** CNPJ */
+    CNPJ: string;
+    /** Razão Social ou Nome do Expedidor/Recebedor */
+    xNome?: string;
+} & __Local;
+
+type Local__Type2 = {
+    /** CPF */
+    CPF: string;
+    /** Razão Social ou Nome do Expedidor/Recebedor */
+    xNome?: string;
+} & __Local;
 
 // schema: TLocal
 type Local = Local__Type1 | Local__Type2;
@@ -652,115 +1080,6 @@ type Product__Type5 = __Product & {
 
 type Product = Product__Type1 | Product__Type2 | Product__Type3 | Product__Type4 | Product__Type5;
 
-export enum OperationType {
-    OTHERS = 0,
-    DEALERSHIP_SALE = 1,
-    DIRECT_BILLING = 2,
-    DIRECT_SALE = 3,
-}
-
-export enum FuelType {
-    ALCOHOL = "01",
-    GASOLINE = "02",
-    DIESEL = "03",
-    ALCOHOL_GAS = "16",
-    GAS_ALCOHOL_GNV = "17",
-    GASOLINE_ELECTRIC = "18",
-}
-
-export enum Vin {
-    REMARKED = "R",
-    NORMAL = "N",
-}
-
-export enum VehicleCondition {
-    FINISHED = 1,
-    UNFINISHED = 2,
-    SEMI_FINISHED = 3,
-}
-
-export enum DENATRANColorCode {
-    YELLOW = "01",
-    BLUE = "02",
-    BEIGE = "03",
-    WHITE = "04",
-    GRAY = "05",
-    GOLDEN = "06",
-    GRENA = "07",
-    ORANGE = "08",
-    BROWN = "09",
-    SILVER = "10",
-    BLACK = "11",
-    PINK = "12",
-    PURPLE = "13",
-    GREEN = "14",
-    RED = "15",
-    FANTASY = "16",
-}
-
-export enum Restriction {
-    NONE = 0,
-    FIDUCIARY_ALIENATION = 1,
-    COMMERCIAL_LEASING = 2,
-    DOMAIN_RESERVATION = 3,
-    VEHICLE_PLEDGE = 4,
-    OTHERS = 9,
-}
-
-export enum FireGunType {
-    PERMITTED = 0,
-    RESTRICTED = 1,
-}
-
-export enum ImportIndicator {
-    NATIONAL = 0,
-    IMPORTED = 1,
-}
-
-// CST (Código de Situação Tributária)
-export enum CST__Type1 {
-    CUMULATIVE_NON_CUMULATIVE = "01",
-    DIFFERENTIATED_RATE = "02",
-}
-
-// CST (Código de Situação Tributária)
-export enum CST__Type2 {
-    TAXABLE_OPERATION_SINGLE_PHASE_TAXATION_ZERO_RATE = "04",
-    TAXABLE_OPERATION_ST = "05",
-    TAXABLE_OPERATION_ZERO_RATE = "06",
-    OPERATION_EXEMPT_CONTRIBUTION = "07",
-    OPERATION_WITHOUT_INCIDENCE_OF_CONTRIBUTION = "08",
-    OPERATION_WITH_SUSPENSION_OF_CONTRIBUTION = "09",
-}
-
-// CST (Código de Situação Tributária)
-export enum CST__Type3 {
-    OTHER_OUTBOUND_OPERATIONS = "49",
-    OPERATION_WITH_RIGHT_TO_CREDIT_LINKED_EXCLUSIVELY_TO_REVENUE_TAXED_IN_THE_DOMESTIC_MARKET = "50",
-    OPERATION_WITH_RIGHT_TO_CREDIT_LINKED_EXCLUSIVELY_TO_NON_TAXED_REVENUE_IN_THE_DOMESTIC_MARKET = "51",
-    OPERATION_WITH_RIGHT_TO_CREDIT_LINKED_EXCLUSIVELY_TO_EXPORT_REVENUE = "52",
-    OPERATION_WITH_RIGHT_TO_CREDIT_LINKED_TO_TAXED_AND_NON_TAXED_REVENUE_IN_THE_DOMESTIC_MARKET = "53",
-    OPERATION_WITH_RIGHT_TO_CREDIT_LINKED_TO_REVENUE_TAXED_IN_THE_DOMESTIC_AND_EXPORT_MARKET = "54",
-    OPERATION_WITH_RIGHT_TO_CREDIT_LINKED_TO_NON_TAXED_REVENUE_IN_THE_DOMESTIC_AND_EXPORT_MARKET = "55",
-    OPERATION_WITH_RIGHT_TO_CREDIT_LINKED_TO_TAXED_AND_NON_TAXED_REVENUES_IN_THE_DOMESTIC_MARKET_AND_EXPORTS = "56",
-    PRESUMED_CREDIT_ACQUISITION_TRANSACTION_LINKED_EXCLUSIVELY_TO_REVENUE_TAXED_IN_THE_DOMESTIC_MARKET = "60",
-    PRESUMED_CREDIT_ACQUISITION_TRANSACTION_LINKED_EXCLUSIVELY_TO_NON_TAXED_REVENUE_IN_THE_DOMESTIC_MARKET = "61",
-    PRESUMED_CREDIT_ACQUISITION_OPERATION_LINKED_EXCLUSIVELY_TO_EXPORT_REVENUE = "62",
-    PRESUMED_CREDIT_ACQUISITION_TRANSACTION_LINKED_TO_TAXED_AND_NON_TAXED_REVENUE_IN_THE_DOMESTIC_MARKET = "63",
-    PRESUMED_CREDIT_ACQUISITION_OPERATION_LINKED_TO_TAXED_REVENUES_IN_THE_DOMESTIC_AND_EXPORT_MARKET = "64",
-    PRESUMED_CREDIT_ACQUISITION_OPERATION_LINKED_TO_NON_TAXED_REVENUE_IN_THE_DOMESTIC_AND_EXPORT_MARKET = "65",
-    PRESUMED_CREDIT_ACQUISITION_OPERATION_LINKED_TO_TAXED_AND_NON_TAXED_REVENUE_IN_THE_DOMESTIC_MARKET_AND_EXPORT = "66",
-    PRESUMED_CREDIT_OTHER_OPERATIONS = "67",
-    ACQUISITION_OPERATION_WITHOUT_THE_RIGHT_TO_CREDIT = "70",
-    ACQUISITION_OPERATION_WITH_EXEMPTION = "71",
-    ACQUISITION_OPERATION_WITH_SUSPENSION = "72",
-    ZERO_RATE_ACQUISITION_OPERATION = "73",
-    ACQUISITION_OPERATION_WITHOUT_INCIDENCE_OF_CONTRIBUTION = "74",
-    ACQUISITION_OPERATION_BY_TAX_REPLACEMENT = "75",
-    OTHER_ENTRY_OPERATIONS = "98",
-    OTHER_OPERATIONS = "99",
-}
-
 type TPISOutr = {
     /** Código de Situação Tributária do PIS:
      * 99 | Outras Operações
@@ -769,12 +1088,6 @@ type TPISOutr = {
     /** Valor do PIS */
     vPIS: string;
 };
-
-export enum ICMSInterstateTaxRate {
-    FOUR_PERCENT = "4.00",
-    SEVEN_PERCENT = "7.00",
-    TWELVE_PERCENT = "12.00",
-}
 
 type PIS__Type1 = {
     /** Código de Situação Tributária do PIS:
@@ -1006,24 +1319,6 @@ type COFINSST = {
     indSomaCOFINSST?: ProductComposeTotal;
 };
 
-export enum SpecialTaxRegimeCode {
-    I1 = 1,
-    I2 = 2,
-    I3 = 3,
-    I4 = 4,
-    I5 = 5,
-    I6 = 6,
-}
-
-export enum ShippingMethod {
-    FREIGHT_CONTRACTING_ON_BEHALF_OF_THE_SENDER_CIF = 0,
-    FREIGHT_CONTRACTING_ON_BEHALF_OF_THE_RECIPIENT_SENDER_FOB = 1,
-    HIRING_FREIGHT_ON_BEHALF_OF_THIRD_PARTIES = 2,
-    OWN_TRANSPORT_EXPENSE_OF_THE_SENDER = 3,
-    OWN_TRANSPORT_EXPENSE_OF_THE_RECIPIENT = 4,
-    NO_TRANSPORT_OCCURRENCE = 9,
-}
-
 type Transporter = {
     xNome?: string;
     IE?: string;
@@ -1032,150 +1327,7 @@ type Transporter = {
     UF?: UFIssuer;
 };
 
-export enum PaymentIndicator {
-    CASH = "0",
-    IN_PARTS = "1",
-}
-
-export enum PaymentMode {
-    MONEY = "01",
-    CHECK = "02",
-    CREDIT_CARD = "03",
-    DEBIT_CARD = "04",
-    STORE_CREDIT = "05",
-    FOOD_VOUCHER = "10",
-    MEAL_VOUCHER = "11",
-    GIFT_VOUCHER = "12",
-    FUEL_VOUCHER = "13",
-    COMMERCIAL_DUPLICATE = "14",
-    BANK_SLIP = "15",
-    BANK_DEPOSIT = "16",
-    INSTANT_PAYMENT_PIX = "17",
-    BANK_TRANSFER_DIGITAL_WALLET = "18",
-    LOYALTY_PROGRAM_CASHBACK_VIRTUAL_CREDIT = "19",
-    NO_PAYMENT = "90",
-    OTHERS = "99",
-}
-
-export enum IntegrationTypeInPaymentProcess {
-    INTEGRATED = 1,
-    NOT_INTEGRATED = 2,
-}
-
-export enum ProcessOrigin {
-    SEFAZ = 0,
-    FEDERAL_JUSTICE = 1,
-    STATE_JUSTICE = 2,
-    SECEX_RFB = 3,
-    CONFAZ = 4,
-    OTHERS = 9,
-}
-
-export enum ConcessionAct {
-    AGREEMENT_TERM = "08",
-    SPECIAL_REGIME = "10",
-    SPECIFIC_AUTHORIZATION = "12",
-    SINIEF_ADJUSTMENT = "14",
-    ICMS_AGREEMENT = "15",
-}
-
-// schema: TInfRespTec
-export type TechnicalResponsible = {
-    CNPJ: string;
-    xContato: string;
-    email: string;
-    fone: string;
-    idCSRT?: string;
-    hashCSRT?: string;
-};
-
-export enum MerchandiseOrigin {
-    NATIONAL_EXCEPT_THOSE_INDICATED_IN_CODES_3_4_5_8 = 0,
-    FOREIGN_DIRECT_IMPORT = 1,
-    FOREIGN_ACQUIRED_ON_THE_DOMESTIC_MARKET = 2,
-    NATIONAL_CONTENT_GREATER_THAN_40_PERCENT_AND_LESS_THAN_OR_EQUAL_TO_70_PERCENT = 3,
-    NATIONAL_BASIC_PRODUCTION_PROCESSES = 4,
-    NATIONAL_CONTENT_LOWER_THAN_40_PERCENT = 5,
-    FOREIGN_DIRECT_IMPORT_WITH_NATIONAL_SIMILAR_CAMEX_LIST = 6,
-    FOREIGN_DOMESTIC_MARKET_WITHOUT_SIMULATING_CAMEX_LIST = 7,
-    NATIONAL_IMPORT_CONTENT_GREATER_THAN_70_PERCENT = 8,
-}
-
-export enum DeterminationMethod__Type1 {
-    ADDED_VALUE_MARGIN_PERCENT = 0,
-    TARIFF_VALUE = 1,
-    MAXIMUM_LISTED_PRICE_VALUE = 2,
-    TRANSACTION_VALUE = 3,
-}
-
-export enum DeterminationMethod__Type2 {
-    LISTED_PRICE_OR_MAXIMUM_SUGGESTED_PRICE = 0,
-    NEGATIVE_LIST_VALUE = 1,
-    POSITIVE_LIST_VALUE = 2,
-    NEUTRAL_LIST_VALUE = 3,
-    ADDED_VALUE_MARGIN_PERCENT = 4,
-    TARIFF_VALUE = 5,
-    OPERATION_VALUE = 6,
-}
-
-export enum ExemptionReason__Type1 {
-    USE_IN_AGRICULTURE = 3,
-    OTHERS = 9,
-    AGRICULTURAL_PROMOTION = 12,
-}
-
-export enum ExemptionReason__Type2 {
-    MOTORCYCLE_UTILITIES_IN_FREE_AREA = 6,
-    SUFRAMA = 7,
-    OTHERS = 9,
-}
-
-export enum ExemptionReason__Type3 {
-    TAXI = "1",
-    AGRICULTURAL_PRODUCER = "3",
-    FLEET_OWNER_LESSOR = "4",
-    DIPLOMATIC_CONSULAR = "5",
-    UTILITIES_AND_MOTORCYCLES_IN_THE_WESTERN_AMAZON_AND_FREE_TRADE_AREAS = "6",
-    SUFRAMA = "7",
-    SALE_TO_A_PUBLIC_BODY = "8",
-    OTHERS = "9",
-    DISABLED_DRIVER = "10",
-    NON_DRIVER_DISABLED = "11",
-    RIO_2016_OLYMPICS = "16",
-    TAX_AUTHORITIES_REQUESTED = "90",
-}
-
-export enum ItemValueDeduction {
-    NO = 0,
-    YES = 1,
-}
-
-// TODO: build enum
-export enum ICMSCST {}
-
-// TODO: build enum
-export enum CSOSN {}
-
-export enum IPITaxStatusCode {
-    ENTRY_WITH_CREDIT_RECOVERY = "00",
-    INPUT_TAXED_AT_ZERO_RATE = "01",
-    EXEMPT_ENTRY = "02",
-    NON_TAXED_ENTRY = "03",
-    IMMUNE_ENTRY = "04",
-    ENTRY_WITH_SUSPENSION = "05",
-    OTHER_ENTRIES = "49",
-    TAXED_EXIT = "50",
-    OUTPUT_TAXED_AT_ZERO_RATE = "51",
-    EXEMPT_EXIT = "52",
-    UNTAXED_EXIT = "53",
-    IMMUNE_EXIT = "54",
-    EXIT_WITH_SUSPENSION = "55",
-    OTHER_OUTPUTS = "99",
-}
-
 type __Tax = {
-    /** Valor estimado total de impostos federais, estaduais e municipais */
-    vTotTrib?: string;
     /** Dados do PIS */
     PIS?: PIS;
     /** Dados do PIS Substituição Tributária */
@@ -1293,22 +1445,9 @@ type IPI__Type2 = __IPI & {
 
 type IPI = IPI__Type1 | IPI__Type2;
 
-export enum ExibilidadeISS {
-    REQUIRABLE = 1,
-    NO_INCIDENT = 2,
-    EXEMPTION = 3,
-    EXPORT = 4,
-    IMMUNITY = 5,
-    REQUIREMENT_SUSP_JUDICIAL = 6,
-    REQUIREMENT_SUSP_ADM = 7,
-}
-
-export enum TaxIncentiveIndicator {
-    YES = 1,
-    NO = 2,
-}
-
-type Tax__Type1 = __Tax & {
+type Tax__Type1 = {
+    /** Valor estimado total de impostos federais, estaduais e municipais */
+    vTotTrib?: string;
     /** Dados do ICMS Normal e ST */
     ICMS:
         | {
@@ -1325,7 +1464,7 @@ type Tax__Type1 = __Tax & {
                   /** Tributação pelo ICMS:
                    * 00 | Tributada integralmente
                    */
-                  CST: "00";
+                  CST: ICMSCST.FULLY_TAXED;
                   /** Modalidade de determinação da BC do ICMS:
                    * 0 | Margem Valor Agregado (%)
                    * 1 | Pauta (valor)
@@ -1353,7 +1492,7 @@ type Tax__Type1 = __Tax & {
                   /** Tributação pelo ICMS
                    * 02 | Tributação monofásica própria sobre combustíveis
                    */
-                  CST: "02";
+                  CST: ICMSCST.OWN_SINGLE_PHASE_TAXATION_ON_FUELS;
                   /** Quantidade tributada */
                   qBCMono?: string;
                   /** Alíquota ad rem do imposto */
@@ -1374,7 +1513,7 @@ type Tax__Type1 = __Tax & {
                    */
                   orig: MerchandiseOrigin;
                   /** 10 | Tributada e com cobrança do ICMS por substituição tributária */
-                  CST: "10";
+                  CST: ICMSCST.TAXED_AND_CHARGED_WITH_ICMS_FOR_TAX_SUBSTITUTION;
                   /** Modalidade de determinação da BC do ICMS:
                    * 0 | Margem Valor Agregado (%)
                    * 1 | Pauta (valor)
@@ -1437,7 +1576,7 @@ type Tax__Type1 = __Tax & {
                   orig: MerchandiseOrigin;
                   /** Tributação pelo ICMS:
                    * 15 | Tributação monofásica própria e com responsabilidade pela retenção sobre combustíveis */
-                  CST: "15";
+                  CST: ICMSCST.OWN_SINGLE_PHASE_TAXATION_AND_RESPONSIBILITY_FOR_WITHHOLDING_ON_FUELS;
                   /** Quantidade tributada */
                   qBCMono?: string;
                   /** Alíquota ad rem do imposto */
@@ -1473,7 +1612,7 @@ type Tax__Type1 = __Tax & {
                   /** Tributação pelo ICMS:
                    * 20 | Com redução de base de cálculo
                    */
-                  CST: "20";
+                  CST: ICMSCST.WITH_REDUCTION_IN_CALCULATION_BASE;
                   /** Modalidade de determinação da BC do ICMS:
                    * 0 | Margem Valor Agregado (%)
                    * 1 | Pauta (valor)
@@ -1524,7 +1663,7 @@ type Tax__Type1 = __Tax & {
                   /** Tributação pelo ICMS:
                    * 30 | Isenta ou não tributada e com cobrança do ICMS por substituição tributária
                    */
-                  CST: "30";
+                  CST: ICMSCST.EXEMPT_OR_NOT_TAXED_AND_CHARGED_WITH_ICMS_FOR_TAX_SUBSTITUTION;
                   /** Modalidade de determinação da BC do ICMS ST:
                    * 0 | Preço tabelado ou máximo sugerido
                    * 1 | Lista Negativa (valor)
@@ -1583,9 +1722,8 @@ type Tax__Type1 = __Tax & {
                    * 40 | Isenta
                    * 41 | Não tributada
                    * 50 | Suspensão
-                   * 51 | Diferimento
                    */
-                  CST: "40" | "41" | "50";
+                  CST: ICMSCST.EXEMPT | ICMSCST.NOT_TAXED | ICMSCST.SUSPENSION;
                   /** O valor do ICMS será informado apenas nas operações com veículos beneficiados com a desoneração
                    * condicional do ICMS
                    */
@@ -1627,11 +1765,9 @@ type Tax__Type1 = __Tax & {
                    */
                   orig: MerchandiseOrigin;
                   /** Tributação pelo ICMS:
-                   * 20 | Com redução de base de cálculo
-                   *
-                   * WARN: PROVIDED DOCUMENTATION HAVE WRONG VALUES
+                   * 51 | Diferimento
                    */
-                  CST: "51";
+                  CST: ICMSCST.DEFERRAL;
                   /** Modalidade de determinação da BC do ICMS:
                    * 0 | Margem Valor Agregado (%)
                    * 1 | Pauta (valor)
@@ -1677,7 +1813,7 @@ type Tax__Type1 = __Tax & {
                   /** Tributação pelo ICMS:
                    * 53 | Tributação monofásica sobre combustíveis com recolhimento diferido
                    */
-                  CST: "53";
+                  CST: ICMSCST.SINGLE_PHASE_TAXATION_ON_FUELS_WITH_DEFERRED_COLLECTION;
                   /** Quantidade tributada */
                   qBCMono?: string;
                   /** Alíquota ad rem do imposto */
@@ -1710,7 +1846,7 @@ type Tax__Type1 = __Tax & {
                   /** Tributação pelo ICMS:
                    * 60 | ICMS cobrado anteriormente por substituição tributária
                    */
-                  CST: "60";
+                  CST: ICMSCST.ICMS_PREVIOUSLY_CHARGED_BY_TAX_SUBSTITUTION;
                   /** Valor da BC do ICMS ST retido anteriormente */
                   vBCSTRet?: string;
                   /** Aliquota suportada pelo consumidor final */
@@ -1743,7 +1879,7 @@ type Tax__Type1 = __Tax & {
                   /** Tributação pelo ICMS:
                    * 61 | Tributação monofásica sobre combustíveis cobrada anteriormente
                    */
-                  CST: "61";
+                  CST: ICMSCST.SINGLE_PHASE_TAXATION_ON_FUELS_PREVIOUSLY_CHARGED;
                   /** Quantidade tributada retida anteriormente */
                   qBCMonoRet?: string;
                   /** Alíquota ad rem do imposto retido anteriormente */
@@ -1766,7 +1902,7 @@ type Tax__Type1 = __Tax & {
                   /** Tributação pelo ICMS:
                    * 70 | Com redução de base de cálculo e cobrança do ICMS por substituição tributária
                    */
-                  CST: "70";
+                  CST: ICMSCST.WITH_REDUCTION_IN_THE_CALCULATION_BASE_AND_COLLECTION_OF_ICMS_FOR_TAX_SUBSTITUTION;
                   /** Modalidade de determinação da BC do ICMS:
                    * 0 | Margem Valor Agregado (%)
                    * 1 | Pauta (valor)
@@ -1821,7 +1957,7 @@ type Tax__Type1 = __Tax & {
                    * 9 | Outros
                    * 12 | Fomento agropecuário
                    */
-                  motdesicms?: ExemptionReason__Type1;
+                  motDesICMS?: ExemptionReason__Type1;
                   /** Indica se o valor do ICMS desonerado (vICMSDeson) deduz do valor do item (vProd):
                    * 0 | Valor do ICMS desonerado (vICMSDeson) não deduz do valor do item (vProd) / total da NF-e
                    * 1 | Valor do ICMS desonerado (vICMSDeson) deduz do valor do item (vProd) / total da NF-es
@@ -1851,7 +1987,7 @@ type Tax__Type1 = __Tax & {
                   /** Tributação pelo ICMS:
                    * 90 | Outras
                    */
-                  CST: "90";
+                  CST: ICMSCST.OTHERS;
                   /** Modalidade de determinação da BC do ICMS:
                    * 0 | Margem Valor Agregado (%)
                    * 1 | Pauta (valor)
@@ -1938,7 +2074,7 @@ type Tax__Type1 = __Tax & {
                    * 10 | Tributada e com cobrança do ICMS por substituição tributária
                    * 90 | Outros
                    */
-                  CST: "10" | "90";
+                  CST: ICMSCST.TAXED_AND_CHARGED_WITH_ICMS_FOR_TAX_SUBSTITUTION | ICMSCST.OTHERS;
                   /** Modalidade de determinação da BC do ICMS:
                    * 0 | Margem Valor Agregado (%)
                    * 1 | Pauta (valor)
@@ -2001,7 +2137,7 @@ type Tax__Type1 = __Tax & {
                    * 41 | Não Tributado
                    * 60 | Cobrado anteriormente por substituição tributária
                    */
-                  CST: "41" | "60";
+                  CST: ICMSCST.NOT_TAXED | ICMSCST.ICMS_PREVIOUSLY_CHARGED_BY_TAX_SUBSTITUTION;
                   /** Informar o valor da BC do ICMS ST retido na UF remetente */
                   vBCSTRet: string;
                   /** Aliquota suportada pelo consumidor final */
@@ -2040,7 +2176,7 @@ type Tax__Type1 = __Tax & {
                    */
                   orig: MerchandiseOrigin;
                   /** 101 | Tributada pelo Simples Nacional com permissão de crédito. (v.2.0) */
-                  CSOSN: "101";
+                  CSOSN: CSOSN.TAXED_BY_SIMPLES_NACIONAL_WITH_CREDIT_PERMISSION;
                   /** Alíquota aplicável de cálculo do crédito (Simples Nacional). (v2.0) */
                   pCredSN: string;
                   /** Valor crédito do ICMS que pode ser aproveitado nos termos do art. 23 da LC 123 (Simples Nacional)
@@ -2063,7 +2199,11 @@ type Tax__Type1 = __Tax & {
                    * 300 | Imune
                    * 400 | Não tributada pelo Simples Nacional (v.2.0)
                    */
-                  CSOSN: "102" | "103" | "300" | "400";
+                  CSOSN:
+                      | CSOSN.TAXED_BY_SIMPLES_NACIONAL_WITHOUT_CREDIT_PERMISSION
+                      | CSOSN.ICMS_EXEMPTION_IN_SIMPLES_NACIONAL_FOR_GROSS_REVENUE_RANGE
+                      | CSOSN.IMMUNE
+                      | CSOSN.NOT_TAXED_BY_SIMPLES_NACIONAL;
               };
           }
         | {
@@ -2078,7 +2218,7 @@ type Tax__Type1 = __Tax & {
                   /** 201 | Tributada pelo Simples Nacional com permissão de crédito e com cobrança do ICMS por
                    * Substituição Tributária (v.2.0)
                    */
-                  CSOSN: "201";
+                  CSOSN: CSOSN.TAXED_BY_SIMPLES_NACIONAL_WITH_CREDIT_PERMISSION_AND_ICMS_CHARGED_BY_TAX_REPLACEMENT;
                   /** Modalidade de determinação da BC do ICMS ST:
                    * 0 | Preço tabelado ou máximo sugerido
                    * 1 | Lista Negativa (valor)
@@ -2127,7 +2267,9 @@ type Tax__Type1 = __Tax & {
                    * 203 | Isenção do ICMS nos Simples Nacional para faixa de receita bruta e com cobrança do ICMS por
                    * Substituição Tributária (v.2.0)
                    */
-                  CSOSN: "202" | "203";
+                  CSOSN:
+                      | CSOSN.TAXED_BY_SIMPLES_NACIONAL_WITHOUT_CREDIT_PERMISSION_AND_WITH_ICMS_CHARGED_FOR_TAX_REPLACEMENT
+                      | CSOSN.EXEMPTION_FROM_ICMS_IN_SIMPLES_NACIONAL_FOR_GROSS_REVENUE_RANGE_AND_WITH_ICMS_COLLECTION_FOR_TAX_REPLACEMENT;
                   /** Modalidade de determinação da BC do ICMS ST:
                    * 0 | Preço tabelado ou máximo sugerido
                    * 1 | Lista Negativa (valor)
@@ -2168,7 +2310,7 @@ type Tax__Type1 = __Tax & {
                   /** 500 | ICMS cobrado anterirmente por substituição tributária (substituído) ou por antecipação
                    * (v.2.0)
                    */
-                  CSOSN: "500";
+                  CSOSN: CSOSN.ICMS_PREVIOUSLY_CHARGED_BY_TAX_SUBSTITUTION_REPLACED_OR_BY_ADVANCE_TAXATION_BY_ICMS;
                   /** Valor da BC do ICMS ST retido anteriormente (v2.0) */
                   vBCSTRet?: string;
                   /** Aliquota suportada pelo consumidor final */
@@ -2203,7 +2345,7 @@ type Tax__Type1 = __Tax & {
                    */
                   orig: MerchandiseOrigin;
                   /** Tributação pelo ICMS 900 - Outros(v2.0) */
-                  CSOSN: "900";
+                  CSOSN: CSOSN.OTHERS;
                   /** Modalidade de determinação da BC do ICMS:
                    * 0 | Margem Valor Agregado (%)
                    * 1 | Pauta (valor)
@@ -2265,9 +2407,11 @@ type Tax__Type1 = __Tax & {
         /** Valor do Imposto sobre Operações Financeiras */
         vIOF: string;
     };
-};
+} & __Tax;
 
-type Tax__Type2 = __Tax & {
+type Tax__Type2 = {
+    /** Valor estimado total de impostos federais, estaduais e municipais */
+    vTotTrib?: string;
     IPI?: IPI;
     ISSQN: {
         /** Valor da BC do ISSQN */
@@ -2316,14 +2460,9 @@ type Tax__Type2 = __Tax & {
          */
         indIncentivo: TaxIncentiveIndicator;
     };
-};
+} & __Tax;
 
-export type Tax = Tax__Type1 | Tax__Type2;
-
-export enum AdremReductionReason {
-    PUBLIC_PASSENGER_TRANSPORT = 1,
-    OTHERS = 9,
-}
+type Tax = Tax__Type1 | Tax__Type2;
 
 type __Transport = {
     modFrete: ShippingMethod;
@@ -2336,6 +2475,9 @@ type __Transport = {
         CFOP: string;
         cMunFG: CodeCityIBGE;
     };
+};
+
+type TransportVolumes = {
     /** Dados dos volumes */
     vol?: {
         /** Quantidade de volumes transportados */
@@ -2369,25 +2511,35 @@ type Transport__Type1 = __Transport & {
     veicTransp?: Vehicle;
     /** Dados do reboque/Dolly (v2.0) */
     reboque?: Vehicle[];
-};
+} & TransportVolumes;
 
 type Transport__Type2 = __Transport & {
     /** Identificação do vagão (v2.0) */
     vagao?: string;
-};
+} & TransportVolumes;
 
 type Transport__Type3 = __Transport & {
     /** Identificação da balsa (v2.0) */
     balsa?: string;
-};
+} & TransportVolumes;
 
 type Transport = Transport__Type1 | Transport__Type2 | Transport__Type3;
+
+// schema: TInfRespTec
+export type TechnicalResponsible = {
+    CNPJ: string;
+    xContato: string;
+    email: string;
+    fone: string;
+    idCSRT?: string;
+    hashCSRT?: string;
+};
 
 // schema: TNFe
 export type SefazNFE = {
     $: {
         /** Versão do leiaute (v4.00) */
-        versao: string;
+        versao: VERSION;
         /** PL_005d - 11/08/09 - validação do Id */
         Id: string;
     };
@@ -2499,10 +2651,10 @@ export type SefazNFE = {
         /** Informar a justificativa da entrada */
         xJust?: string;
         /** Grupo de informações da NF referenciada */
-        NFref?: ReferencedNFE[];
+        NFref?: NF_Ref[];
     };
     /** Identificação do emitente */
-    emit: (Issuer & { CNPJ: string }) | (Issuer & { CPF: string });
+    emit: Issuer;
     /** Emissão de avulsa, informar os dados do Fisco emitente */
     avulsa?: {
         /** CNPJ do Órgão emissor */
@@ -2529,7 +2681,7 @@ export type SefazNFE = {
         dPag?: string;
     };
     /** Identificação do Destinatário */
-    dest?: (Recipient & { CNPJ?: string }) | (Recipient & { CPF?: string }) | (Recipient & { idEstrangeiro?: string });
+    dest?: Recipient;
     /** Identificação do Local de Retirada (informar apenas quando for diferente do endereço do remetente) */
     retirada?: Local;
     /** Identificação do Local de Entrega (informar apenas quando for diferente do endereço do destinatário) */
@@ -2561,13 +2713,13 @@ export type SefazNFE = {
         obsItem?: {
             /** Grupo de observações de uso livre (para o item da NF-e) */
             obsCont?: {
+                $: { xCampo: string };
                 xTexto: string;
-                xCampo: string;
             };
             /** Grupo de observações de uso livre (para o item da NF-e) */
             obsFisco: {
+                $: { xCampo: string };
                 xTexto: string;
-                xCampo: string;
             };
         };
     }[];
@@ -2870,8 +3022,3 @@ export type SefazNFE = {
         xSolic: string;
     };
 };
-
-export enum WebServiceMode {
-    ASYNC = 0,
-    SYNC = 1,
-}

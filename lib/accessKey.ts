@@ -17,7 +17,7 @@ export class AccessKey {
     }
 
     static fromNFe(NFe: SefazNFE) {
-        return (
+        const value =
             NFe.ide.cUF +
             new Date(NFe.ide.dhEmi)
                 .toLocaleString("pt-BR", {
@@ -30,12 +30,14 @@ export class AccessKey {
             // @ts-ignore
             NFe.emit.CNPJ +
             NFe.ide.mod +
-            NFe.ide.serie +
+            ("00" + NFe.ide.serie).slice(-3) +
             NFe.ide.nNF +
             NFe.ide.tpEmis +
-            NFe.ide.cNF +
-            NFe.ide.cDV
-        );
+            NFe.ide.cNF;
+
+        const verifyingDigit = AccessKey.prototype.calculateVerifyingDigit.call({ value });
+
+        return new AccessKey(AccessKeyVersion.V400, value + verifyingDigit);
     }
 
     calculateVerifyingDigit(): number {
@@ -54,6 +56,10 @@ export class AccessKey {
             }, 0);
 
         const rest = sum % 11;
+
+        if (rest <= 1) {
+            return 0;
+        }
 
         return 11 - rest;
     }

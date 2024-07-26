@@ -104,7 +104,7 @@ test.only("Request authorization", async () => {
             indIntermed: IntermediaryIndicator.WITHOUT_INTERMEDIARY,
         },
         emit: {
-            CNPJ: "99999999000191",
+            CNPJ: process.env.CNPJ ?? "99999999000191",
             xNome: "Open MDF-e by @acesnofleirbag",
             enderEmit: {
                 UF: UFIssuer.SP,

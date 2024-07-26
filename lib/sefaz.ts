@@ -33,7 +33,6 @@ import { CTeServiceStatusRequest, CTeServiceStatusResponse } from "./@types/layo
 import { CTeEventReceptionRequest, CTeEventReceptionResponse } from "./@types/layouts/cte/eventReception";
 import { EnvironmentIdentifier } from "./@types/layouts/general";
 import { WebServiceActions } from "./core/static/actions";
-import { DebugUtility } from "./utils/debug";
 
 export class NFeSEFAZ implements NFeSefazOperations {
     private httpClient: HTTPClient<AxiosRequestConfig>;
@@ -167,18 +166,16 @@ export class NFeSEFAZ implements NFeSefazOperations {
         return this.XML.obj2xml(document);
     }
 
+    async checkCertificateExpirationTime() {
+        return this.signer.checkExpirationTime();
+    }
+
     async requestAuthorization(payload: AuthorizationRequest): Promise<AuthorizationResponse> {
         const wsName = "NFeAutorizacao4";
         const environment = this.getEnvironment();
 
         const envelope = this.makeSoapEnvelope(payload, wsName);
         const signedEnvelope = await this.signer.signXML_X509(envelope, "infNFe");
-
-        // 297 - [Simulacao] Rejeicao: Assinatura difere do calculado
-        // 245 - [Simulacao] Rejeicao: CNPJ Emitente nao cadastrado
-
-        DebugUtility.write("/tmp/open-mdfe/schema.xml", signedEnvelope);
-        return 1 as any;
 
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).authorization[environment],
@@ -454,6 +451,10 @@ export class CTeSEFAZ implements CTeSefazOperations {
         return this.XML.obj2xml(document);
     }
 
+    async checkCertificateExpirationTime() {
+        return this.signer.checkExpirationTime();
+    }
+
     async requestTransportAuthorization(
         payload: TransportAuthorizationRequest,
     ): Promise<TransportAuthorizationResponse> {
@@ -548,4 +549,52 @@ export class CTeSEFAZ implements CTeSefazOperations {
     }
 
     // TODO: specific events (page: 58)
+}
+
+export class NFSeSEFAZ {
+    private httpClient: HTTPClient<AxiosRequestConfig>;
+    private XML: XMLClient;
+    private signer: Signer;
+
+    constructor(
+        private readonly environment: EnvironmentIdentifier,
+        readonly cert: Cert,
+    ) {
+        this.httpClient = new AxiosHttpClient(cert);
+        this.XML = new XMLClient();
+        this.signer = new Signer(cert);
+    }
+
+    private getEnvironment() {
+        switch (this.environment) {
+            case EnvironmentIdentifier.PRODUCTION:
+                return "production";
+            case EnvironmentIdentifier.HOMOLOGATION:
+                return "homologation";
+        }
+    }
+
+    private makeSoapEnvelope(payload: any) {
+        const document = {
+            "soap12:Envelope": {
+                $: {
+                    "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+                    "xmlns:xsd": "http://www.w3.org/2001/XMLSchema",
+                    "xmlns:soap12": "http://www.w3.org/2003/05/soap-envelope",
+                },
+                "soap12:Body": {
+                    NFSe: {
+                        $: { versao: "1.00", xmlns: "http://www.sped.fazenda.gov.br/nfse" },
+                        ...payload,
+                    },
+                },
+            },
+        };
+
+        return this.XML.obj2xml(document);
+    }
+
+    async checkCertificateExpirationTime() {
+        return this.signer.checkExpirationTime();
+    }
 }

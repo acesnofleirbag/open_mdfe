@@ -4,6 +4,7 @@ import { Agent } from "https";
 import { NotImplementedError } from "../errors/notImplementedError";
 import { Cert } from "../@types/cert";
 import { readFileSync } from "fs";
+import { CA } from "../core/static/ca";
 
 export class AxiosHttpClient implements HTTPClient<AxiosRequestConfig> {
     private client: Axios;
@@ -18,6 +19,7 @@ export class AxiosHttpClient implements HTTPClient<AxiosRequestConfig> {
                 rejectUnauthorized: false,
                 pfx: readFileSync(cert.pfx),
                 passphrase: cert.pass,
+                ca: CA,
             }),
         });
     }

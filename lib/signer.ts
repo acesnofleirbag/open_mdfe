@@ -3,12 +3,23 @@ import { SignedXml } from "xml-crypto";
 import { readFileSync } from "node:fs";
 import { Cert } from "./@types/cert";
 import { promisified as PEM } from "pem";
+import { ExpiredCertificateError } from "./errors/expiredCertificateError";
 
 export class Signer implements ISigner {
     private cert: Cert;
 
     constructor(cert: Cert) {
         this.cert = cert;
+    }
+
+    async checkExpirationTime() {
+        const pfx = readFileSync(this.cert.pfx);
+        const __cert = await PEM.readPkcs12(pfx, { p12Password: this.cert.pass });
+        const infos: any = await PEM.readCertificateInfo(__cert.cert);
+
+        if (infos.validity.end < new Date().getTime()) {
+            throw new ExpiredCertificateError();
+        }
     }
 
     async signXML(envelope: string, tagRef: string): Promise<string> {

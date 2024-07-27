@@ -2536,7 +2536,7 @@ export type TechnicalResponsible = {
 };
 
 // schema: TNFe
-export type SefazNFE = {
+export type SefazNFe = {
     $: {
         /** Versão do leiaute (v4.00) */
         versao: VERSION;

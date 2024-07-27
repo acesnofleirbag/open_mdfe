@@ -1,5 +1,5 @@
 import { AccessKeyLayout, AccessKeyVersion } from "./@types/accessKey";
-import { SefazNFE } from "./@types/layouts/nfe/nfe";
+import { SefazNFe } from "./@types/layouts/nfe/nfe";
 import { Env } from "./core/environments";
 import { InvalidAccessKeyError } from "./errors/invalidAccessKeyError";
 
@@ -16,7 +16,7 @@ export class AccessKey {
         this.version = version;
     }
 
-    static fromNFe(NFe: SefazNFE) {
+    static fromNFe(NFe: SefazNFe) {
         const value =
             NFe.ide.cUF +
             new Date(NFe.ide.dhEmi)

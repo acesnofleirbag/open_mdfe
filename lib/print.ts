@@ -1,11 +1,11 @@
 import { readFileSync } from "node:fs";
 import * as Handlebars from "handlebars";
-import { SefazNFE } from "./@types/layouts/nfe/nfe";
+import { SefazNFe } from "./@types/layouts/nfe/nfe";
 import { AccessKey } from "./accessKey";
 import { SefazCTE } from "./@types/layouts/cte/cte";
 
 export class Print {
-    DANFE(mode: "portrait" | "landscape", nfe: SefazNFE) {
+    DANFE(mode: "portrait" | "landscape", nfe: SefazNFe) {
         const layout =
             mode === "portrait"
                 ? readFileSync(__dirname + "/core/static/danfe.portrait.hbs")

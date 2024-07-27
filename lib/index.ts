@@ -1,8 +1,10 @@
-export { NFE } from "./nfe";
+export { NFe } from "./nfe";
 export { NFeSEFAZ, CTeSEFAZ } from "./sefaz";
 export { AccessKey } from "./accessKey";
 export { CSRT } from "./csrt";
 export { Print } from "./print";
-export { CTE } from "./cte";
-
-// TODO: export enum values to client
+export { CTe } from "./cte";
+export { NFSe } from "./nfse";
+export * as NFeTypes from "./@types/layouts/nfe/nfe";
+export * as NFSeTypes from "./@types/layouts/nfse/nfse";
+export * as CTeTypes from "./@types/layouts/cte/cte";

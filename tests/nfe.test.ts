@@ -1,6 +1,6 @@
 import { version as __VERSION__ } from "../package.json";
 import { expect, test } from "vitest";
-import { NFE } from "../lib/nfe";
+import { NFe } from "../lib/nfe";
 import {
     BuyerPresenceOnEstablishmentAtTransactionIndicator,
     CST__Type1,
@@ -76,14 +76,14 @@ test.only("Request authorization", async () => {
         pass: process.env.CERT_PASS ?? "",
     };
     const sefaz = new NFeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
-    const nfe = new NFE({
+    const nfe = new NFe({
         $: {
             versao: "4.00",
             Id: "", // ID is auto-generate
         },
         ide: {
             cUF: UFCodeIBGE.SP,
-            cNF: NFE.genNumericCode(),
+            cNF: NFe.genNumericCode(),
             natOp: "Venda de produto",
             mod: TaxDocumentModel.NFE,
             serie: "3",

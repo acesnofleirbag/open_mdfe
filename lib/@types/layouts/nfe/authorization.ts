@@ -1,5 +1,5 @@
 import { EnvironmentIdentifier, UFCodeIBGE } from "../general";
-import { SefazNFE, WebServiceMode } from "./nfe";
+import { SefazNFe, WebServiceMode } from "./nfe";
 import { VERSION } from "../version";
 
 // web service: NfeAutorizacao
@@ -16,7 +16,7 @@ export type AuthorizationRequest = {
          */
         indSinc: WebServiceMode;
         NFe: {
-            infNFe: SefazNFE;
+            infNFe: SefazNFe;
             /** Informações suplementares Nota Fiscal */
             infNFeSupl?: {
                 /** Texto com o QR-Code impresso no DANFE NFC-e */

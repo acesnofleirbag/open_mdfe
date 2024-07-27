@@ -1,13 +1,13 @@
-import { SefazNFE } from "./@types/layouts/nfe/nfe";
+import { SefazNFe } from "./@types/layouts/nfe/nfe";
 import { AccessKey } from "./accessKey";
 import { XMLClient } from "./adapters/xml";
 import { NFeValidator } from "./core/validator/nfe";
 
-export class NFE {
-    private payload: SefazNFE;
+export class NFe {
+    private payload: SefazNFe;
     private XML: XMLClient;
 
-    constructor(payload: SefazNFE) {
+    constructor(payload: SefazNFe) {
         this.assignAccessKey(payload);
         this.payload = NFeValidator.parse(payload);
         this.XML = new XMLClient();
@@ -26,7 +26,7 @@ export class NFE {
         return res;
     }
 
-    private assignAccessKey(payload: SefazNFE) {
+    private assignAccessKey(payload: SefazNFe) {
         const accessKey = AccessKey.fromNFe(payload);
 
         payload["$"].Id = "NFe" + accessKey.getValue();
@@ -41,7 +41,7 @@ export class NFE {
         return this.payload;
     }
 
-    async XMLToObject(xml: string): Promise<SefazNFE> {
-        return this.XML.xml2obj<SefazNFE>(xml);
+    async XMLToObject(xml: string): Promise<SefazNFe> {
+        return this.XML.xml2obj<SefazNFe>(xml);
     }
 }

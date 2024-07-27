@@ -2,7 +2,7 @@ import { SefazCTE } from "./@types/layouts/cte/cte";
 import { XMLClient } from "./adapters/xml";
 import { CTeValidator } from "./core/validator/cte";
 
-export class CTE {
+export class CTe {
     private payload: SefazCTE;
     private XML: XMLClient;
 

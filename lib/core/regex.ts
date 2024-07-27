@@ -1,6 +1,6 @@
 // WARN: All regex pattern as wrapped on a ^(<official-regex>)$ pattern. Because some issues on exactly match
 export const RegexSEFAZ = {
-    // schema: TDateTimeUTC
+    // schema: TDateTimeUTC | TSDateTimeUTC
     DateTimeUTC: new RegExp(
         /^((((20(([02468][048])|([13579][26]))-02-29))|(20[0-9][0-9])-((((0[1-9])|(1[0-2]))-((0[1-9])|(1\d)|(2[0-8])))|((((0[13578])|(1[02]))-31)|(((0[1,3-9])|(1[0-2]))-(29|30)))))T(20|21|22|23|[0-1]\d):[0-5]\d:[0-5]\d([\-,\+](0[0-9]|10|11):00|([\+](12):00)))$/,
     ),
@@ -26,7 +26,7 @@ export const RegexSEFAZ = {
     // schema: TIeST | TIeDestNaoIsento
     IEWithoutISENTO: new RegExp(/^([0-9]{2,14})$/),
 
-    // schema: TData
+    // schema: TData | TSData
     Date: new RegExp(
         /^((((20(([02468][048])|([13579][26]))-02-29))|(20[0-9][0-9])-((((0[1-9])|(1[0-2]))-((0[1-9])|(1\d)|(2[0-8])))|((((0[13578])|(1[02]))-31)|(((0[1,3-9])|(1[0-2]))-(29|30))))))$/,
     ),
@@ -76,4 +76,10 @@ export const RegexSEFAZ = {
 
     // schema: TDec_0302Max100
     Decimal3_02max100: new RegExp(/^(0(\.[0-9]{2})?|100(\.00)?|[1-9]{1}[0-9]{0,1}(\.[0-9]{2})?)$/),
+
+    // schema: TSDec15V2
+    Decimal15_02: new RegExp(/^(0|0\.[0-9]{2}|[1-9]{1}[0-9]{0,14}(\.[0-9]{2})?)$/),
+
+    // schema: TSDec3V2
+    Decimal3_02: new RegExp(/^(0|0\.[0-9]{2}|[1-9]{1}[0-9]{0,2}(\.[0-9]{2})?)$/),
 };

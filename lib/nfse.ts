@@ -7,8 +7,6 @@ export class NFSe {
     private XML: XMLClient;
 
     constructor(payload: SefazNFSe) {
-        // FIXME(@@@)
-        // @ts-ignore
         this.payload = NFSeValidator.parse(payload);
         this.XML = new XMLClient();
     }

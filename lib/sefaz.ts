@@ -552,6 +552,7 @@ export class CTeSEFAZ implements CTeSefazOperations {
 }
 
 export class NFSeSEFAZ {
+    // @ts-ignore
     private httpClient: HTTPClient<AxiosRequestConfig>;
     private XML: XMLClient;
     private signer: Signer;
@@ -565,6 +566,7 @@ export class NFSeSEFAZ {
         this.signer = new Signer(cert);
     }
 
+    // @ts-ignore
     private getEnvironment() {
         switch (this.environment) {
             case EnvironmentIdentifier.PRODUCTION:
@@ -574,6 +576,7 @@ export class NFSeSEFAZ {
         }
     }
 
+    // @ts-ignore
     private makeSoapEnvelope(payload: any) {
         const document = {
             "soap12:Envelope": {

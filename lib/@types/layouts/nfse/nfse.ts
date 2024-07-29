@@ -406,7 +406,7 @@ type PeopleInfos__Type4 = {
      * 1 | Dispensado do NIF
      * 2 | Não exigência do NIF
      */
-    cNaoNIF: string;
+    cNaoNIF: NonNIF_Reason;
 } & __PeopleInfos;
 
 type PeopleInfos = PeopleInfos__Type1 | PeopleInfos__Type2 | PeopleInfos__Type3 | PeopleInfos__Type4;

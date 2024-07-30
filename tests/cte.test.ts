@@ -45,7 +45,7 @@ test("Request GTVe authorization", async () => {
     expect(1).toEqual(1);
 });
 
-test("Fetch CTE", async () => {
+test("Fetch CTe", async () => {
     // arrange
     const cert = {
         pfx: __dirname + "/cert/cert.pfx",

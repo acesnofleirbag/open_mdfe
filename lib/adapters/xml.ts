@@ -6,7 +6,6 @@ export class XMLClient implements XML {
 
     constructor() {
         this.client = new Builder({
-            headless: true,
             renderOpts: { pretty: false },
             xmldec: { version: "1.0", encoding: "UTF-8" },
         });

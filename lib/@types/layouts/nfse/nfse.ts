@@ -697,8 +697,9 @@ export type SefazNFSe = {
     emit: Issuer;
     /** Grupo de valores referentes ao Serviço Prestado */
     valores: Values;
-    /** Grupo de informações da DPS relativas ao serviço prestado */
+    /** Grupo de informações da Declaração de Prestação de Serviço (DPS) relativas ao serviço prestado */
     DPS: {
+        $: { xmlns: "http://www.sped.fazenda.gov.br/nfse" };
         infDPS: {
             $: {
                 /**  Informar o identificador precedido do literal ‘DPS’. A regra de formação do identificador de 45
@@ -706,6 +707,7 @@ export type SefazNFSe = {
                  * completar com 000 à esquerda) + Série DPS (5)+ Núm. DPS (15)
                  */
                 Id: string;
+                versao: "1.00";
             };
             /** Identificação do Ambiente:
              * 1 | Produção
@@ -722,7 +724,7 @@ export type SefazNFSe = {
             serie: string;
             /** Número do DPS */
             nDPS: string;
-            /** Data em que se iniciou a prestação do serviço: Dia, mês e ano (AAAAMMDD) */
+            /** Data em que se iniciou a prestação do serviço: Dia, mês e ano (AAAA-MM-DD) */
             dCompet: string;
             /** Emitente da DPS:
              * 1 | Prestador;

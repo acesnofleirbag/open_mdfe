@@ -360,9 +360,11 @@ export const NFSeValidator = z.object({
     emit: Issuer,
     valores: Values,
     DPS: z.object({
+        $: z.object({ xmlns: z.literal("http://www.sped.fazenda.gov.br/nfse") }),
         infDPS: z.object({
             $: z.object({
                 Id: z.string().regex(new RegExp(/^(DPS[0-9]{42})$/)),
+                versao: z.literal("1.00"),
             }),
             tpAmb: z.nativeEnum(EnvironmentIdentifier),
             dhEmi: z.string().regex(RegexSEFAZ.DateTimeUTC),

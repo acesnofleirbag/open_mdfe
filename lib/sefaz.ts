@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from "axios";
 import { CTeSefazOperations, NFeSefazOperations } from "./@types/operations";
 import { HTTPClient } from "./core/ports/httpClient";
-import { AxiosHttpClient } from "./adapters/httpClient";
+import { AxiosHttpClient, HttpClientMode } from "./adapters/httpClient";
 import { UFCodeIBGE, UFIssuer } from "./@types/layouts/general";
 import { AuthorizationResultRequest, AuthorizationResultResponse } from "./@types/layouts/nfe/authorizationResult";
 import { AuthorizationRequest, AuthorizationResponse } from "./@types/layouts/nfe/authorization";
@@ -33,7 +33,7 @@ import { CTeServiceStatusRequest, CTeServiceStatusResponse } from "./@types/layo
 import { CTeEventReceptionRequest, CTeEventReceptionResponse } from "./@types/layouts/cte/eventReception";
 import { EnvironmentIdentifier } from "./@types/layouts/general";
 import { WebServiceActions } from "./core/static/actions";
-import { gunzipSync } from "zlib";
+import { gzip } from "zlib";
 import { NFSe_AuthorizationRequest, NFSe_AuthorizationResponse } from "./@types/layouts/nfse/authorization";
 
 export class NFeSEFAZ implements NFeSefazOperations {
@@ -554,12 +554,13 @@ export class CTeSEFAZ implements CTeSefazOperations {
 }
 
 export class NFSeSEFAZ {
+    // NOTE: <https://www.nfse.gov.br/swagger/contribuintesissqn/>
     private httpClient: HTTPClient<AxiosRequestConfig>;
     private XML: XMLClient;
     private signer: Signer;
 
     constructor(readonly cert: Cert) {
-        this.httpClient = new AxiosHttpClient(cert);
+        this.httpClient = new AxiosHttpClient(cert, HttpClientMode.REST);
         this.XML = new XMLClient();
         this.signer = new Signer(cert);
     }
@@ -612,10 +613,20 @@ export class NFSeSEFAZ {
         const envelope = this.makeSoapEnvelope(payload);
         const signedEnvelope = await this.signer.signXML_X509(envelope, "@@@");
 
+        const gzipEnvelope = await new Promise<Buffer>((resolve, reject) => {
+            gzip(signedEnvelope, function (err, buffer) {
+                if (err) {
+                    reject(err);
+                }
+
+                resolve(buffer);
+            });
+        });
+
         const { data } = await this.httpClient.post(
             "https://sefin.nfse.gov.br/sefinnacional/nfse/" + accessKey + "/eventos",
             {
-                pedidoRegistroEventoXmlGZipB64: gunzipSync(signedEnvelope),
+                pedidoRegistroEventoXmlGZipB64: gzipEnvelope.toString("base64"),
             },
         );
 
@@ -657,10 +668,21 @@ export class NFSeSEFAZ {
 
     async requestAuthorization(payload: NFSe_AuthorizationRequest): Promise<NFSe_AuthorizationResponse> {
         const envelope = this.makeSoapEnvelope(payload);
-        const signedEnvelope = await this.signer.signXML_X509(envelope, "@@@");
+        let signedEnvelope = await this.signer.signXML_X509(envelope, "infDPS");
+        signedEnvelope = await this.signer.signXML_X509(signedEnvelope, "infNFSe");
+
+        const gzipEnvelope = await new Promise<Buffer>((resolve, reject) => {
+            gzip(signedEnvelope, function (err, buffer) {
+                if (err) {
+                    reject(err);
+                }
+
+                resolve(buffer);
+            });
+        });
 
         const { data } = await this.httpClient.post("https://sefin.nfse.gov.br/sefinnacional/nfse", {
-            dpsXmlGZipB64: gunzipSync(signedEnvelope),
+            dpsXmlGZipB64: gzipEnvelope.toString("base64"),
         });
 
         return data;

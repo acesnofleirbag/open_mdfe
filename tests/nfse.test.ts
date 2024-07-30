@@ -16,7 +16,13 @@ import {
 } from "../lib/@types/layouts/nfse/nfse";
 import { DateUtility } from "../lib/utils/date";
 import { version as __VERSION__ } from "../package.json";
-import { EnvironmentIdentifier, IBGE_DistrictTable, ISO_Country, UFIssuer } from "../lib/@types/layouts/general";
+import {
+    EnvironmentIdentifier,
+    IBGE_DistrictTable,
+    ISO_Country,
+    NationalTaxCodes,
+    UFIssuer,
+} from "../lib/@types/layouts/general";
 
 test.todo("Get DANFS-e", async () => {
     // arrange
@@ -124,6 +130,9 @@ test.todo("Get event by event sequential number", async () => {
     expect(res).toEqual(1);
 });
 
+// WARN: A maioria dos municípios não disponibilizam ambientes de homologação ainda, para saber qual município
+// disponibiliza o ambiente de homologação veja: '[0]
+// [0]: <https://www.gov.br/nfse/pt-br/municipios/municipios-aderentes/municipios-aderentes>
 test.only("Request authorization", async () => {
     // arrange
     const cert = {
@@ -132,38 +141,39 @@ test.only("Request authorization", async () => {
     };
     const sefaz = new NFSeSEFAZ(cert);
     const nfse = new NFSe({
-        $: { Id: "" },
+        $: { Id: "ID31062001100005392612628000000000000019010153978386" },
         DPS: {
+            $: { xmlns: "http://www.sped.fazenda.gov.br/nfse" },
             infDPS: {
-                $: { Id: "" },
-                cLocEmi: IBGE_DistrictTable["SAO_PAULO-SP"],
-                dCompet: "20240101",
+                $: { versao: "1.00", Id: "DPS310620011000053926126280000000000000190101" },
+                cLocEmi: IBGE_DistrictTable["SAO_LEOPOLDO-RS"],
+                dCompet: "2024-01-01",
                 dhEmi: DateUtility.now(),
-                nDPS: "",
-                serie: "",
+                nDPS: "12345678901234",
+                serie: "12345",
                 tpAmb: EnvironmentIdentifier.HOMOLOGATION,
                 tpEmit: IssuerType.PROVIDER,
                 verAplic: "OPEN_MDFE_" + __VERSION__,
                 serv: {
                     cServ: {
-                        cTribNac: "",
-                        xDescServ: "",
+                        cTribNac: NationalTaxCodes["Análise e desenvolvimento de sistemas"],
+                        xDescServ: "Desenvolvimento de biblioteca NodeJS",
                     },
                     locPrest: {
                         opConsumServ:
                             ServiceUsageLocal.CONSUMPTION_OF_THE_SERVICE_PROVIDED_OCCURRED_IN_THE_MUNICIPALITY_WHERE_THE_SERVICE_WAS_PROVIDED,
-                        cLocPrestacao: IBGE_DistrictTable["SAO_PAULO-SP"],
+                        cLocPrestacao: IBGE_DistrictTable["SAO_LEOPOLDO-RS"],
                         cPaisPrestacao: ISO_Country.BRASIL,
                     },
                 },
                 toma: {
                     xNome: "Open MDF-e taker",
-                    CNPJ: "",
+                    CNPJ: "32238322000160",
                     NIF: "",
                     cNaoNIF: NonNIF_Reason.NIF_NOT_REQUIRED,
                 },
                 prest: {
-                    CNPJ: "",
+                    CNPJ: "42660677000104",
                     NIF: "",
                     regTrib: {
                         opSimpNac: SimpleNationalSituation.OPTANT_MICROENTERPRISE_OR_SMALL_BUSINESS_ME_EPP,
@@ -172,14 +182,14 @@ test.only("Request authorization", async () => {
                     cNaoNIF: NonNIF_Reason.NIF_NOT_REQUIRED,
                 },
                 interm: {
-                    CNPJ: "",
+                    CNPJ: "61550170000134",
                     xNome: "Open MDF-e Intermediary",
                     NIF: "",
                     cNaoNIF: NonNIF_Reason.NIF_NOT_REQUIRED,
                 },
                 valores: {
                     vServPrest: {
-                        vServ: "0.00",
+                        vServ: "10.00",
                     },
                     trib: {
                         totTrib: {
@@ -195,13 +205,13 @@ test.only("Request authorization", async () => {
         },
         emit: {
             CNPJ: process.env.CNPJ ?? "99999999000191",
-            xFant: "Open MDF-e Library test",
+            xFant: "Open MDF-e library test",
             xNome: "Open MDF-e by @acesnofleirbag",
             enderNac: {
-                UF: UFIssuer.SP,
+                UF: UFIssuer.RS,
                 CEP: "09421500",
                 nro: "123",
-                cMun: IBGE_DistrictTable["SAO_PAULO-SP"],
+                cMun: IBGE_DistrictTable["SAO_LEOPOLDO-RS"],
                 xCpl: "Rua das Flores",
                 xLgr: "Ribeirão Pires",
                 xBairro: "Suíssa",
@@ -210,21 +220,21 @@ test.only("Request authorization", async () => {
         ambGer: GenerateEnvironmentType.CITY_HALL,
         cStat: MessageStatusCode.INDIVIDUAL_NFSE,
         dhProc: DateUtility.now(),
-        nDFSe: "",
-        nNFSe: "",
+        nDFSe: "1234567890123",
+        nNFSe: "1234567890123",
         procEmi: IssuanceProcess.ISSUANCE_USING_THE_TAXPAYERS_APPLICATION_VIA_WEB_SERVICE,
         tpEmis: IssueType.NORMAL_ISSUANCE_IN_THE_NATIONAL_NFSE_MODEL,
         verAplic: "OPEN_MDFE_" + __VERSION__,
-        xLocEmi: "",
-        xLocPrestacao: "",
-        xTribNac: "",
+        xLocEmi: "SAO_LEOPOLDO-RS",
+        xLocPrestacao: "Unidade comercial sede",
+        xTribNac: "Análise e desenvolvimento de sistemas",
         valores: {
-            vLiq: "0.00",
+            vLiq: "10.00",
         },
     });
 
     // act
-    const res = await sefaz.requestAuthorization(nfse);
+    const res = await sefaz.requestAuthorization({ infNFSe: nfse.toObject() });
 
     // assert
     expect(res).toEqual({});

@@ -100,7 +100,7 @@ test.only("Request authorization", async () => {
             indFinal: OperationWithEndConsumer.YES,
             indPres: BuyerPresenceOnEstablishmentAtTransactionIndicator.INTERNET,
             procEmi: IssuingProcess.OWNED_APP,
-            verProc: __VERSION__,
+            verProc: "OPEN_MDFE_" + __VERSION__,
             indIntermed: IntermediaryIndicator.WITHOUT_INTERMEDIARY,
         },
         emit: {

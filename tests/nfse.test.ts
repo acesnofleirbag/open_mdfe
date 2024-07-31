@@ -17,6 +17,7 @@ import {
 import { DateUtility } from "../lib/utils/date";
 import { version as __VERSION__ } from "../package.json";
 import {
+    BrazilianNomenclatureServices,
     EnvironmentIdentifier,
     IBGE_DistrictTable,
     ISO_Country,
@@ -133,7 +134,7 @@ test.todo("Get event by event sequential number", async () => {
 // WARN: A maioria dos municípios não disponibilizam ambientes de homologação ainda, para saber qual município
 // disponibiliza o ambiente de homologação veja: '[0]
 // [0]: <https://www.gov.br/nfse/pt-br/municipios/municipios-aderentes/municipios-aderentes>
-test.only("Request authorization", async () => {
+test.skip("Request authorization", async () => {
     // arrange
     const cert = {
         pfx: __dirname + "/cert/cert.pfx",
@@ -146,7 +147,7 @@ test.only("Request authorization", async () => {
             $: { xmlns: "http://www.sped.fazenda.gov.br/nfse" },
             infDPS: {
                 $: { versao: "1.00", Id: "DPS310620011000053926126280000000000000190101" },
-                cLocEmi: IBGE_DistrictTable["SAO_LEOPOLDO-RS"],
+                cLocEmi: IBGE_DistrictTable["GOIANIA-GO"],
                 dCompet: "2024-01-01",
                 dhEmi: DateUtility.now(),
                 nDPS: "12345678901234",
@@ -162,7 +163,7 @@ test.only("Request authorization", async () => {
                     locPrest: {
                         opConsumServ:
                             ServiceUsageLocal.CONSUMPTION_OF_THE_SERVICE_PROVIDED_OCCURRED_IN_THE_MUNICIPALITY_WHERE_THE_SERVICE_WAS_PROVIDED,
-                        cLocPrestacao: IBGE_DistrictTable["SAO_LEOPOLDO-RS"],
+                        cLocPrestacao: IBGE_DistrictTable["GOIANIA-GO"],
                         cPaisPrestacao: ISO_Country.BRASIL,
                     },
                 },
@@ -211,7 +212,7 @@ test.only("Request authorization", async () => {
                 UF: UFIssuer.RS,
                 CEP: "09421500",
                 nro: "123",
-                cMun: IBGE_DistrictTable["SAO_LEOPOLDO-RS"],
+                cMun: IBGE_DistrictTable["GOIANIA-GO"],
                 xCpl: "Rua das Flores",
                 xLgr: "Ribeirão Pires",
                 xBairro: "Suíssa",
@@ -225,7 +226,7 @@ test.only("Request authorization", async () => {
         procEmi: IssuanceProcess.ISSUANCE_USING_THE_TAXPAYERS_APPLICATION_VIA_WEB_SERVICE,
         tpEmis: IssueType.NORMAL_ISSUANCE_IN_THE_NATIONAL_NFSE_MODEL,
         verAplic: "OPEN_MDFE_" + __VERSION__,
-        xLocEmi: "SAO_LEOPOLDO-RS",
+        xLocEmi: "GOIANIA-GO",
         xLocPrestacao: "Unidade comercial sede",
         xTribNac: "Análise e desenvolvimento de sistemas",
         valores: {
@@ -240,7 +241,7 @@ test.only("Request authorization", async () => {
     expect(res).toEqual({});
 });
 
-test.todo("Get by access key", async () => {
+test.only("Get by access key", async () => {
     // arrange
     const cert = {
         pfx: __dirname + "/cert/cert.pfx",
@@ -255,7 +256,7 @@ test.todo("Get by access key", async () => {
     expect(res).toEqual(1);
 });
 
-test.todo("Get parameterized ISSQN aliquot", async () => {
+test("Get parameterized ISSQN aliquot", async () => {
     // arrange
     const cert = {
         pfx: __dirname + "/cert/cert.pfx",
@@ -264,13 +265,22 @@ test.todo("Get parameterized ISSQN aliquot", async () => {
     const sefaz = new NFSeSEFAZ(cert);
 
     // act
-    const res = await sefaz.getParameterizedISSQN_Aliquot("", "", "");
+    const res = await sefaz.getParameterizedISSQN_Aliquot(
+        IBGE_DistrictTable["PORTO_ALEGRE-RS"],
+        BrazilianNomenclatureServices["Licenciamento de direitos de uso de programas de computador (software)"],
+        "01-15-2024",
+    );
 
     // assert
-    expect(res).toEqual(1);
+    expect(res).toEqual({
+        dataHoraProcessamento: expect.any(String), // "30-07-2024 23:17:14"
+        // WARN: HOMOLOGATION environments is not available
+        tipoAmbiente: EnvironmentIdentifier.PRODUCTION,
+        mensagem: "Alíquotas não encontradas.",
+    });
 });
 
-test.todo("Get aliquot history", async () => {
+test("Get aliquot history", async () => {
     // arrange
     const cert = {
         pfx: __dirname + "/cert/cert.pfx",
@@ -279,13 +289,21 @@ test.todo("Get aliquot history", async () => {
     const sefaz = new NFSeSEFAZ(cert);
 
     // act
-    const res = await sefaz.getAliquotHistory("", "");
+    const res = await sefaz.getAliquotHistory(
+        IBGE_DistrictTable["PORTO_ALEGRE-RS"],
+        BrazilianNomenclatureServices["Licenciamento de direitos de uso de programas de computador (software)"],
+    );
 
     // assert
-    expect(res).toEqual(1);
+    expect(res).toEqual({
+        dataHoraProcessamento: expect.any(String), // "30-07-2024 22:59:40"
+        // WARN: HOMOLOGATION environments is not available
+        tipoAmbiente: EnvironmentIdentifier.PRODUCTION,
+        mensagem: "Histórico de alíquotas não encontrado",
+    });
 });
 
-test.todo("Get agreement params", async () => {
+test("Get agreement params", async () => {
     // arrange
     const cert = {
         pfx: __dirname + "/cert/cert.pfx",
@@ -294,13 +312,25 @@ test.todo("Get agreement params", async () => {
     const sefaz = new NFSeSEFAZ(cert);
 
     // act
-    const res = await sefaz.getAgreementParams("");
+    const res = await sefaz.getAgreementParams(IBGE_DistrictTable["PORTO_ALEGRE-RS"]);
 
     // assert
-    expect(res).toEqual(1);
+    expect(res).toEqual({
+        dataHoraProcessamento: expect.any(String), // "30-07-2024 22:48:15"
+        // WARN: HOMOLOGATION environments is not available
+        tipoAmbiente: EnvironmentIdentifier.PRODUCTION,
+        parametrosConvenio: {
+            aderenteAmbienteNacional: 1,
+            aderenteEmissorNacional: 1,
+            origCad: 2,
+            aderenteMAN: 0,
+            permiteAproveitametoDeCreditos: true,
+        },
+        mensagem: "Parâmetros do convênio recuperados com sucesso.",
+    });
 });
 
-test.todo("Get special regime params", async () => {
+test("Get special regime params", async () => {
     // arrange
     const cert = {
         pfx: __dirname + "/cert/cert.pfx",
@@ -309,13 +339,17 @@ test.todo("Get special regime params", async () => {
     const sefaz = new NFSeSEFAZ(cert);
 
     // act
-    const res = await sefaz.getSpecialRegimeParams("", "", "");
+    const res = await sefaz.getSpecialRegimeParams(
+        IBGE_DistrictTable["PORTO_ALEGRE-RS"],
+        BrazilianNomenclatureServices["Licenciamento de direitos de uso de programas de computador (software)"],
+        "01-15-2020",
+    );
 
     // assert
-    expect(res).toEqual(1);
+    expect(res).toEqual(null);
 });
 
-test.todo("Get ISSQN retention params", async () => {
+test("Get ISSQN retention params", async () => {
     // arrange
     const cert = {
         pfx: __dirname + "/cert/cert.pfx",
@@ -324,10 +358,26 @@ test.todo("Get ISSQN retention params", async () => {
     const sefaz = new NFSeSEFAZ(cert);
 
     // act
-    const res = await sefaz.getISSQN_RetentionParams("", "");
+    const res = await sefaz.getISSQN_RetentionParams(IBGE_DistrictTable["PORTO_ALEGRE-RS"], "01-15-2024");
 
     // assert
-    expect(res).toEqual(1);
+    expect(res).toEqual({
+        dataHoraProcessamento: expect.any(String), // "30-07-2024 22:42:56",
+        // WARN: HOMOLOGATION environments is not available
+        tipoAmbiente: EnvironmentIdentifier.PRODUCTION,
+        retencoes: {
+            art6: {
+                habilitado: true,
+                hist: [
+                    {
+                        dtIni: expect.any(String), // "2023-04-17T00:00:00"
+                    },
+                ],
+            },
+            retMun: [],
+        },
+        mensagem: "Parâmetros de retenções para a competência recuperados com sucesso.",
+    });
 });
 
 test.todo("get benefit number params", async () => {
@@ -339,8 +389,8 @@ test.todo("get benefit number params", async () => {
     const sefaz = new NFSeSEFAZ(cert);
 
     // act
-    const res = await sefaz.getBenefitNumberParams("", "", "");
+    const res = await sefaz.getBenefitNumberParams(IBGE_DistrictTable["PORTO_ALEGRE-RS"], "", "01-15-2024");
 
     // assert
-    expect(res).toEqual(1);
+    expect(res).toEqual({});
 });

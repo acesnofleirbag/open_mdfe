@@ -35,6 +35,7 @@ import { EnvironmentIdentifier } from "./@types/layouts/general";
 import { WebServiceActions } from "./core/static/actions";
 import { gzip } from "zlib";
 import { NFSe_AuthorizationRequest, NFSe_AuthorizationResponse } from "./@types/layouts/nfse/authorization";
+import { NFSe } from "./nfse";
 
 export class NFeSEFAZ implements NFeSefazOperations {
     private httpClient: HTTPClient<AxiosRequestConfig>;
@@ -589,27 +590,25 @@ export class NFSeSEFAZ {
         return this.signer.checkExpirationTime();
     }
 
-    async getDANFSe(accessKey: string): Promise<{}> {
+    async getDANFSe(accessKey: string): Promise<unknown | null> {
         const { data } = await this.httpClient.get("https://sefin.nfse.gov.br/sefinnacional/" + accessKey);
 
-        return data;
+        return NFSe.JSON_SafeParse(data);
     }
 
-    async distribuiteDFe(NSU: string): Promise<any> {
+    async distribuiteDFe(NSU: string): Promise<unknown | null> {
         const { data } = await this.httpClient.get("https://adn.nfse.gov.br/contribuinte/DFe/" + NSU);
 
-        return data;
+        return NFSe.JSON_SafeParse(data);
     }
 
-    async getAccessKeyByDPS(accessKey: string): Promise<any> {
-        const { data } = await this.httpClient.get(
-            "https://adn.nfse.gov.br/contribuinte/NFSe/" + accessKey + "/Eventos",
-        );
+    async getAccessKeyByDPS(DPS: string): Promise<unknown | null> {
+        const { data } = await this.httpClient.get("https://sefin.nfse.gov.br/sefinnacional/" + DPS);
 
-        return data;
+        return NFSe.JSON_SafeParse(data);
     }
 
-    async registerEvent(payload: any, accessKey: string): Promise<any> {
+    async registerEvent(payload: any, accessKey: string): Promise<unknown | null> {
         const envelope = this.makeSoapEnvelope(payload);
         const signedEnvelope = await this.signer.signXML_X509(envelope, "@@@");
 
@@ -630,30 +629,30 @@ export class NFSeSEFAZ {
             },
         );
 
-        return data;
+        return NFSe.JSON_SafeParse(data);
     }
 
-    async getEventByAccessKey(accessKey: string): Promise<any> {
+    async getEventByAccessKey(accessKey: string): Promise<unknown | null> {
         const { data } = await this.httpClient.get(
             "https://sefin.nfse.gov.br/sefinnacional/nfse/" + accessKey + "/eventos",
         );
 
-        return data;
+        return NFSe.JSON_SafeParse(data);
     }
 
-    async getEventByEventType(accessKey: string, eventType: string): Promise<any> {
+    async getEventByEventType(accessKey: string, eventType: string): Promise<unknown | null> {
         const { data } = await this.httpClient.get(
             "https://sefin.nfse.gov.br/sefinnacional/nfse/" + accessKey + "/eventos/" + eventType,
         );
 
-        return data;
+        return NFSe.JSON_SafeParse(data);
     }
 
     async getEventByEventSequentialNumber(
         accessKey: string,
         eventType: string,
         sequentialNumber: string,
-    ): Promise<any> {
+    ): Promise<unknown | null> {
         const { data } = await this.httpClient.get(
             "https://sefin.nfse.gov.br/sefinnacional/nfse/" +
                 accessKey +
@@ -663,10 +662,10 @@ export class NFSeSEFAZ {
                 sequentialNumber,
         );
 
-        return data;
+        return NFSe.JSON_SafeParse(data);
     }
 
-    async requestAuthorization(payload: NFSe_AuthorizationRequest): Promise<NFSe_AuthorizationResponse> {
+    async requestAuthorization(payload: NFSe_AuthorizationRequest): Promise<NFSe_AuthorizationResponse | null> {
         const envelope = this.makeSoapEnvelope(payload);
         let signedEnvelope = await this.signer.signXML_X509(envelope, "infDPS");
         signedEnvelope = await this.signer.signXML_X509(signedEnvelope, "infNFSe");
@@ -685,64 +684,72 @@ export class NFSeSEFAZ {
             dpsXmlGZipB64: gzipEnvelope.toString("base64"),
         });
 
-        return data;
+        return NFSe.JSON_SafeParse<NFSe_AuthorizationResponse>(data);
     }
 
-    async getByAccessKey(accessKey: string): Promise<any> {
+    async getByAccessKey(accessKey: string): Promise<unknown> {
         const { data } = await this.httpClient.get("https://sefin.nfse.gov.br/sefinnacional/nfse/" + accessKey);
 
-        return data;
+        return NFSe.JSON_SafeParse(data);
     }
 
-    async getParameterizedISSQN_Aliquot(districtCode: string, serviceCode: string, competence: string): Promise<any> {
+    async getParameterizedISSQN_Aliquot(
+        districtCode: string,
+        serviceCode: string,
+        competence: string,
+    ): Promise<unknown | null> {
         const { data } = await this.httpClient.get(
             "https://sefin.nfse.gov.br/sefinnacional/parametros_municipais/" +
                 districtCode +
                 "/" +
-                serviceCode +
+                NFSe.fmtServiceCode(serviceCode) +
                 "/" +
                 competence +
                 "/aliquota",
         );
 
-        return data;
+        return NFSe.JSON_SafeParse(data);
     }
 
-    async getAliquotHistory(districtCode: string, serviceCode: string): Promise<any> {
+    async getAliquotHistory(districtCode: string, serviceCode: string): Promise<unknown | null> {
         const { data } = await this.httpClient.get(
             "https://sefin.nfse.gov.br/sefinnacional/parametros_municipais/" +
                 districtCode +
                 "/" +
-                serviceCode +
+                NFSe.fmtServiceCode(serviceCode) +
                 "/historicoaliquotas",
         );
 
-        return data;
+        return NFSe.JSON_SafeParse(data);
     }
 
-    async getAgreementParams(districtCode: string): Promise<any> {
+    async getAgreementParams(districtCode: string): Promise<unknown | null> {
         const { data } = await this.httpClient.get(
             "https://sefin.nfse.gov.br/sefinnacional/parametros_municipais/" + districtCode + "/convenio",
         );
 
-        return data;
+        return NFSe.JSON_SafeParse(data);
     }
 
-    async getSpecialRegimeParams(districtCode: string, serviceCode: string, competence: string): Promise<any> {
+    async getSpecialRegimeParams(
+        districtCode: string,
+        serviceCode: string,
+        competence: string,
+    ): Promise<unknown | null> {
         const { data } = await this.httpClient.get(
             "https://sefin.nfse.gov.br/sefinnacional/parametros_municipais/" +
                 districtCode +
                 "/" +
-                serviceCode +
+                NFSe.fmtServiceCode(serviceCode) +
                 "/" +
                 competence +
                 "/regimes_especiais",
         );
 
-        return data;
+        return NFSe.JSON_SafeParse(data);
     }
 
-    async getISSQN_RetentionParams(districtCode: string, competence: string): Promise<any> {
+    async getISSQN_RetentionParams(districtCode: string, competence: string): Promise<unknown | null> {
         const { data } = await this.httpClient.get(
             "https://sefin.nfse.gov.br/sefinnacional/parametros_municipais/" +
                 districtCode +
@@ -751,10 +758,14 @@ export class NFSeSEFAZ {
                 "/retencoes",
         );
 
-        return data;
+        return NFSe.JSON_SafeParse(data);
     }
 
-    async getBenefitNumberParams(districtCode: string, benefitNumber: string, competence: string): Promise<any> {
+    async getBenefitNumberParams(
+        districtCode: string,
+        benefitNumber: string,
+        competence: string,
+    ): Promise<unknown | null> {
         const { data } = await this.httpClient.get(
             "https://sefin.nfse.gov.br/sefinnacional/parametros_municipais/" +
                 districtCode +
@@ -765,6 +776,6 @@ export class NFSeSEFAZ {
                 "/beneficio",
         );
 
-        return data;
+        return NFSe.JSON_SafeParse(data);
     }
 }

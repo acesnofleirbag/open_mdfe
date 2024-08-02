@@ -25,12 +25,12 @@ import {
 import { writeFileSync } from "node:fs";
 import { CodeCityIBGE, EnvironmentIdentifier, UFCodeIBGE, UFIssuer } from "../lib/@types/layouts/general";
 
-test("DANFE: portrait", () => {
+test("DANFE: HTML portrait", () => {
     // arrange
     const print = new Print();
 
     // act
-    const res = print.DANFE("portrait", {
+    const res = print.DANFE_HTML("portrait", {
         $: {
             Id: "NFe31060243816719000108550000000010011234567900",
             versao: "4.00",
@@ -213,12 +213,12 @@ test("DANFE: portrait", () => {
     writeFileSync("/tmp/DANFE.portrait.html", res);
 });
 
-test("DANFE: landscape", () => {
+test("DANFE: HTML landscape", () => {
     // arrange
     const print = new Print();
 
     // act
-    const res = print.DANFE("landscape", {
+    const res = print.DANFE_HTML("landscape", {
         $: {
             Id: "NFe31060243816719000108550000000010011234567900",
             versao: "4.00",

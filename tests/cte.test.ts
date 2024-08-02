@@ -1,5 +1,5 @@
 import { EnvironmentIdentifier, UFIssuer } from "../lib/@types/layouts/general";
-import { CTeSEFAZ } from "../lib/sefaz";
+import { CTeService } from "../lib/services/cte";
 import { version as __VERSION__ } from "../package.json";
 import { expect, test } from "vitest";
 
@@ -9,7 +9,7 @@ test("Request transport authorization", async () => {
         pfx: __dirname + "/cert/cert.pfx",
         pass: process.env.CERT_PASS ?? "",
     };
-    const sefaz = new CTeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
+    const sut = new CTeService(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
 
     // act
 
@@ -23,7 +23,7 @@ test("Request other services authorization", async () => {
         pfx: __dirname + "/cert/cert.pfx",
         pass: process.env.CERT_PASS ?? "",
     };
-    const sefaz = new CTeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
+    const sut = new CTeService(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
 
     // act
 
@@ -37,7 +37,7 @@ test("Request GTVe authorization", async () => {
         pfx: __dirname + "/cert/cert.pfx",
         pass: process.env.CERT_PASS ?? "",
     };
-    const sefaz = new CTeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
+    const sut = new CTeService(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
 
     // act
 
@@ -51,7 +51,7 @@ test("Fetch CTe", async () => {
         pfx: __dirname + "/cert/cert.pfx",
         pass: process.env.CERT_PASS ?? "",
     };
-    const sefaz = new CTeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
+    const sut = new CTeService(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
 
     // act
 
@@ -65,7 +65,7 @@ test("Check service status", async () => {
         pfx: __dirname + "/cert/cert.pfx",
         pass: process.env.CERT_PASS ?? "",
     };
-    const sefaz = new CTeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
+    const sut = new CTeService(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
 
     // act
 
@@ -79,7 +79,7 @@ test("Query registration", async () => {
         pfx: __dirname + "/cert/cert.pfx",
         pass: process.env.CERT_PASS ?? "",
     };
-    const sefaz = new CTeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
+    const sut = new CTeService(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
 
     // act
 
@@ -93,7 +93,7 @@ test("Register event", async () => {
         pfx: __dirname + "/cert/cert.pfx",
         pass: process.env.CERT_PASS ?? "",
     };
-    const sefaz = new CTeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
+    const sut = new CTeService(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
 
     // act
 

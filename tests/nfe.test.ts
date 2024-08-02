@@ -8,6 +8,7 @@ import {
     CST__Type3,
     DanfePrintFormat,
     DeterminationMethod__Type1,
+    IBGEOrganCode,
     ICMSCST,
     IntermediaryIndicator,
     IssuanceMode,
@@ -25,7 +26,7 @@ import {
     TaxRegimeCode,
     WebServiceMode,
 } from "../lib/@types/layouts/nfe/nfe";
-import { NFeSEFAZ } from "../lib/sefaz";
+import { NFeService } from "../lib/services/nfe";
 import { CodeCityIBGE, EnvironmentIdentifier, UFCodeIBGE, UFIssuer } from "../lib/@types/layouts/general";
 import { DateUtility } from "../lib/utils/date";
 
@@ -41,10 +42,10 @@ test("Check service status", async () => {
         pfx: __dirname + "/cert/cert.pfx",
         pass: process.env.CERT_PASS ?? "",
     };
-    const sefaz = new NFeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
+    const sut = new NFeService(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
 
     // act
-    const res = await sefaz.checkServiceStatus({
+    const res = await sut.checkServiceStatus({
         consStatServ: {
             $: { versao: "4.00", xmlns: "http://www.portalfiscal.inf.br/nfe" },
             tpAmb: EnvironmentIdentifier.HOMOLOGATION,
@@ -75,7 +76,7 @@ test.only("Request authorization", async () => {
         pfx: __dirname + "/cert/cert.pfx",
         pass: process.env.CERT_PASS ?? "",
     };
-    const sefaz = new NFeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
+    const sut = new NFeService(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
     const nfe = new NFe({
         $: {
             versao: "4.00",
@@ -252,7 +253,7 @@ test.only("Request authorization", async () => {
     });
 
     // act
-    const res = await sefaz.requestAuthorization({
+    const res = await sut.requestAuthorization({
         enviNFe: {
             $: { versao: "4.00", xmlns: "http://www.portalfiscal.inf.br/nfe" },
             idLote: "01234567",
@@ -309,10 +310,10 @@ test.skip("Check authorization", async () => {
         pfx: __dirname + "/cert/cert.pfx",
         pass: process.env.CERT_PASS ?? "",
     };
-    const sefaz = new NFeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
+    const sut = new NFeService(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
 
     // act
-    const res = await sefaz.checkAuthorization({
+    const res = await sut.checkAuthorization({
         consReciNFe: {
             $: { versao: "4.00", xmlns: "http://www.portalfiscal.inf.br/nfe" },
             tpAmb: EnvironmentIdentifier.HOMOLOGATION,
@@ -325,26 +326,52 @@ test.skip("Check authorization", async () => {
     expect(res).toEqual({});
 });
 
-test.todo("Fetch NF-e", async () => {
+test("Fetch NF-e", async () => {
     // arrange
     const cert = {
         pfx: __dirname + "/cert/cert.pfx",
         pass: process.env.CERT_PASS ?? "",
     };
-    const sefaz = new NFeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
+    const sut = new NFeService(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
+    const accessKey = process.env.ACCESS_KEY ?? "";
 
     // act
-    const res = await sefaz.fetchNFE({
+    const res = await sut.fetchNFe({
         consSitNFe: {
             $: { versao: "4.00", xmlns: "http://www.portalfiscal.inf.br/nfe" },
             tpAmb: EnvironmentIdentifier.HOMOLOGATION,
             xServ: "CONSULTAR",
-            chNFe: "",
+            chNFe: accessKey,
         },
     });
 
     // assert
-    expect(res).toEqual(1);
+    expect(res).toEqual({
+        $: { xmlns: "http://www.portalfiscal.inf.br/nfe/wsdl/NFeConsultaProtocolo4" },
+        retConsSitNFe: {
+            $: { versao: "4.00", xmlns: "http://www.portalfiscal.inf.br/nfe" },
+            tpAmb: EnvironmentIdentifier.HOMOLOGATION,
+            verAplic: expect.any(String),
+            cStat: "100",
+            xMotivo: "Autorizado o uso da NF-e",
+            cUF: IBGEOrganCode.SP,
+            dhRecbto: expect.any(String), // "2024-08-01T21:13:34-03:00"
+            chNFe: accessKey,
+            protNFe: {
+                $: { versao: "4.00" },
+                infProt: {
+                    cStat: "100",
+                    chNFe: accessKey,
+                    dhRecbto: expect.any(String), // "2022-06-15T23:38:43-03:00"
+                    digVal: expect.any(String),
+                    nProt: expect.any(String), // "123456789012345"
+                    tpAmb: EnvironmentIdentifier.HOMOLOGATION,
+                    verAplic: expect.any(String),
+                    xMotivo: "Autorizado o uso da NF-e",
+                },
+            },
+        },
+    });
 });
 
 test.todo("Make useless", async () => {
@@ -353,10 +380,10 @@ test.todo("Make useless", async () => {
         pfx: __dirname + "/cert/cert.pfx",
         pass: process.env.CERT_PASS ?? "",
     };
-    const sefaz = new NFeSEFAZ(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
+    const sut = new NFeService(EnvironmentIdentifier.HOMOLOGATION, UFIssuer.SP, cert);
 
     // act
-    const res = await sefaz.makeUseless({
+    const res = await sut.makeUseless({
         inutNFe: {
             $: { versao: "4.00" },
             infInut: {

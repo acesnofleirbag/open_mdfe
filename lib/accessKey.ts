@@ -30,7 +30,7 @@ export class AccessKey {
             // @ts-ignore
             NFe.emit.CNPJ +
             NFe.ide.mod +
-            ("00" + NFe.ide.serie).slice(-3) +
+            NFe.ide.serie.padStart(3, "0") +
             NFe.ide.nNF +
             NFe.ide.tpEmis +
             NFe.ide.cNF;

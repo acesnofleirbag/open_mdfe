@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { NFSeSEFAZ } from "../lib/sefaz";
+import { NFSeService } from "../lib/services/nfse";
 import { NFSe } from "../lib/nfse";
 import {
     GenerateEnvironmentType,
@@ -31,10 +31,10 @@ test.todo("Get DANFS-e", async () => {
         pfx: __dirname + "/cert/cert.pfx",
         pass: process.env.CERT_PASS ?? "",
     };
-    const sefaz = new NFSeSEFAZ(cert);
+    const sut = new NFSeService(cert);
 
     // act
-    const res = await sefaz.getDANFSe("");
+    const res = await sut.getDANFSe("");
 
     // assert
     expect(res).toEqual(1);
@@ -46,10 +46,10 @@ test.todo("Distribuite DF-e", async () => {
         pfx: __dirname + "/cert/cert.pfx",
         pass: process.env.CERT_PASS ?? "",
     };
-    const sefaz = new NFSeSEFAZ(cert);
+    const sut = new NFSeService(cert);
 
     // act
-    const res = await sefaz.distribuiteDFe("");
+    const res = await sut.distribuiteDFe("");
 
     // assert
     expect(res).toEqual(1);
@@ -61,10 +61,10 @@ test.todo("Get access key by DPS", async () => {
         pfx: __dirname + "/cert/cert.pfx",
         pass: process.env.CERT_PASS ?? "",
     };
-    const sefaz = new NFSeSEFAZ(cert);
+    const sut = new NFSeService(cert);
 
     // act
-    const res = await sefaz.getAccessKeyByDPS("");
+    const res = await sut.getAccessKeyByDPS("");
 
     // assert
     expect(res).toEqual(1);
@@ -76,11 +76,11 @@ test.todo("Register event", async () => {
         pfx: __dirname + "/cert/cert.pfx",
         pass: process.env.CERT_PASS ?? "",
     };
-    const sefaz = new NFSeSEFAZ(cert);
+    const sut = new NFSeService(cert);
     const payload = {};
 
     // act
-    const res = await sefaz.registerEvent(payload, "");
+    const res = await sut.registerEvent(payload, "");
 
     // assert
     expect(res).toEqual(1);
@@ -92,10 +92,10 @@ test.todo("Get event by access key", async () => {
         pfx: __dirname + "/cert/cert.pfx",
         pass: process.env.CERT_PASS ?? "",
     };
-    const sefaz = new NFSeSEFAZ(cert);
+    const sut = new NFSeService(cert);
 
     // act
-    const res = await sefaz.getEventByAccessKey("");
+    const res = await sut.getEventByAccessKey("");
 
     // assert
     expect(res).toEqual(1);
@@ -107,10 +107,10 @@ test.todo("Get event by event type", async () => {
         pfx: __dirname + "/cert/cert.pfx",
         pass: process.env.CERT_PASS ?? "",
     };
-    const sefaz = new NFSeSEFAZ(cert);
+    const sut = new NFSeService(cert);
 
     // act
-    const res = await sefaz.getEventByEventType("", "");
+    const res = await sut.getEventByEventType("", "");
 
     // assert
     expect(res).toEqual(1);
@@ -122,10 +122,10 @@ test.todo("Get event by event sequential number", async () => {
         pfx: __dirname + "/cert/cert.pfx",
         pass: process.env.CERT_PASS ?? "",
     };
-    const sefaz = new NFSeSEFAZ(cert);
+    const sut = new NFSeService(cert);
 
     // act
-    const res = await sefaz.getEventByEventSequentialNumber("", "", "");
+    const res = await sut.getEventByEventSequentialNumber("", "", "");
 
     // assert
     expect(res).toEqual(1);
@@ -140,7 +140,7 @@ test.skip("Request authorization", async () => {
         pfx: __dirname + "/cert/cert.pfx",
         pass: process.env.CERT_PASS ?? "",
     };
-    const sefaz = new NFSeSEFAZ(cert);
+    const sut = new NFSeService(cert);
     const nfse = new NFSe({
         $: { Id: "ID31062001100005392612628000000000000019010153978386" },
         DPS: {
@@ -235,7 +235,7 @@ test.skip("Request authorization", async () => {
     });
 
     // act
-    const res = await sefaz.requestAuthorization({ infNFSe: nfse.toObject() });
+    const res = await sut.requestAuthorization({ $: { Id: "NFS" }, infNFSe: nfse.toObject() });
 
     // assert
     expect(res).toEqual({});
@@ -247,10 +247,10 @@ test.only("Get by access key", async () => {
         pfx: __dirname + "/cert/cert.pfx",
         pass: process.env.CERT_PASS ?? "",
     };
-    const sefaz = new NFSeSEFAZ(cert);
+    const sut = new NFSeService(cert);
 
     // act
-    const res = await sefaz.getByAccessKey("");
+    const res = await sut.getByAccessKey("");
 
     // assert
     expect(res).toEqual(1);
@@ -262,10 +262,10 @@ test("Get parameterized ISSQN aliquot", async () => {
         pfx: __dirname + "/cert/cert.pfx",
         pass: process.env.CERT_PASS ?? "",
     };
-    const sefaz = new NFSeSEFAZ(cert);
+    const sut = new NFSeService(cert);
 
     // act
-    const res = await sefaz.getParameterizedISSQN_Aliquot(
+    const res = await sut.getParameterizedISSQN_Aliquot(
         IBGE_DistrictTable["PORTO_ALEGRE-RS"],
         BrazilianNomenclatureServices["Licenciamento de direitos de uso de programas de computador (software)"],
         "01-15-2024",
@@ -286,10 +286,10 @@ test("Get aliquot history", async () => {
         pfx: __dirname + "/cert/cert.pfx",
         pass: process.env.CERT_PASS ?? "",
     };
-    const sefaz = new NFSeSEFAZ(cert);
+    const sut = new NFSeService(cert);
 
     // act
-    const res = await sefaz.getAliquotHistory(
+    const res = await sut.getAliquotHistory(
         IBGE_DistrictTable["PORTO_ALEGRE-RS"],
         BrazilianNomenclatureServices["Licenciamento de direitos de uso de programas de computador (software)"],
     );
@@ -309,10 +309,10 @@ test("Get agreement params", async () => {
         pfx: __dirname + "/cert/cert.pfx",
         pass: process.env.CERT_PASS ?? "",
     };
-    const sefaz = new NFSeSEFAZ(cert);
+    const sut = new NFSeService(cert);
 
     // act
-    const res = await sefaz.getAgreementParams(IBGE_DistrictTable["PORTO_ALEGRE-RS"]);
+    const res = await sut.getAgreementParams(IBGE_DistrictTable["PORTO_ALEGRE-RS"]);
 
     // assert
     expect(res).toEqual({
@@ -336,10 +336,10 @@ test("Get special regime params", async () => {
         pfx: __dirname + "/cert/cert.pfx",
         pass: process.env.CERT_PASS ?? "",
     };
-    const sefaz = new NFSeSEFAZ(cert);
+    const sut = new NFSeService(cert);
 
     // act
-    const res = await sefaz.getSpecialRegimeParams(
+    const res = await sut.getSpecialRegimeParams(
         IBGE_DistrictTable["PORTO_ALEGRE-RS"],
         BrazilianNomenclatureServices["Licenciamento de direitos de uso de programas de computador (software)"],
         "01-15-2020",
@@ -355,10 +355,10 @@ test("Get ISSQN retention params", async () => {
         pfx: __dirname + "/cert/cert.pfx",
         pass: process.env.CERT_PASS ?? "",
     };
-    const sefaz = new NFSeSEFAZ(cert);
+    const sut = new NFSeService(cert);
 
     // act
-    const res = await sefaz.getISSQN_RetentionParams(IBGE_DistrictTable["PORTO_ALEGRE-RS"], "01-15-2024");
+    const res = await sut.getISSQN_RetentionParams(IBGE_DistrictTable["PORTO_ALEGRE-RS"], "01-15-2024");
 
     // assert
     expect(res).toEqual({
@@ -386,10 +386,10 @@ test.todo("get benefit number params", async () => {
         pfx: __dirname + "/cert/cert.pfx",
         pass: process.env.CERT_PASS ?? "",
     };
-    const sefaz = new NFSeSEFAZ(cert);
+    const sut = new NFSeService(cert);
 
     // act
-    const res = await sefaz.getBenefitNumberParams(IBGE_DistrictTable["PORTO_ALEGRE-RS"], "", "01-15-2024");
+    const res = await sut.getBenefitNumberParams(IBGE_DistrictTable["PORTO_ALEGRE-RS"], "", "01-15-2024");
 
     // assert
     expect(res).toEqual({});

@@ -664,3 +664,7 @@ export const CTeWebServices = {
         },
     },
 };
+
+export const ABRASF_WebServices: Record<string, string> = {
+    "2933307": "https://ba-vitoriadaconquista-pm-nfs-backend.cloud.el.com.br:443/producao/NfseWSService",
+};

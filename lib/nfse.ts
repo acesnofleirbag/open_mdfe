@@ -1,14 +1,11 @@
 import { SefazNFSe } from "./@types/layouts/nfse/nfse";
-import { XMLClient } from "./adapters/xml";
+import { NFSeABRASF_Validator } from "./core/validator/abrasf";
 import { NFSeValidator } from "./core/validator/nfse";
+import { Document } from "./document";
 
-export class NFSe {
-    private payload: SefazNFSe;
-    private XML: XMLClient;
-
+export class NFSe extends Document<SefazNFSe> {
     constructor(payload: SefazNFSe) {
-        this.payload = NFSeValidator.parse(payload);
-        this.XML = new XMLClient();
+        super(payload, NFSeValidator);
     }
 
     static fmtServiceCode(serviceCode: string) {
@@ -22,16 +19,10 @@ export class NFSe {
             return null;
         }
     }
+}
 
-    toXML(): string {
-        return this.XML.obj2xml(this.payload);
-    }
-
-    toObject() {
-        return this.payload;
-    }
-
-    async XMLToObject(xml: string): Promise<SefazNFSe> {
-        return this.XML.xml2obj<SefazNFSe>(xml);
+export class NFSeABRASF extends Document<any> {
+    constructor(payload: any) {
+        super(payload, NFSeABRASF_Validator);
     }
 }

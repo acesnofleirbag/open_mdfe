@@ -5,7 +5,7 @@ import { AccessKey } from "./accessKey";
 import { SefazCTE } from "./@types/layouts/cte/cte";
 
 export class Print {
-    DANFE(mode: "portrait" | "landscape", nfe: SefazNFe) {
+    DANFE_HTML(mode: "portrait" | "landscape", nfe: SefazNFe) {
         const layout =
             mode === "portrait"
                 ? readFileSync(__dirname + "/core/static/danfe.portrait.hbs")

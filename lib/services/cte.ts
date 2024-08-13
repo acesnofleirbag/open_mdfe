@@ -143,7 +143,7 @@ export class CTeService {
         const environment = this.getEnvironment();
 
         const envelope = this.makeSoapEnvelope(payload, "CTeRecepcaoOSV4");
-        const signedEnvelope = await this.signer.signXML_X509(envelope, "@@@");
+        const signedEnvelope = await this.signer.signXML_X509(envelope, "");
 
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).OSReception[environment],

@@ -225,7 +225,7 @@ export class NFeService {
         const environment = this.getEnvironment();
 
         const envelope = this.makeSoapEnvelope(payload, "NfeInutilizacao4");
-        const signedEnvelope = await this.signer.signXML_X509(envelope, "@@@");
+        const signedEnvelope = await this.signer.signXML_X509(envelope, "");
 
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).authorization[environment],
@@ -260,7 +260,7 @@ export class NFeService {
         const environment = this.getEnvironment();
 
         const envelope = this.makeSoapEnvelope(payload, "NfeConsultaCadastro");
-        const signedEnvelope = await this.signer.signXML_X509(envelope, "@@@");
+        const signedEnvelope = await this.signer.signXML_X509(envelope, "");
 
         const { data } = await this.httpClient.post(
             this.getAuthorizerByUF(this.UF).authorization[environment],
@@ -333,8 +333,8 @@ export class NFeService {
     async generateEPEC(payload: any): Promise<any> {
         const environment = this.getEnvironment();
 
-        const envelope = this.makeSoapEnvelope(payload, "@@@");
-        const signedEnvelope = await this.signer.signXML_X509(envelope, "@@@");
+        const envelope = this.makeSoapEnvelope(payload, "");
+        const signedEnvelope = await this.signer.signXML_X509(envelope, "");
 
         const { data } = await this.httpClient.post(
             this.getContingencyAuthorizerByUF(this.UF).authorization[environment],

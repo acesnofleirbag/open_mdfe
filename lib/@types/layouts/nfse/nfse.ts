@@ -249,8 +249,6 @@ export enum PIS_COFINS_RetentionType {
     NOT_RETAINED = "2",
 }
 
-// @@@
-
 type Address = {
     xLgr: string;
     nro: string;

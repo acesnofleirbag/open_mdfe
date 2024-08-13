@@ -9,7 +9,7 @@ export type GTVeAuthorizationRequest = {
     /** Informações do CT-e do tipo GTV-e */
     infCte: {
         $: { versao: VERSION; Id: string };
-        // TODO(@@@): schema
+        // TODO: schema
     };
     /** Informações suplementares da GTV-e */
     infCTeSupl?: {

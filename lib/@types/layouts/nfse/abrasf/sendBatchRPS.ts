@@ -10,4 +10,5 @@ export type NFSeABRASF_SendBatchRPS_Request = {
     };
 };
 
-export type NFSeABRASF_SendBatchRPS_Response = {}; // FIXME(@@@)
+// TODO: schema
+export type NFSeABRASF_SendBatchRPS_Response = {};

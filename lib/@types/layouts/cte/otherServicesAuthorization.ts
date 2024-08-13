@@ -7,7 +7,7 @@ import { VERSION } from "../version";
 export type OtherServicesAuthorizationRequest = {
     /** Tipo Conhecimento de Transporte Eletrônico Outros Serviços (Modelo 67) */
     infCte: {
-        // TODO(@@@): schema
+        // TODO: schema
     };
 };
 

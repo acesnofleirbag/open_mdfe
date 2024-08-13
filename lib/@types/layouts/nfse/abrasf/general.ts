@@ -1,4 +1,4 @@
-import { IBGE_DistrictTable } from "../../general";
+import { IBGE_DistrictTable, UFIssuer } from "../../general";
 
 export enum CancellationCode {
     ISSUING_ERROR = "1",
@@ -58,7 +58,8 @@ export type ResponseMessage = {
 
 export type CompNFSe = {
     Nfse: {
-        InfNfse: unknown; // TODO
+        // TODO: schema
+        InfNfse: unknown;
     };
     NfseCancelamento?: {
         Confirmacao: {
@@ -136,7 +137,7 @@ type Taker__Type1 = __Taker & {
 
 type Taker__Type2 = __Taker & {
     EnderecoExterior: {
-        CodigoPais: string; // FIXME(@@@): length = 4
+        CodigoPais: string; // FIXME: length = 4, make an enum with possible options
         EnderecoCompletoExterior: string;
     };
     Contato: Contact;
@@ -194,74 +195,75 @@ type DeductionDocumentIdentification =
     | DeductionDocumentIdentification__Type3;
 
 export type RPS = {
-        InfDeclaracaoPrestacaoServico: {
-            $: { Id: string };
-            Rps?: {
-                IdentificacaoRps?: RPS_Identification;
-                DataEmissao: string;
-                /** Situacao do RPS:
-                 * 1 | Normal
-                 * 2 | Cancelado
-                 */
-                Status: RPS_Status;
-                RpsSubstituido?: RPS_Identification;
-            };
-            Competencia: string;
-            Servico: null;
-            Prestador: IdentificationPeopleCompany;
-            TomadorServico?: Taker;
-            Intermediario?: {
-                IdentificacaoIntermediario: IdentificationPeopleCompany;
-                RazaoSocial: string;
-                CodigoMunicipio: IBGE_DistrictTable;
-            };
-            ConstrucaoCivil?: Construction;
-            /** Exigibilidade do ISS da NFS-e:
-             * 1 | Microempresa Municipal
-             * 2 | Estimativa
-             * 3 | Sociedade de Profissionais
-             * 4 | Cooperativa
-             * 5 | Microempresario Individual (MEI)
-             * 6 | Microempresa ou Empresa de Pequeno Porte (ME EPP))
+    InfDeclaracaoPrestacaoServico: {
+        $: { Id: string };
+        Rps?: {
+            IdentificacaoRps?: RPS_Identification;
+            DataEmissao: string;
+            /** Situacao do RPS:
+             * 1 | Normal
+             * 2 | Cancelado
              */
-            RegimeEspecialTributacao?: SpecialTaxationRegime;
-            /** Sim ou Nao:
-             * 1 | Sim
-             * 2 | Nao
-             */
-            OptanteSimplesNacional: Choice;
-            /** Sim ou Nao:
-             * 1 | Sim
-             * 2 | Nao
-             */
-            IncentivoFiscal: Choice;
-            Evento?: Event;
-            InformacoesComplementares?: string;
-            Deducao?: {
-                /** Codigo de identificação do tipo da deducao:
-                 * 1 | Materiais
-                 * 2 | Subempreitada de mão de obra
-                 * 3 | Serviços
-                 * 4 | Produção externa
-                 * 5 | Alimentação e bebidas/frigobar
-                 * 6 | Reembolso de despesas
-                 * 7 | Repasse consorciado
-                 * 8 | Repasse plano de saúde
-                 * 99 | Outras deduções
-                 */
-                TipoDeducao: DeductionType;
-                DescricaoDeducao?: string;
-                IdentificacaoDocumentoDeducao: DeductionDocumentIdentification;
-                DadosFornecedor: {
-                    IdentificacaoFornecedor: Document;
-                    FornecedorExterior: {
-                        NifFornecedor?: string;
-                        CodigoPais: string;
-                    };
-                };
-                DataEmissao: string;
-                ValorDedutivel: string;
-                ValorUtilizadoDeducao: string;
-            };
+            Status: RPS_Status;
+            RpsSubstituido?: RPS_Identification;
         };
-    }
+        Competencia: string;
+        // FIXME: schema
+        Servico: null;
+        Prestador: IdentificationPeopleCompany;
+        TomadorServico?: Taker;
+        Intermediario?: {
+            IdentificacaoIntermediario: IdentificationPeopleCompany;
+            RazaoSocial: string;
+            CodigoMunicipio: IBGE_DistrictTable;
+        };
+        ConstrucaoCivil?: Construction;
+        /** Exigibilidade do ISS da NFS-e:
+         * 1 | Microempresa Municipal
+         * 2 | Estimativa
+         * 3 | Sociedade de Profissionais
+         * 4 | Cooperativa
+         * 5 | Microempresario Individual (MEI)
+         * 6 | Microempresa ou Empresa de Pequeno Porte (ME EPP))
+         */
+        RegimeEspecialTributacao?: SpecialTaxationRegime;
+        /** Sim ou Nao:
+         * 1 | Sim
+         * 2 | Nao
+         */
+        OptanteSimplesNacional: Choice;
+        /** Sim ou Nao:
+         * 1 | Sim
+         * 2 | Nao
+         */
+        IncentivoFiscal: Choice;
+        Evento?: Event;
+        InformacoesComplementares?: string;
+        Deducao?: {
+            /** Codigo de identificação do tipo da deducao:
+             * 1 | Materiais
+             * 2 | Subempreitada de mão de obra
+             * 3 | Serviços
+             * 4 | Produção externa
+             * 5 | Alimentação e bebidas/frigobar
+             * 6 | Reembolso de despesas
+             * 7 | Repasse consorciado
+             * 8 | Repasse plano de saúde
+             * 99 | Outras deduções
+             */
+            TipoDeducao: DeductionType;
+            DescricaoDeducao?: string;
+            IdentificacaoDocumentoDeducao: DeductionDocumentIdentification;
+            DadosFornecedor: {
+                IdentificacaoFornecedor: Document;
+                FornecedorExterior: {
+                    NifFornecedor?: string;
+                    CodigoPais: string;
+                };
+            };
+            DataEmissao: string;
+            ValorDedutivel: string;
+            ValorUtilizadoDeducao: string;
+        };
+    };
+};

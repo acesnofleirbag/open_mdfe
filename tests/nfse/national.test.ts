@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
-import { NFSeService } from "../lib/services/nfse";
-import { NFSe } from "../lib/nfse";
+import { NFSeService } from "../../lib/services/nfse/national";
+import { NFSe } from "../../lib/nfse";
 import {
     GenerateEnvironmentType,
     ISSQN_TaxOverService,
@@ -13,9 +13,9 @@ import {
     ServiceUsageLocal,
     SimpleNationalSituation,
     TaxAssessmentRegimeSpecialTypes,
-} from "../lib/@types/layouts/nfse/nfse";
-import { DateUtility } from "../lib/utils/date";
-import { version as __VERSION__ } from "../package.json";
+} from "../../lib/@types/layouts/nfse/nfse";
+import { DateUtility } from "../../lib/utils/date";
+import { version as __VERSION__ } from "../../package.json";
 import {
     BrazilianNomenclatureServices,
     EnvironmentIdentifier,
@@ -23,7 +23,7 @@ import {
     ISO_Country,
     NationalTaxCodes,
     UFIssuer,
-} from "../lib/@types/layouts/general";
+} from "../../lib/@types/layouts/general";
 
 test.todo("Get DANFS-e", async () => {
     // arrange

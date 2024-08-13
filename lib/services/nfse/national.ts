@@ -1,12 +1,12 @@
 import { AxiosRequestConfig } from "axios";
-import { HTTPClient } from "../core/ports/httpClient";
-import { AxiosHttpClient, HttpClientMode } from "../adapters/httpClient";
-import { XMLClient } from "../adapters/xml";
-import { Signer } from "../signer";
-import { Cert } from "../@types/cert";
+import { HTTPClient } from "../../core/ports/httpClient";
+import { AxiosHttpClient, HttpClientMode } from "../../adapters/httpClient";
+import { XMLClient } from "../../adapters/xml";
+import { Signer } from "../../signer";
+import { Cert } from "../../@types/cert";
 import { gzip } from "zlib";
-import { NFSe_AuthorizationRequest, NFSe_AuthorizationResponse } from "../@types/layouts/nfse/authorization";
-import { NFSe } from "../nfse";
+import { NFSe_AuthorizationRequest, NFSe_AuthorizationResponse } from "../../@types/layouts/nfse/authorization";
+import { NFSe } from "../../nfse";
 
 export class NFSeService {
     // NOTE: <https://www.nfse.gov.br/swagger/contribuintesissqn/>
@@ -64,7 +64,7 @@ export class NFSeService {
 
     async registerEvent(payload: any, accessKey: string): Promise<unknown | null> {
         const envelope = this.makeSoapEnvelope(payload);
-        const signedEnvelope = await this.signer.signXML_X509(envelope, "@@@");
+        const signedEnvelope = await this.signer.signXML_X509(envelope, "");
 
         const gzipEnvelope = await new Promise<Buffer>((resolve, reject) => {
             gzip(signedEnvelope, function (err, buffer) {

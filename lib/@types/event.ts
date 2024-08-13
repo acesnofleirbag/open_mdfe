@@ -1,4 +1,3 @@
-// FIXME: move this
 export enum Actions {
     CONFIRMATION,
     UNFAMILIARITY,

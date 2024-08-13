@@ -7761,7 +7761,6 @@ export enum NationalTaxCodes {
     "Serviços de desenho industrial e congêneres" = "230102",
     "Serviços de chaveiros, confecção de carimbos e congêneres" = "240101",
     "Serviços de placas, sinalização visual, banners, adesivos e congêneres" = "240102",
-    "@@@" = "@@@",
     "Translado intramunicipal de corpos e partes de corpos cadavéricos" = "250201",
     "Cremação de corpos e partes de corpos cadavéricos" = "250202",
     "Planos ou convênio funerários" = "250301",

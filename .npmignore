@@ -1,0 +1,7 @@
+.git/
+Makefile
+lib/
+node_modules/
+specs/
+tests/
+.prettierrc

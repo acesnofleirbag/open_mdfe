@@ -1,6 +1,6 @@
 # OPEN MDF-e
 
-NodeJS package para MDF-e (NF-e, NFC-e, CT-e, consulta de dados, etc..)
+NodeJS package para MDF-e (NF-e, NFC-e, NFS-e, CT-e)
 
 ### Requisitos
 

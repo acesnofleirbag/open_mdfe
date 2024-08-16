@@ -28,7 +28,7 @@ export class NFeService {
     constructor(
         private readonly environment: EnvironmentIdentifier,
         private readonly UF: UFIssuer,
-        readonly cert: Cert,
+        cert: Cert,
     ) {
         this.httpClient = new AxiosHttpClient(cert);
         this.XML = new XMLClient();

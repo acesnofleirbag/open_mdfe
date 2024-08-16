@@ -9,7 +9,6 @@ NodeJS package para MDF-e (NF-e, NFC-e, CT-e, consulta de dados, etc..)
 ### Instalação
 
 ```bash
-# Instalação via NPM ainda não disponível
 $ npm install @acesnofleirbag/open-mdfe
 ```
 

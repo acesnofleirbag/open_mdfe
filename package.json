@@ -1,28 +1,36 @@
 {
   "name": "@acesnofleirbag/open-mdfe",
-  "version": "1.0.0",
-  "description": "SEFAZ and others MDF-e integrations",
-  "main": "index.js",
+  "version": "0.1.0",
+  "description": "Pacote para manifestação de documentos fiscais (NF-e, NFC-e, NFS-e, CT-e)",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
+    "build": "tsc",
     "check": "tsc --noEmit",
     "test": "vitest --run",
     "fmt": "prettier --write \"lib/**/*.ts\" \"tests/**/*.ts\""
   },
+  "license": "MIT",
+  "author": "Gabriel Fonseca",
+  "repository": {
+      "type": "git",
+      "url": "git://github.com/acesnofleirbag/open_mdfe"
+  },
+  "files": [
+    "dist"
+  ],
   "keywords": [
     "MDF-e",
     "mdfe",
     "SEFAZ",
     "sefaz",
     "NF-e",
-    "NFC-e",
     "nfe",
-    "nfce"
+    "NFC-e",
+    "nfce",
+    "NFS-e",
+    "nfse"
   ],
-  "author": {
-    "name": "Gabriel Fonseca",
-    "github": "@acesnofleirbag"
-  },
-  "license": "MIT",
   "dependencies": {
     "axios": "^1.6.8",
     "handlebars": "^4.7.8",

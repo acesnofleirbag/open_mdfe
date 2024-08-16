@@ -14,7 +14,7 @@ export class NFSeService {
     private XML: XMLClient;
     private signer: Signer;
 
-    constructor(readonly cert: Cert) {
+    constructor(cert: Cert) {
         this.httpClient = new AxiosHttpClient(cert, HttpClientMode.REST);
         this.XML = new XMLClient();
         this.signer = new Signer(cert);

@@ -202,7 +202,7 @@
         // "reactNamespace": "",
 
         // Disable emitting comments.
-        "removeComments": true,
+        "removeComments": false,
 
         // Enable importing .json files.
         "resolveJsonModule": true,

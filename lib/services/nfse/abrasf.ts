@@ -40,7 +40,7 @@ export class ABRASF_Service {
     private districtCode: string;
 
     constructor(
-        readonly cert: Cert,
+        cert: Cert,
         districtCode: string,
     ) {
         this.httpClient = new AxiosHttpClient(cert);
